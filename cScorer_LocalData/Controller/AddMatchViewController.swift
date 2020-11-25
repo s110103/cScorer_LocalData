@@ -22,13 +22,13 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     ]
     let itemTitles: [[String]] =
     [
-        ["Match Typ","Spieler 1","Spieler 1 Details","Spieler 2","Spieler 2 Details"],
+        ["Match Typ","Spieler 1","Spieler 1 Details","Spieler 1.1","Spieler 1.1 Details","Spieler 2","Spieler 2 Details","Spieler 2.1","Spieler 2.1 Details"],
         ["Court","Matchregel","Turnierinfos"],
         ["Start"]
     ]
     var itemSubtitles: [[String]] =
     [
-        ["Einzel","Spieler 1","Spieler 1","Spieler 2","Spieler 2"],
+        ["Einzel","Spieler 1","Spieler 1","Spieler 1.1","Spieler 1.1","Spieler 2","Spieler 2","Spieler 2.1","Spieler 2.1"],
         ["-","Standard Match - 3 Sätze","Daten zum Turnier"],
         [""]
     ]
@@ -81,7 +81,15 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         return sectionHeaders.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemTitles[section].count
+        if section == 0 {
+            if match.matchType?.matchType == 0 {
+                return itemTitles[section].count-4
+            } else {
+                return itemTitles[section].count
+            }
+        } else {
+            return itemTitles[section].count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,8 +97,31 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         let section = indexPath.section
         let row = indexPath.row
         
-        cell.textLabel?.text = itemTitles[section][row]
-        cell.detailTextLabel?.text = itemSubtitles[section][row]
+        if section == 0 {
+            if match.matchType?.matchType == 0 {
+                
+                switch row {
+                case 0...2:
+                    cell.textLabel?.text = itemTitles[section][row]
+                    cell.detailTextLabel?.text = itemSubtitles[section][row]
+                case 3:
+                    cell.textLabel?.text = itemTitles[section][5]
+                    cell.detailTextLabel?.text = itemSubtitles[section][5]
+                case 4:
+                    cell.textLabel?.text = itemTitles[section][6]
+                    cell.detailTextLabel?.text = itemSubtitles[section][6]
+                default:
+                    break
+                }
+                
+            } else {
+                cell.textLabel?.text = itemTitles[section][row]
+                cell.detailTextLabel?.text = itemSubtitles[section][row]
+            }
+        } else {
+            cell.textLabel?.text = itemTitles[section][row]
+            cell.detailTextLabel?.text = itemSubtitles[section][row]
+        }
         
         return cell
     }
