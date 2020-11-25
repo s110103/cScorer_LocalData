@@ -22,6 +22,8 @@
 		06D6709725694816005CB434 /* TournamentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D6709625694816005CB434 /* TournamentData.swift */; };
 		06D6709A25697C18005CB434 /* SetPlayerNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D6709925697C18005CB434 /* SetPlayerNameViewController.swift */; };
 		06D6709D25698204005CB434 /* SetCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D6709C25698204005CB434 /* SetCourtViewController.swift */; };
+		06DE137D256EE97D0080EAB0 /* MatchStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DE137C256EE97D0080EAB0 /* MatchStatistics.swift */; };
+		06DE1381256EEEE60080EAB0 /* EditMatchRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DE1380256EEEE60080EAB0 /* EditMatchRuleViewController.swift */; };
 		18ED908A4DD34E002D5173F3 /* Pods_cScorer_LocalData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA969E1C8A318DFE9A779D2 /* Pods_cScorer_LocalData.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,8 @@
 		06D6709625694816005CB434 /* TournamentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentData.swift; sourceTree = "<group>"; };
 		06D6709925697C18005CB434 /* SetPlayerNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlayerNameViewController.swift; sourceTree = "<group>"; };
 		06D6709C25698204005CB434 /* SetCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCourtViewController.swift; sourceTree = "<group>"; };
+		06DE137C256EE97D0080EAB0 /* MatchStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchStatistics.swift; sourceTree = "<group>"; };
+		06DE1380256EEEE60080EAB0 /* EditMatchRuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMatchRuleViewController.swift; sourceTree = "<group>"; };
 		7697C0A024C7990F1B5C93DE /* Pods-cScorer_LocalData.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cScorer_LocalData.release.xcconfig"; path = "Target Support Files/Pods-cScorer_LocalData/Pods-cScorer_LocalData.release.xcconfig"; sourceTree = "<group>"; };
 		7AA969E1C8A318DFE9A779D2 /* Pods_cScorer_LocalData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cScorer_LocalData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6CF77026A256F7EB1045245 /* Pods-cScorer_LocalData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cScorer_LocalData.debug.xcconfig"; path = "Target Support Files/Pods-cScorer_LocalData/Pods-cScorer_LocalData.debug.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 				067FB52E255F42E2001AD911 /* SelectMatchTypeViewController.swift */,
 				06D6709925697C18005CB434 /* SetPlayerNameViewController.swift */,
 				06D6709C25698204005CB434 /* SetCourtViewController.swift */,
+				06DE1383256EEEEA0080EAB0 /* MatchRule */,
 			);
 			path = "Setup Match Controller";
 			sourceTree = "<group>";
@@ -146,8 +151,17 @@
 				06D6708D25694450005CB434 /* Match.swift */,
 				06D670932569474C005CB434 /* MatchType.swift */,
 				06D6709625694816005CB434 /* TournamentData.swift */,
+				06DE137C256EE97D0080EAB0 /* MatchStatistics.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		06DE1383256EEEEA0080EAB0 /* MatchRule */ = {
+			isa = PBXGroup;
+			children = (
+				06DE1380256EEEE60080EAB0 /* EditMatchRuleViewController.swift */,
+			);
+			path = MatchRule;
 			sourceTree = "<group>";
 		};
 		EF48626575B7ED0331D0C7D5 /* Frameworks */ = {
@@ -280,10 +294,12 @@
 				06D670942569474C005CB434 /* MatchType.swift in Sources */,
 				06D6709725694816005CB434 /* TournamentData.swift in Sources */,
 				06D6709D25698204005CB434 /* SetCourtViewController.swift in Sources */,
+				06DE1381256EEEE60080EAB0 /* EditMatchRuleViewController.swift in Sources */,
 				067FB52F255F42E2001AD911 /* SelectMatchTypeViewController.swift in Sources */,
 				06D6709A25697C18005CB434 /* SetPlayerNameViewController.swift in Sources */,
 				067FB500255EF038001AD911 /* SceneDelegate.swift in Sources */,
 				067FB508255EF038001AD911 /* cScorer_LocalData.xcdatamodeld in Sources */,
+				06DE137D256EE97D0080EAB0 /* MatchStatistics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

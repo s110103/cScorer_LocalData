@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate {
+class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate, EditMatchRuleViewControllerDelegate {
     
     // MARK: - Variables
     var selectedPlayer: String = ""
@@ -155,6 +155,8 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             selectedPlayerName = match.secondTeamSecondPlayer
             selectedPlayerSurname = match.secondTeamSecondPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Matchregel":
+            performSegue(withIdentifier: "editMatchRuleSegue", sender: self)
         case "Court":
             performSegue(withIdentifier: "setCourtSegue", sender: self)
         default:
@@ -184,6 +186,12 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
                 destinationVC.selectedPlayerName = selectedPlayerName
                 destinationVC.selectedPlayerSurname = selectedPlayerSurname
             }
+            
+            destinationVC.delegate = self
+        case "editMatchRuleSegue":
+            let destinationVC = segue.destination as! EditMatchRuleViewController
+            
+            destinationVC.matchType = match.matchType!
             
             destinationVC.delegate = self
         case "setCourtSegue":
@@ -259,5 +267,9 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         itemSubtitles[1][0] = court
         
         matchDataTableView.reloadData()
+    }
+    
+    func sendMatchRuleData(matchType: MatchType) {
+        match.matchType = matchType
     }
 }

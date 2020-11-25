@@ -17,6 +17,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var matchScore: [String] = ["(0:0), 0:0"]
     var matchSyncedWithCloud: [Bool] = [false]
     
+    var savedMatches: [Match] = []
+    
     var editingEntries: Bool = false
 
     // MARK: - Outelts
