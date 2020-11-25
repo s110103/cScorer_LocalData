@@ -1,0 +1,6 @@
+framework module Pods_cScorer_LocalData {
+  umbrella header "Pods-cScorer_LocalData-umbrella.h"
+
+  export *
+  module * { export * }
+}

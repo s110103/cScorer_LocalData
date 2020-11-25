@@ -17,9 +17,13 @@ class SelectMatchTypeViewController: UIViewController {
     var matchType: Int = 0
     var delegate: SelectMatchTypeViewControllerDelegate?
     
+    let circleUnselected = UIImage(systemName: "circle")
+    let circleSelected = UIImage(systemName: "dot.circle")
+    
     // MARK: - Outlets
     @IBOutlet weak var singlesButton: UIButton!
     @IBOutlet weak var doublesButton: UIButton!
+    @IBOutlet weak var matchTypeView: UIView!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -27,35 +31,19 @@ class SelectMatchTypeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        
-        
+        matchTypeView.layer.cornerRadius = 10
+        matchTypeView.layer.masksToBounds = true
         
         switch matchType {
         case 0:
-            singlesButton.imageView?.image = UIImage(systemName: "dot.circle")
-            doublesButton.imageView?.image = UIImage(systemName: "circle")
+            singlesButton.setImage(circleSelected, for: .normal)
+            doublesButton.setImage(circleUnselected, for: .normal)
         case 1:
-            singlesButton.imageView?.image = UIImage(systemName: "circle")
-            doublesButton.imageView?.image = UIImage(systemName: "dot.circle")
+            singlesButton.setImage(circleUnselected, for: .normal)
+            doublesButton.setImage(circleSelected, for: .normal)
         default:
             break
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onDidReceiveData(_:)), name: .didReceiveData, object: nil)
-    }
-    
-    @objc func onDidReceiveData(_ notification:Notification) {
-        if let data = notification.userInfo as? [String: Int]
-            {
-                for (name, score) in data
-                {
-                    print("\(name) scored \(score) points!")
-                }
-            }
     }
 
     // MARK: - Actions
@@ -65,17 +53,17 @@ class SelectMatchTypeViewController: UIViewController {
         switch title {
         case "Einzel":
             matchType = 0
-            singlesButton.imageView?.image = UIImage(systemName: "dot.circle")
-            doublesButton.imageView?.image = UIImage(systemName: "circle")
+            singlesButton.setImage(circleSelected, for: .normal)
+            doublesButton.setImage(circleUnselected, for: .normal)
         case "Doppel":
             matchType = 1
-            singlesButton.imageView?.image = UIImage(systemName: "circle")
-            doublesButton.imageView?.image = UIImage(systemName: "dot.circle")
+            singlesButton.setImage(circleUnselected, for: .normal)
+            doublesButton.setImage(circleSelected, for: .normal)
         default: break
         }
         
         delegate?.sendMatchType(matchType: matchType)
-        
+                
         dismiss(animated: true, completion: nil)
 
     }

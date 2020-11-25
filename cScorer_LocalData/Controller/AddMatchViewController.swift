@@ -7,10 +7,14 @@
 
 import UIKit
 
-class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate {
+class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate {
     
     // MARK: - Variables
-    var matchType = 0
+    var selectedPlayer: String = ""
+    var selectedPlayerName: String = ""
+    var selectedPlayerSurname: String = ""
+    
+    var match: Match = Match(_firstTeamFirstPlayer: "Spieler", _firstTeamFirstPlayerSurname: "1", _firstTeamSecondPlayer: "Spieler", _firstTeamSecondPlayerSurname: "1.1", _secondTeamFirstPlayer: "Spieler", _secondTeamFirstPlayerSurname: "2", _secondTeamSecondPlayer: "Spieler", _secondTeamSecondPlayerSurname: "2.2", _firstTeamFirstPlayerDetails: "", _firstTeamSecondPlayerDetails: "", _secondTeamFirstPlayerDetails: "", _secondTeamSecondPlayerDetails: "", _matchService: 0, _court: "-")
     
     let sectionHeaders: [String] =
     [
@@ -19,13 +23,13 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     let itemTitles: [[String]] =
     [
         ["Match Typ","Spieler 1","Spieler 1 Details","Spieler 2","Spieler 2 Details"],
-        ["Platz","Aufschläger","Aufschläger","Aufschläger"],
+        ["Court","Matchregel","Turnierinfos"],
         ["Start"]
     ]
-    let itemSubtitles: [[String]] =
+    var itemSubtitles: [[String]] =
     [
         ["Einzel","Spieler 1","Spieler 1","Spieler 2","Spieler 2"],
-        ["CC","Spieler 1","Standard Match - 3 Sätze","Daten zum Turnier"],
+        ["-","Standard Match - 3 Sätze","Daten zum Turnier"],
         [""]
     ]
         
@@ -41,15 +45,10 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         
         matchDataTableView.delegate = self
         matchDataTableView.dataSource = self
-        
-        
     }
     
     //MARK: - Actions
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        let scores = ["Bob": 5, "Alice": 3, "Arthur": 42]
-        
-        NotificationCenter.default.post(Notification(name: .didReceiveData, object: self, userInfo: scores))
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func addMatchButtonTapped(_ sender: UIButton) {
@@ -104,27 +103,130 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
                 
         switch title {
         case "Match Typ":
-            let scores = ["Bob": 5, "Alice": 3, "Arthur": 42]
-            
-            NotificationCenter.default.post(Notification(name: .didReceiveData, object: self, userInfo: scores))
-            
             performSegue(withIdentifier: "selectMatchTypeSegue", sender: self)
+        case "Spieler 1":
+            selectedPlayer = "1"
+            selectedPlayerName = match.firstTeamFirstPlayer
+            selectedPlayerSurname = match.firstTeamFirstPlayerSurname
+            performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Spieler 1.1":
+            selectedPlayer = "1.1"
+            selectedPlayerName = match.firstTeamSecondPlayer
+            selectedPlayerSurname = match.firstTeamSecondPlayerSurname
+            performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Spieler 2":
+            selectedPlayer = "2"
+            selectedPlayerName = match.secondTeamFirstPlayer
+            selectedPlayerSurname = match.secondTeamFirstPlayerSurname
+            performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Spieler 2.1":
+            selectedPlayer = "2.1"
+            selectedPlayerName = match.secondTeamSecondPlayer
+            selectedPlayerSurname = match.secondTeamSecondPlayerSurname
+            performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Court":
+            performSegue(withIdentifier: "setCourtSegue", sender: self)
         default:
             break
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "selectMatchTypeSegue" {
-            print("Segue prepare")
+        
+        switch segue.identifier {
+        case "selectMatchTypeSegue":
             let destinationVC = segue.destination as! SelectMatchTypeViewController
             
+            destinationVC.matchType = match.matchType!.matchType
+            
             destinationVC.delegate = self
+        case "setPlayerNameSegue":
+            let destinationVC = segue.destination as! SetPlayerNameViewController
+            
+            destinationVC.selectedPlayer = selectedPlayer
+            
+            if selectedPlayerName == "Spieler" && (selectedPlayerSurname == "1" || selectedPlayerSurname == "1.1" || selectedPlayerSurname == "2" || selectedPlayerSurname == "2.2") {
+                
+                destinationVC.selectedPlayerName = ""
+                destinationVC.selectedPlayerSurname = ""
+            } else {
+                destinationVC.selectedPlayerName = selectedPlayerName
+                destinationVC.selectedPlayerSurname = selectedPlayerSurname
+            }
+            
+            destinationVC.delegate = self
+        case "setCourtSegue":
+            let destinationVC = segue.destination as! SetCourtViewController
+            
+            destinationVC.court = match.court
+            
+            destinationVC.delegate = self
+        default:
+            break
         }
     }
     
     func sendMatchType(matchType: Int) {
-        self.matchType = matchType
-        print("sendMatchType \(matchType)")
+        match.matchType?.matchType = matchType
+        
+        switch matchType {
+        case 0:
+            itemSubtitles[0][0] = "Einzel"
+        case 1:
+            itemSubtitles[0][0] = "Doppel"
+        default:
+            break
+        }
+        
+        matchDataTableView.reloadData()
+    }
+    
+    func sendPlayerNameData(selectedPlayer: String, selectedPlayerName: String, selectedPlayerSurname: String) {
+        
+        switch selectedPlayer {
+        case "1":
+            match.firstTeamFirstPlayer = selectedPlayerName
+            match.firstTeamFirstPlayerSurname = selectedPlayerSurname
+            itemSubtitles[0][1] = "\(selectedPlayerName) \(selectedPlayerSurname)"
+        case "1.1":
+            if match.matchType?.matchType == 0 {
+                match.firstTeamSecondPlayer = selectedPlayerName
+                match.firstTeamSecondPlayerSurname = selectedPlayerSurname
+            } else {
+                match.firstTeamSecondPlayer = selectedPlayerName
+                match.firstTeamSecondPlayerSurname = selectedPlayerSurname
+                itemSubtitles[0][3] = "\(selectedPlayerName) \(selectedPlayerSurname)"
+            }
+        case "2":
+            if match.matchType?.matchType == 0 {
+                match.secondTeamFirstPlayer = selectedPlayerName
+                match.secondTeamFirstPlayerSurname = selectedPlayerSurname
+                itemSubtitles[0][3] = "\(selectedPlayerName) \(selectedPlayerSurname)"
+            } else {
+                match.secondTeamFirstPlayer = selectedPlayerName
+                match.secondTeamFirstPlayerSurname = selectedPlayerSurname
+                itemSubtitles[0][5] = "\(selectedPlayerName) \(selectedPlayerSurname)"
+            }
+        case "2.1":
+            if match.matchType?.matchType == 0 {
+                match.secondTeamSecondPlayer = selectedPlayerName
+                match.secondTeamSecondPlayerSurname = selectedPlayerSurname
+            } else {
+                match.secondTeamSecondPlayer = selectedPlayerName
+                match.secondTeamSecondPlayerSurname = selectedPlayerSurname
+                itemSubtitles[0][7] = "\(selectedPlayerName) \(selectedPlayerSurname)"
+            }
+        default:
+            break
+        }
+        
+        matchDataTableView.reloadData()
+    }
+    
+    func sendCourtData(court: String) {
+        match.court = court
+        itemSubtitles[1][0] = court
+        
+        matchDataTableView.reloadData()
     }
 }
