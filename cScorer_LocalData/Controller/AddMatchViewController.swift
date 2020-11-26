@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate, EditMatchRuleViewControllerDelegate {
+class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate, EditMatchRuleViewControllerDelegate, TournamentInfoViewControllerDelegate {
     
     // MARK: - Variables
     var selectedPlayer: String = ""
@@ -157,6 +157,8 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
         case "Matchregel":
             performSegue(withIdentifier: "editMatchRuleSegue", sender: self)
+        case "Turnierinfos":
+            performSegue(withIdentifier: "editTournamentInfoSegue", sender: self)
         case "Court":
             performSegue(withIdentifier: "setCourtSegue", sender: self)
         default:
@@ -192,6 +194,12 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             let destinationVC = segue.destination as! EditMatchRuleViewController
             
             destinationVC.matchType = match.matchType!
+            
+            destinationVC.delegate = self
+        case "editTournamentInfoSegue":
+            let destinationVC = segue.destination as! TournamentInfoViewController
+            
+            destinationVC.tournamentInfo = match.tournamendData!
             
             destinationVC.delegate = self
         case "setCourtSegue":
@@ -271,5 +279,9 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     func sendMatchRuleData(matchType: MatchType) {
         match.matchType = matchType
+    }
+    
+    func sendTournamendInfoData(tournamentInfo: TournamentData) {
+        match.tournamendData = tournamentInfo
     }
 }

@@ -85,9 +85,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         
         let section = indexPath.section
         let row = indexPath.row
-        
-        print("\(section) \(row)")
-        
+                
         cell.textLabel?.text = matchRuleTitles[section][row]
         cell.detailTextLabel?.text = matchRuleSubTitles[section][row]
         
