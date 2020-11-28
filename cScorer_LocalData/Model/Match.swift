@@ -42,7 +42,7 @@ class Match {
         matchService = _matchService
         court = _court
         
-        let _matchType: MatchType = MatchType(_matchType: 0, _totalSets: 2, _gamesInSet: 6, _twoGameDifference: true, _noAd: false, _heatRule: false, _advantageSet: 0, _tiebreakAt: 6, _tiebreakPoints: 7, _lastSetTiebreakPoints: 7, _matchTiebreak: false)
+        let _matchType: MatchType = MatchType(_matchType: 0, _template: 0, _totalSets: 3, _gamesInSet: 6, _twoGameDifference: true, _noAd: false, _heatRule: false, _advantageSet: 0, _tiebreakAt: 6, _tiebreakPoints: 7, _lastSetTiebreakPoints: 7, _matchTiebreakPoints: 10, _matchTiebreak: false)
         let _tournamentData: TournamentData = TournamentData(_tournamentName: "", _tournamentPlace: "", _tournamendStage: "", _tournamendCategory: "")
         
         matchType = _matchType

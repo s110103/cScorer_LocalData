@@ -28,11 +28,21 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     ]
     var itemSubtitles: [[String]] =
     [
-        ["Einzel","Spieler 1","Spieler 1","Spieler 1.1","Spieler 1.1","Spieler 2","Spieler 2","Spieler 2.1","Spieler 2.1"],
-        ["-","Standard Match - 3 Sätze","Daten zum Turnier"],
-        [""]
     ]
-        
+    var selectableTemplates: [String] =
+    [
+        "Standard Match - 3 Sätze",
+        "Standard Match - 1 Satz",
+        "3 Sätze, Match TieBreak, NoAd",
+        "4 Games Pro Satz",
+        "8 Games Pro Satz",
+        "10 Games Pro Satz",
+        "4 Games 1 Satz",
+        "4 Games 3 Satz",
+        "TieBreak",
+        "Match Tiebreak",
+        "Benutzerdefiniert"
+    ]
     
     // MARK: - Outlets
     @IBOutlet weak var matchDataTableView: UITableView!
@@ -45,6 +55,8 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         
         matchDataTableView.delegate = self
         matchDataTableView.dataSource = self
+        
+        initSubtitles()
     }
     
     //MARK: - Actions
@@ -213,6 +225,40 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    func initSubtitles() {
+        var firstSection: [String] = []
+        
+        if match.matchType?.matchType == 0 {
+            firstSection.append("Einzel")
+        } else {
+            firstSection.append("Einzel")
+        }
+        firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
+        firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
+        
+        firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
+        firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
+        
+        firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
+        firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
+        
+        firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
+        firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
+        
+        var secondSection: [String] = []
+        
+        secondSection.append(match.court)
+        secondSection.append(selectableTemplates[match.matchType!.matchType])
+        secondSection.append("Daten zum Turnier")
+        
+        let thirdSection: [String] = [""]
+        
+        let subtitles: [[String]] = [firstSection, secondSection, thirdSection]
+        
+        itemSubtitles.removeAll()
+        itemSubtitles = subtitles
+    }
+    
     func sendMatchType(matchType: Int) {
         match.matchType?.matchType = matchType
         
@@ -279,6 +325,8 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     func sendMatchRuleData(matchType: MatchType) {
         match.matchType = matchType
+        itemSubtitles[1][1] = selectableTemplates[matchType.template]
+        matchDataTableView.reloadData()
     }
     
     func sendTournamendInfoData(tournamentInfo: TournamentData) {

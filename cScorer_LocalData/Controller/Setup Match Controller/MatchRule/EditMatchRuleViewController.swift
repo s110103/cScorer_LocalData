@@ -11,21 +11,36 @@ protocol EditMatchRuleViewControllerDelegate {
     func sendMatchRuleData(matchType: MatchType)
 }
 
-class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TemplateMatchRuleViewControllerDelegate {
     
     // MARK: - Variables
-    var template: String = "Standard Match - 3 Sätze"
+    var selectedItem: String = ""
+    var template: String = ""
     var matchType: MatchType = MatchType()
-    var sectionHeaders: [String] = ["Matchregel", "Vorteil Satz", "Tie Break"]
+    var sectionHeaders: [String] = ["Matchregel", "Vorteil Satz", "TieBreak"]
     var matchRuleTitles: [[String]] =
     [
         ["Vorlage", "Sätze im Match", "Games im Satz", "2 Games Unterschied", "NoAd", "Heat Rule"],
         ["Vorteil Satz"],
-        ["TieBreak bei", "Punkte im Satz", "Punkte im letzten Satz", "Letzter Satz Match Tiebreak"]
+        ["TieBreak bei", "Punkte im Satz", "Punkte im letzten Satz", "Punkte im Match TieBreak", "Letzter Satz Match TieBreak"]
     ]
     var matchRuleSubTitles: [[String]] =
     [
         [""]
+    ]
+    var selectableTemplates: [String] =
+    [
+        "Standard Match - 3 Sätze",
+        "Standard Match - 1 Satz",
+        "3 Sätze, Match TieBreak, NoAd",
+        "4 Games Pro Satz",
+        "8 Games Pro Satz",
+        "10 Games Pro Satz",
+        "4 Games 1 Satz",
+        "4 Games 3 Satz",
+        "TieBreak",
+        "Match Tiebreak",
+        "Benutzerdefiniert"
     ]
     var delegate: EditMatchRuleViewControllerDelegate?
     
@@ -46,6 +61,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - Actions
     @IBAction func backButtonTapped(_ sender: UIButton) {
+        delegate?.sendMatchRuleData(matchType: matchType)
         dismiss(animated: true, completion: nil)
     }
     
@@ -72,11 +88,9 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         return sectionHeaders[section]
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        print(sectionHeaders.count)
         return sectionHeaders.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(matchRuleTitles[section].count)
         return matchRuleTitles[section].count
     }
     
@@ -94,6 +108,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     
     func initSubtitles() {
         matchRuleSubTitles.removeAll()
+        template = selectableTemplates[matchType.template]
         
         var firstSection: [String] = [template, "\(matchType.totalSets) Sätze", "\(matchType.gamesInSet) Games"]
         
@@ -110,7 +125,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         if matchType.heatRule == true {
-            firstSection.append("Korrekt")
+            firstSection.append("Ja")
         } else {
             firstSection.append("Nein")
         }
@@ -125,12 +140,12 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             secondSection = ["Jeder Satz Vorteil Satz"]
         }
         
-        var thirdSection: [String] = [template, "\(matchType.tiebreakPoints) Punkte", "\(matchType.lastSetTiebreakPoints) Punkte"]
+        var thirdSection: [String] = ["\(matchType.tiebreakAt) All", "\(matchType.tiebreakPoints) Punkte", "\(matchType.lastSetTiebreakPoints) Punkte", "\(matchType.matchTiebreakPoints) Punkte"]
         
         if matchType.matchTiebreak == true {
-            thirdSection.append("Letzter Satz Match Tiebreak")
+            thirdSection.append("Ja")
         } else {
-            thirdSection.append("-")
+            thirdSection.append("Nein")
         }
         
         matchRuleSubTitles.append(firstSection)
@@ -140,6 +155,65 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        let title = matchRuleTitles[section][row]
+        
+        selectedItem = title
+        
+        switch title {
+        case "Vorlage":
+            performSegue(withIdentifier: "templateMatchRuleSegue", sender: self)
+        case "Sätze im Match":
+            performSegue(withIdentifier: "setAmountOfSetsSegue", sender: self)
+        case "Games im Satz":
+            performSegue(withIdentifier: "setAmountOfGamesSegue", sender: self)
+        case "2 Games Unterschied":
+            performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
+        case "NoAd":
+            performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
+        case "Heat Rule":
+            performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
+        case "Letzter Satz Match TieBreak":
+            performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
+        case "Vorteil Satz":
+            performSegue(withIdentifier: "selectAdvantageSetSegue", sender: self)
+        case "TieBreak bei":
+            performSegue(withIdentifier: "setTiebreakAtSegue", sender: self)
+        case "Punkte im Satz":
+            performSegue(withIdentifier: "setTiebreakPointsSegue", sender: self)
+        case "Punkte im letzten Satz":
+            performSegue(withIdentifier: "setTiebreakPointsLastSetSegue", sender: self)
+        case "Punkte im Match TieBreak":
+            performSegue(withIdentifier: "setMatchTiebreakPointsSegue", sender: self)
+        default:
+            break
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        switch segue.identifier {
+        case "templateMatchRuleSegue":
+            let destinationVC = segue.destination as! TemplateMatchRuleViewController
+            
+            destinationVC.selectedTemplate = matchType.template
+            
+            destinationVC.delegate = self
+        default:
+            break
+        }
+    }
+    
+    func sendTemplateMatchRuleData(selectedTemplate: Int) {
+        matchType.template = selectedTemplate
+        template = selectableTemplates[selectedTemplate]
+        
+        initSubtitles()
+        matchRuleTableView.reloadData()
+        
     }
     
 }
