@@ -38,7 +38,6 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         "8 Games Pro Satz",
         "10 Games Pro Satz",
         "4 Games 1 Satz",
-        "4 Games 3 Satz",
         "TieBreak",
         "Match Tiebreak",
         "Benutzerdefiniert"
@@ -231,7 +230,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         if match.matchType?.matchType == 0 {
             firstSection.append("Einzel")
         } else {
-            firstSection.append("Einzel")
+            firstSection.append("Doppel")
         }
         firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
         firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
@@ -248,7 +247,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         var secondSection: [String] = []
         
         secondSection.append(match.court)
-        secondSection.append(selectableTemplates[match.matchType!.matchType])
+        secondSection.append(selectableTemplates[match.matchType!.template])
         secondSection.append("Daten zum Turnier")
         
         let thirdSection: [String] = [""]
@@ -264,12 +263,14 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch matchType {
         case 0:
-            itemSubtitles[0][0] = "Einzel"
+            match.matchType?.template = 0
         case 1:
-            itemSubtitles[0][0] = "Doppel"
+            match.matchType?.template = 2
         default:
             break
         }
+        
+        initSubtitles()
         
         matchDataTableView.reloadData()
     }

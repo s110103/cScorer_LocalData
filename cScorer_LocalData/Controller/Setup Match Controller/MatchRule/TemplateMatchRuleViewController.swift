@@ -25,7 +25,6 @@ class TemplateMatchRuleViewController: UIViewController, UITableViewDelegate, UI
         "8 Games Pro Satz",
         "10 Games Pro Satz",
         "4 Games 1 Satz",
-        "4 Games 3 Satz",
         "TieBreak",
         "Match Tiebreak",
         "Benutzerdefiniert"
