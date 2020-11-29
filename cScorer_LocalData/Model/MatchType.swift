@@ -17,6 +17,7 @@ class MatchType {
     var twoGameDifference: Bool = true
     var noAd: Bool = false
     var heatRule: Bool = false
+    var ballChange: Int = 0
     
     var advantageSet: Int = 0
     
@@ -26,7 +27,7 @@ class MatchType {
     var matchTiebreakPoints: Int = 10
     var matchTiebreak: Bool = false
     
-    init(_matchType: Int, _template: Int, _templateBackup: Int, _totalSets: Int, _gamesInSet: Int, _twoGameDifference: Bool, _noAd: Bool, _heatRule: Bool, _advantageSet: Int, _tiebreakAt: Int, _tiebreakPoints: Int, _lastSetTiebreakPoints: Int, _matchTiebreakPoints: Int, _matchTiebreak: Bool) {
+    init(_matchType: Int, _template: Int, _templateBackup: Int, _totalSets: Int, _gamesInSet: Int, _twoGameDifference: Bool, _noAd: Bool, _heatRule: Bool, _ballChange: Int, _advantageSet: Int, _tiebreakAt: Int, _tiebreakPoints: Int, _lastSetTiebreakPoints: Int, _matchTiebreakPoints: Int, _matchTiebreak: Bool) {
         matchType = _matchType
         template = _template
         templateBackup = _templateBackup
@@ -35,6 +36,7 @@ class MatchType {
         twoGameDifference = _twoGameDifference
         noAd = _noAd
         heatRule = _heatRule
+        ballChange = _ballChange
         
         advantageSet = _advantageSet
         

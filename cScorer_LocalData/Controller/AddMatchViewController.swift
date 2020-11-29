@@ -13,8 +13,8 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     var selectedPlayer: String = ""
     var selectedPlayerName: String = ""
     var selectedPlayerSurname: String = ""
-    
-    var match: Match = Match(_firstTeamFirstPlayer: "Spieler", _firstTeamFirstPlayerSurname: "1", _firstTeamSecondPlayer: "Spieler", _firstTeamSecondPlayerSurname: "1.1", _secondTeamFirstPlayer: "Spieler", _secondTeamFirstPlayerSurname: "2", _secondTeamSecondPlayer: "Spieler", _secondTeamSecondPlayerSurname: "2.2", _firstTeamFirstPlayerDetails: "", _firstTeamSecondPlayerDetails: "", _secondTeamFirstPlayerDetails: "", _secondTeamSecondPlayerDetails: "", _matchService: 0, _court: "-")
+        
+    var match: Match = Match()
     
     let sectionHeaders: [String] =
     [
@@ -151,6 +151,11 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             selectedPlayerName = match.firstTeamFirstPlayer
             selectedPlayerSurname = match.firstTeamFirstPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Spieler 1 Details":
+            selectedPlayer = "1"
+            selectedPlayerName = match.firstTeamFirstPlayer
+            selectedPlayerSurname = match.firstTeamFirstPlayerSurname
+            performSegue(withIdentifier: "selectPlayerSegue", sender: self)
         case "Spieler 1.1":
             selectedPlayer = "1.1"
             selectedPlayerName = match.firstTeamSecondPlayer

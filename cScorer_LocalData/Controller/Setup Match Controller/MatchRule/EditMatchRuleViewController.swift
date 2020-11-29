@@ -11,7 +11,7 @@ protocol EditMatchRuleViewControllerDelegate {
     func sendMatchRuleData(matchType: MatchType)
 }
 
-class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TemplateMatchRuleViewControllerDelegate, SetAmountOfSetsViewControllerDelegate, SetAmountOfGamesViewControllerDelegate, SelectAdvantageSetViewControllerDelegate, SetTrueFalseViewControllerDelegate, SetTiebreakAtViewControllerDelegate, SetTiebreakPointsViewControllerDelegate, SetMatchTiebreakPointsViewControllerDelegate, SetTiebreakPointsLastSetViewControllerDelegate {
+class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TemplateMatchRuleViewControllerDelegate, SetAmountOfSetsViewControllerDelegate, SetAmountOfGamesViewControllerDelegate, SelectAdvantageSetViewControllerDelegate, SetTrueFalseViewControllerDelegate, SetTiebreakAtViewControllerDelegate, SetTiebreakPointsViewControllerDelegate, SetMatchTiebreakPointsViewControllerDelegate, SetTiebreakPointsLastSetViewControllerDelegate, SetBallChangeViewControllerDelegate {
     
     // MARK: - Variables
     var delegate: EditMatchRuleViewControllerDelegate?
@@ -23,7 +23,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     var sectionHeaders: [String] = ["Matchregel", "Vorteil Satz", "TieBreak"]
     var matchRuleTitles: [[String]] =
     [
-        ["Vorlage", "Sätze im Match", "Games im Satz", "2 Games Unterschied", "NoAd", "Heat Rule"],
+        ["Vorlage", "Sätze im Match", "Games im Satz", "2 Games Unterschied", "NoAd", "Heat Rule", "Ballwechsel"],
         ["Vorteil Satz"],
         ["TieBreak bei", "Punkte im Satz", "Punkte im letzten Satz", "Punkte im Match TieBreak", "Letzter Satz Match TieBreak"]
     ]
@@ -98,6 +98,14 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         "8 Punkte",
         "9 Punkte",
         "10 Punkte"
+    ]
+    var selectableBallChanges: [String] =
+    [
+        "Kein Ballwechsel",
+        "7/9",
+        "9/11",
+        "11/13",
+        "3. Satz"
     ]
     
     // MARK: - Outlets
@@ -190,6 +198,8 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             firstSection.append("Nein")
         }
         
+        firstSection.append(selectableBallChanges[matchType.ballChange])
+        
         let secondSection: [String] = [selectableAdvantageSetSettings[matchType.advantageSet]]
                 
         var thirdSection: [String] = ["\(selectableTiebreakAt[matchType.tiebreakAt])", "\(selectablePoints[matchType.tiebreakPoints])", "\(selectablePoints[matchType.lastSetTiebreakPoints])", "\(selectablePoints[matchType.matchTiebreakPoints])"]
@@ -228,6 +238,8 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
         case "Heat Rule":
             performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
+        case "Ballwechsel":
+            performSegue(withIdentifier: "setBallChangeSegue", sender: self)
         case "Letzter Satz Match TieBreak":
             performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
         case "Vorteil Satz":
@@ -297,6 +309,12 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             destinationVC.matchTiebreakPoints = matchType.matchTiebreakPoints
             
             destinationVC.delegate = self
+        case "setBallChangeSegue":
+            let destinationVC = segue.destination as! SetBallChangeViewController
+            
+            destinationVC.selectedBallChange = matchType.ballChange
+            
+            destinationVC.delegate = self
         case "setTrueFalseSegue":
             let destinationVC = segue.destination as! SetTrueFalseViewController
             
@@ -332,6 +350,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 6
             matchType.tiebreakPoints = 7
@@ -344,6 +363,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 6
             matchType.tiebreakPoints = 7
@@ -356,6 +376,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = true
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 6
             matchType.tiebreakPoints = 7
@@ -368,6 +389,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 4
             matchType.tiebreakPoints = 7
@@ -380,6 +402,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 8
             matchType.tiebreakPoints = 7
@@ -392,6 +415,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 10
             matchType.tiebreakPoints = 7
@@ -404,6 +428,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 4
             matchType.tiebreakPoints = 7
@@ -416,6 +441,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = false
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 0
             matchType.tiebreakPoints = 7
@@ -428,6 +454,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = false
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 0
             matchType.tiebreakPoints = 0
@@ -440,6 +467,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             matchType.twoGameDifference = true
             matchType.noAd = false
             matchType.heatRule = false
+            matchType.ballChange = 0
             matchType.advantageSet = 0
             matchType.tiebreakAt = 6
             matchType.tiebreakPoints = 7
@@ -463,6 +491,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 6
             comparisonMatchType.tiebreakPoints = 7
@@ -475,6 +504,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 6
             comparisonMatchType.tiebreakPoints = 7
@@ -487,6 +517,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = true
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 6
             comparisonMatchType.tiebreakPoints = 7
@@ -499,6 +530,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 4
             comparisonMatchType.tiebreakPoints = 7
@@ -511,6 +543,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 8
             comparisonMatchType.tiebreakPoints = 7
@@ -523,6 +556,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 10
             comparisonMatchType.tiebreakPoints = 7
@@ -535,6 +569,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 4
             comparisonMatchType.tiebreakPoints = 7
@@ -547,6 +582,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = false
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 0
             comparisonMatchType.tiebreakPoints = 7
@@ -559,6 +595,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = false
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 0
             comparisonMatchType.tiebreakPoints = 0
@@ -571,6 +608,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             comparisonMatchType.twoGameDifference = true
             comparisonMatchType.noAd = false
             comparisonMatchType.heatRule = false
+            comparisonMatchType.ballChange = 0
             comparisonMatchType.advantageSet = 0
             comparisonMatchType.tiebreakAt = 6
             comparisonMatchType.tiebreakPoints = 7
@@ -771,6 +809,31 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         initComparison()
         
         if matchType.lastSetTiebreakPoints != comparisonMatchType.lastSetTiebreakPoints {
+            matchType.template = 9
+        } else {
+            if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false{
+                let checkupTemplate = comparisonMatchType.template
+                comparisonMatchType.template = 9
+                
+                if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false {
+                    comparisonMatchType.template = checkupTemplate
+                } else {
+                    comparisonMatchType.template = checkupTemplate
+                    matchType.template = matchType.templateBackup
+                }
+            }
+        }
+                
+        initSubtitles()
+        matchRuleTableView.reloadData()
+    }
+    
+    func sendBallChangeData(selectedBallChange: Int) {
+        matchType.ballChange = selectedBallChange
+        
+        initComparison()
+        
+        if matchType.ballChange != comparisonMatchType.ballChange {
             matchType.template = 9
         } else {
             if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false{
