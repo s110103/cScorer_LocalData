@@ -38,6 +38,8 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
         dismiss(animated: true, completion: nil)
     }
     @IBAction func searchPlayerButtonTapped(_ sender: UIButton) {
+    }
+    @IBAction func editButtonTapped(_ sender: UIButton) {
         if editingEntries == false {
             editingEntries = true
             editPlayersButton.tintColor = UIColor.red
@@ -46,6 +48,9 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
             editingEntries = false;
             editPlayersButton.tintColor = UIColor.white
         }
+    }
+    @IBAction func addPlayerButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "addPlayerSegue", sender: self)
     }
     
     // MARK: - Functions

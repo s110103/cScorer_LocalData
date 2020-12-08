@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06339B412577E79C00CA5AC0 /* AddPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */; };
 		0648DF17257010C900BC55FB /* TournamentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0648DF16257010C900BC55FB /* TournamentInfoViewController.swift */; };
 		0648DF1D2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */; };
 		066F65262572D473006843D1 /* SetAmountOfSetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066F65252572D473006843D1 /* SetAmountOfSetsViewController.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerViewController.swift; sourceTree = "<group>"; };
 		0648DF16257010C900BC55FB /* TournamentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentInfoViewController.swift; sourceTree = "<group>"; };
 		0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDistinctTournamentDataViewController.swift; sourceTree = "<group>"; };
 		066F65252572D473006843D1 /* SetAmountOfSetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAmountOfSetsViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				06D6709925697C18005CB434 /* SetPlayerNameViewController.swift */,
 				06D6709C25698204005CB434 /* SetCourtViewController.swift */,
 				06A86A262574287800ED0A80 /* SelectPlayerDetailsViewController.swift */,
+				06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */,
 				06DE1383256EEEEA0080EAB0 /* MatchRule */,
 				0648DF19257010D000BC55FB /* TournamentInfo */,
 			);
@@ -340,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06A86A272574287800ED0A80 /* SelectPlayerDetailsViewController.swift in Sources */,
+				06339B412577E79C00CA5AC0 /* AddPlayerViewController.swift in Sources */,
 				067FB51D255F06A9001AD911 /* SinglesTableViewCell.swift in Sources */,
 				067FB502255EF038001AD911 /* ViewController.swift in Sources */,
 				066F65312572DB3E006843D1 /* SetTrueFalseViewController.swift in Sources */,

@@ -12,12 +12,12 @@ class Match {
     var firstTeamFirstPlayer: String = "Spieler"
     var firstTeamFirstPlayerSurname: String = "1"
     var firstTeamSecondPlayer: String = "Spieler"
-    var firstTeamSecondPlayerSurname: String = "1.2"
+    var firstTeamSecondPlayerSurname: String = "1.1"
     
     var secondTeamFirstPlayer: String = "Spieler"
     var secondTeamFirstPlayerSurname: String = "2"
     var secondTeamSecondPlayer: String = "Spieler"
-    var secondTeamSecondPlayerSurname: String = "2.2"
+    var secondTeamSecondPlayerSurname: String = "2.1"
     
     var firstTeamFirstPlayerDetails: Player = Player()
     var firstTeamSecondPlayerDetails: Player = Player()

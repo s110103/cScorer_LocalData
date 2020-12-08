@@ -141,8 +141,21 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let title = itemTitles[indexPath.section][indexPath.row]
+        let section = indexPath.section
+        var row = indexPath.row
+        
+        if section == 0 {
+            if match.matchType?.matchType == 0 {
+                if row > 2 {
+                    row += 2
+                }
+            }
+        }
+        
+        
+        let title = itemTitles[section][row]
                 
+                        
         switch title {
         case "Match Typ":
             performSegue(withIdentifier: "selectMatchTypeSegue", sender: self)
@@ -161,16 +174,31 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             selectedPlayerName = match.firstTeamSecondPlayer
             selectedPlayerSurname = match.firstTeamSecondPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Spieler 1.1 Details":
+            selectedPlayer = "1.1"
+            selectedPlayerName = match.firstTeamSecondPlayer
+            selectedPlayerSurname = match.firstTeamSecondPlayerSurname
+            performSegue(withIdentifier: "selectPlayerSegue", sender: self)
         case "Spieler 2":
             selectedPlayer = "2"
             selectedPlayerName = match.secondTeamFirstPlayer
             selectedPlayerSurname = match.secondTeamFirstPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Spieler 2 Details":
+            selectedPlayer = "2"
+            selectedPlayerName = match.secondTeamFirstPlayer
+            selectedPlayerSurname = match.secondTeamFirstPlayerSurname
+            performSegue(withIdentifier: "selectPlayerSegue", sender: self)
         case "Spieler 2.1":
             selectedPlayer = "2.1"
             selectedPlayerName = match.secondTeamSecondPlayer
             selectedPlayerSurname = match.secondTeamSecondPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
+        case "Spieler 2.1 Details":
+            selectedPlayer = "2.1"
+            selectedPlayerName = match.secondTeamSecondPlayer
+            selectedPlayerSurname = match.secondTeamSecondPlayerSurname
+            performSegue(withIdentifier: "selectPlayerSegue", sender: self)
         case "Matchregel":
             performSegue(withIdentifier: "editMatchRuleSegue", sender: self)
         case "Turnierinfos":
@@ -195,8 +223,8 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             let destinationVC = segue.destination as! SetPlayerNameViewController
             
             destinationVC.selectedPlayer = selectedPlayer
-            
-            if selectedPlayerName == "Spieler" && (selectedPlayerSurname == "1" || selectedPlayerSurname == "1.1" || selectedPlayerSurname == "2" || selectedPlayerSurname == "2.2") {
+                        
+            if selectedPlayerName == "Spieler" && (selectedPlayerSurname == "1" || selectedPlayerSurname == "1.1" || selectedPlayerSurname == "2" || selectedPlayerSurname == "2.1") {
                 
                 destinationVC.selectedPlayerName = ""
                 destinationVC.selectedPlayerSurname = ""
@@ -237,17 +265,38 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             firstSection.append("Doppel")
         }
-        firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
-        firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
         
-        firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
-        firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
+        if match.firstTeamFirstPlayer == "" && match.firstTeamFirstPlayerSurname == "" {
+            firstSection.append("Spieler 1")
+            firstSection.append("Spieler 1")
+        } else {
+            firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
+            firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
+        }
         
-        firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
-        firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
+        if match.firstTeamSecondPlayer == "" && match.firstTeamSecondPlayerSurname == "" {
+            firstSection.append("Spieler 1.1")
+            firstSection.append("Spieler 1.1")
+        } else {
+            firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
+            firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
+        }
         
-        firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
-        firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
+        if match.secondTeamFirstPlayer == "" && match.secondTeamFirstPlayerSurname == "" {
+            firstSection.append("Spieler 2")
+            firstSection.append("Spieler 2")
+        } else {
+            firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
+            firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
+        }
+        
+        if match.secondTeamSecondPlayer == "" && match.secondTeamSecondPlayerSurname == "" {
+            firstSection.append("Spieler 2.1")
+            firstSection.append("Spieler 2.1")
+        } else {
+            firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
+            firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
+        }
         
         var secondSection: [String] = []
         
@@ -319,6 +368,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             break
         }
         
+        initSubtitles()
         matchDataTableView.reloadData()
     }
     
