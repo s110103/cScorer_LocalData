@@ -61,7 +61,7 @@
                                             <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
                                         </state>
                                         <connections>
-                                            <segue destination="4vP-TD-oqp" kind="show" id="4x9-su-OCA"/>
+                                            <segue destination="4vP-TD-oqp" kind="show" identifier="addMatchSegue" id="4x9-su-OCA"/>
                                         </connections>
                                     </button>
                                 </subviews>

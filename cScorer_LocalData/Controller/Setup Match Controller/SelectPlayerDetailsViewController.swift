@@ -7,11 +7,18 @@
 
 import UIKit
 
+protocol SelectPlayerDetailsViewControllerDelegate {
+    func sendPlayerDetailsData(selectedPlayer: Player, playerType: String)
+}
+
 class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Variables
     var savedPlayers: [Player] = [Player(_firstName: "Dominik", _surName: "Thiem", _abbreviation: "Dominik T.", _country: "Österreich", _tennisClub: "", _gender: 0)]
     var editingEntries: Bool = false
+    var selectedPlayer: Player = Player()
+    var playerType: String = ""
+    var delegate: SelectPlayerDetailsViewControllerDelegate?
     
     // MARK: - Outlets
     @IBOutlet weak var searchPlayerTextField: UITextField!
@@ -71,6 +78,12 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         playersTableView.deselectRow(at: indexPath, animated: true)
+        
+        let row = indexPath.row
+        
+        delegate?.sendPlayerDetailsData(selectedPlayer: savedPlayers[row], playerType: playerType)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

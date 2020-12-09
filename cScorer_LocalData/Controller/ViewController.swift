@@ -7,16 +7,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate {
     
     // MARK: - Variables
-    var matchFirstPlayer: [String] = ["Thiem D."]
-    var matchSecondPlayer: [String] = ["Federer R."]
-    var matchCourt: [String] = ["CC"]
-    var matchStarted: [String] = ["13.11.2020 18:20"]
-    var matchScore: [String] = ["(0:0), 0:0"]
-    var matchSyncedWithCloud: [Bool] = [false]
-    
     var savedMatches: [Match] = []
     
     var editingEntries: Bool = false
@@ -32,6 +25,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         matchesTableView.delegate = self
         matchesTableView.dataSource = self
+        
+        let match = Match(_firstTeamFirstPlayer: "Dominik", _firstTeamFirstPlayerSurname: "Thiem", _firstTeamSecondPlayer: "", _firstTeamSecondPlayerSurname: "", _secondTeamFirstPlayer: "Roger", _secondTeamFirstPlayerSurname: "Federer", _secondTeamSecondPlayer: "", _secondTeamSecondPlayerSurname: "", _firstTeamFirstPlayerDetails: Player(), _firstTeamSecondPlayerDetails: Player(), _secondTeamFirstPlayerDetails: Player(), _secondTeamSecondPlayerDetails: Player(), _court: "CC", _syncedWithCloud: false)
+        
+        savedMatches.append(match)
         
     }
 
@@ -51,24 +48,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: - Functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return matchScore.count
+        return savedMatches.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = matchesTableView.dequeueReusableCell(withIdentifier: "matchSinglesPrototypeCell", for: indexPath) as! SinglesTableViewCell
-        let i = indexPath.row
+        let row = indexPath.row
+        let match = savedMatches[row]
         
-        if matchSyncedWithCloud[i] == true {
+        if match.syncedWithCloud == true {
             cell.syncedWithCloudImage.image = UIImage(systemName: "icloud")
         } else {
             cell.syncedWithCloudImage.image = UIImage(systemName: "icloud.slash")
         }
         
-        cell.matchDescriptionLabel.text = "\(matchFirstPlayer[i]) vs \(matchSecondPlayer[i])"
-        cell.matchCourtLabel.text = "Platz \(matchCourt[i])"
-        cell.timestampMatchStartedLabel.text = "\(matchStarted[i])"
-        cell.matchScoreLabel.text = "\(matchScore[i])"
+        if match.matchType.matchType == 0 {
+            cell.matchDescriptionLabel.text = "\(match.firstTeamFirstPlayerSurname) \(match.firstTeamFirstPlayer.prefix(1)). vs \(match.secondTeamFirstPlayerSurname) \(match.secondTeamFirstPlayer.prefix(1))."
+        } else {
+            cell.matchDescriptionLabel.text = "\(match.firstTeamFirstPlayerSurname) \(match.firstTeamFirstPlayer.prefix(1)). u \(match.firstTeamSecondPlayerSurname) \(match.firstTeamSecondPlayer.prefix(1)). vs \(match.secondTeamFirstPlayerSurname) \(match.secondTeamFirstPlayer.prefix(1)). u \(match.secondTeamSecondPlayerSurname) \(match.secondTeamSecondPlayer.prefix(1))."
+        }
+        
+        cell.matchCourtLabel.text = "Platz \(match.court)"
+        
+        let today = match.matchStatistics.matchStartedTimeStamp
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "dd.MM.yyyy HH:mm"
+        
+        cell.timestampMatchStartedLabel.text = formatter2.string(from: today as Date)
+        
+        cell.matchScoreLabel.text = "(\(match.matchStatistics.currentSets)), \(match.matchStatistics.currentGame)"
         
         return cell
     }
@@ -85,18 +94,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if editingEntries == true {
             if editingStyle == .delete {
-                let i = indexPath.row
+                let row = indexPath.row
                 
-                matchSyncedWithCloud.remove(at: i)
-                matchFirstPlayer.remove(at: i)
-                matchSecondPlayer.remove(at: i)
-                matchCourt.remove(at: i)
-                matchStarted.remove(at: i)
-                matchScore.remove(at: i)
+                savedMatches.remove(at: row)
                 
                 matchesTableView.reloadData()
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        switch segue.identifier {
+        case "addMatchSegue":
+            let destinationVC = segue.destination as! AddMatchViewController
+            destinationVC.delegate = self
+        default:
+            break
+        }
+    }
+    
+    func sendMatch(match: Match) {
+        savedMatches.append(match)
+        matchesTableView.reloadData()
     }
     
 }

@@ -7,9 +7,14 @@
 
 import UIKit
 
-class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate, EditMatchRuleViewControllerDelegate, TournamentInfoViewControllerDelegate {
+protocol AddMatchViewControllerDelegate {
+    func sendMatch(match: Match)
+}
+
+class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate, EditMatchRuleViewControllerDelegate, TournamentInfoViewControllerDelegate, SelectPlayerDetailsViewControllerDelegate {
     
     // MARK: - Variables
+    var delegate: AddMatchViewControllerDelegate?
     var selectedPlayer: String = ""
     var selectedPlayerName: String = ""
     var selectedPlayerSurname: String = ""
@@ -64,6 +69,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @IBAction func addMatchButtonTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+        delegate?.sendMatch(match: match)
     }
     
     //MARK: - Functions
@@ -93,7 +99,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if match.matchType?.matchType == 0 {
+            if match.matchType.matchType == 0 {
                 return itemTitles[section].count-4
             } else {
                 return itemTitles[section].count
@@ -109,7 +115,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         let row = indexPath.row
         
         if section == 0 {
-            if match.matchType?.matchType == 0 {
+            if match.matchType.matchType == 0 {
                 
                 switch row {
                 case 0...2:
@@ -145,7 +151,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         var row = indexPath.row
         
         if section == 0 {
-            if match.matchType?.matchType == 0 {
+            if match.matchType.matchType == 0 {
                 if row > 2 {
                     row += 2
                 }
@@ -216,7 +222,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         case "selectMatchTypeSegue":
             let destinationVC = segue.destination as! SelectMatchTypeViewController
             
-            destinationVC.matchType = match.matchType!.matchType
+            destinationVC.matchType = match.matchType.matchType
             
             destinationVC.delegate = self
         case "setPlayerNameSegue":
@@ -234,16 +240,22 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             destinationVC.delegate = self
+        case "selectPlayerSegue":
+            let destinationVC = segue.destination as! SelectPlayerDetailsViewController
+            
+            destinationVC.playerType = selectedPlayer
+            
+            destinationVC.delegate = self
         case "editMatchRuleSegue":
             let destinationVC = segue.destination as! EditMatchRuleViewController
             
-            destinationVC.matchType = match.matchType!
+            destinationVC.matchType = match.matchType
             
             destinationVC.delegate = self
         case "editTournamentInfoSegue":
             let destinationVC = segue.destination as! TournamentInfoViewController
             
-            destinationVC.tournamentInfo = match.tournamendData!
+            destinationVC.tournamentInfo = match.tournamendData
             
             destinationVC.delegate = self
         case "setCourtSegue":
@@ -260,7 +272,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     func initSubtitles() {
         var firstSection: [String] = []
         
-        if match.matchType?.matchType == 0 {
+        if match.matchType.matchType == 0 {
             firstSection.append("Einzel")
         } else {
             firstSection.append("Doppel")
@@ -301,7 +313,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         var secondSection: [String] = []
         
         secondSection.append(match.court)
-        secondSection.append(selectableTemplates[match.matchType!.template])
+        secondSection.append(selectableTemplates[match.matchType.template])
         secondSection.append("Daten zum Turnier")
         
         let thirdSection: [String] = [""]
@@ -313,13 +325,13 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func sendMatchType(matchType: Int) {
-        match.matchType?.matchType = matchType
+        match.matchType.matchType = matchType
         
         switch matchType {
         case 0:
-            match.matchType?.template = 0
+            match.matchType.template = 0
         case 1:
-            match.matchType?.template = 2
+            match.matchType.template = 2
         default:
             break
         }
@@ -337,7 +349,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             match.firstTeamFirstPlayerSurname = selectedPlayerSurname
             itemSubtitles[0][1] = "\(selectedPlayerName) \(selectedPlayerSurname)"
         case "1.1":
-            if match.matchType?.matchType == 0 {
+            if match.matchType.matchType == 0 {
                 match.firstTeamSecondPlayer = selectedPlayerName
                 match.firstTeamSecondPlayerSurname = selectedPlayerSurname
             } else {
@@ -346,7 +358,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
                 itemSubtitles[0][3] = "\(selectedPlayerName) \(selectedPlayerSurname)"
             }
         case "2":
-            if match.matchType?.matchType == 0 {
+            if match.matchType.matchType == 0 {
                 match.secondTeamFirstPlayer = selectedPlayerName
                 match.secondTeamFirstPlayerSurname = selectedPlayerSurname
                 itemSubtitles[0][3] = "\(selectedPlayerName) \(selectedPlayerSurname)"
@@ -356,7 +368,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
                 itemSubtitles[0][5] = "\(selectedPlayerName) \(selectedPlayerSurname)"
             }
         case "2.1":
-            if match.matchType?.matchType == 0 {
+            if match.matchType.matchType == 0 {
                 match.secondTeamSecondPlayer = selectedPlayerName
                 match.secondTeamSecondPlayerSurname = selectedPlayerSurname
             } else {
@@ -387,5 +399,31 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     func sendTournamendInfoData(tournamentInfo: TournamentData) {
         match.tournamendData = tournamentInfo
+    }
+    
+    func sendPlayerDetailsData(selectedPlayer: Player, playerType: String) {
+        switch playerType {
+        case "1":
+            match.firstTeamFirstPlayerDetails = selectedPlayer
+            match.firstTeamFirstPlayer = selectedPlayer.firstName
+            match.firstTeamFirstPlayerSurname = selectedPlayer.surName
+        case "1.1":
+            match.firstTeamSecondPlayerDetails = selectedPlayer
+            match.firstTeamSecondPlayer = selectedPlayer.firstName
+            match.firstTeamSecondPlayerSurname = selectedPlayer.surName
+        case "2":
+            match.secondTeamFirstPlayerDetails = selectedPlayer
+            match.secondTeamFirstPlayer = selectedPlayer.firstName
+            match.secondTeamFirstPlayerSurname = selectedPlayer.surName
+        case "2.1":
+            match.secondTeamSecondPlayerDetails = selectedPlayer
+            match.secondTeamSecondPlayer = selectedPlayer.firstName
+            match.secondTeamSecondPlayerSurname = selectedPlayer.surName
+        default:
+            break
+        }
+        
+        initSubtitles()
+        matchDataTableView.reloadData()
     }
 }

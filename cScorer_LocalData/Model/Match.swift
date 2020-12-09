@@ -24,12 +24,13 @@ class Match {
     var secondTeamFirstPlayerDetails: Player = Player()
     var secondTeamSecondPlayerDetails: Player = Player()
     
-    var matchService: Int = 0
     var court: String = "-"
-    var matchType: MatchType?
-    var tournamendData: TournamentData?
+    var syncedWithCloud: Bool = false
+    var matchType: MatchType = MatchType()
+    var tournamendData: TournamentData = TournamentData()
+    var matchStatistics: MatchStatistics = MatchStatistics()
     
-    init(_firstTeamFirstPlayer: String, _firstTeamFirstPlayerSurname: String, _firstTeamSecondPlayer: String, _firstTeamSecondPlayerSurname: String, _secondTeamFirstPlayer: String, _secondTeamFirstPlayerSurname: String, _secondTeamSecondPlayer: String, _secondTeamSecondPlayerSurname: String, _firstTeamFirstPlayerDetails: Player, _firstTeamSecondPlayerDetails: Player, _secondTeamFirstPlayerDetails: Player, _secondTeamSecondPlayerDetails: Player, _matchService: Int, _court: String) {
+    init(_firstTeamFirstPlayer: String, _firstTeamFirstPlayerSurname: String, _firstTeamSecondPlayer: String, _firstTeamSecondPlayerSurname: String, _secondTeamFirstPlayer: String, _secondTeamFirstPlayerSurname: String, _secondTeamSecondPlayer: String, _secondTeamSecondPlayerSurname: String, _firstTeamFirstPlayerDetails: Player, _firstTeamSecondPlayerDetails: Player, _secondTeamFirstPlayerDetails: Player, _secondTeamSecondPlayerDetails: Player, _court: String, _syncedWithCloud: Bool) {
         firstTeamFirstPlayer = _firstTeamFirstPlayer
         firstTeamFirstPlayerSurname = _firstTeamFirstPlayerSurname
         firstTeamSecondPlayer = _firstTeamSecondPlayer
@@ -42,22 +43,26 @@ class Match {
         firstTeamSecondPlayerDetails = _firstTeamSecondPlayerDetails
         secondTeamFirstPlayerDetails = _secondTeamFirstPlayerDetails
         secondTeamSecondPlayerDetails = _secondTeamSecondPlayerDetails
-        matchService = _matchService
         court = _court
+        syncedWithCloud = _syncedWithCloud
         
         let _matchType: MatchType = MatchType(_matchType: 0, _template: 0, _templateBackup: 0, _totalSets: 2, _gamesInSet: 6, _twoGameDifference: true, _noAd: false, _heatRule: false, _ballChange: 0, _advantageSet: 0, _tiebreakAt: 6, _tiebreakPoints: 7, _lastSetTiebreakPoints: 7, _matchTiebreakPoints: 10, _matchTiebreak: false)
         let _tournamentData: TournamentData = TournamentData(_tournamentName: "", _tournamentPlace: "", _tournamendStage: "", _tournamendCategory: "")
+        let _matchStatistics: MatchStatistics = MatchStatistics()
         
         matchType = _matchType
         tournamendData = _tournamentData
+        matchStatistics = _matchStatistics
     }
     
     init() {
         let _matchType: MatchType = MatchType(_matchType: 0, _template: 0, _templateBackup: 0, _totalSets: 2, _gamesInSet: 6, _twoGameDifference: true, _noAd: false, _heatRule: false, _ballChange: 0, _advantageSet: 0, _tiebreakAt: 6, _tiebreakPoints: 7, _lastSetTiebreakPoints: 7, _matchTiebreakPoints: 10, _matchTiebreak: false)
         let _tournamentData: TournamentData = TournamentData(_tournamentName: "", _tournamentPlace: "", _tournamendStage: "", _tournamendCategory: "")
+        let _matchStatistics: MatchStatistics = MatchStatistics()
         
         matchType = _matchType
         tournamendData = _tournamentData
+        matchStatistics = _matchStatistics
     }
     
 }
