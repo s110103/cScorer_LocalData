@@ -11,7 +11,7 @@ protocol SelectPlayerDetailsViewControllerDelegate {
     func sendPlayerDetailsData(selectedPlayer: Player, playerType: String)
 }
 
-class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddPlayerViewControlerDelegate {
     
     // MARK: - Variables
     var savedPlayers: [Player] = [Player(_firstName: "Dominik", _surName: "Thiem", _abbreviation: "Dominik T.", _country: "Österreich", _tennisClub: "", _gender: 0)]
@@ -101,6 +101,21 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
                 playersTableView.reloadData()
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "addPlayerSegue":
+            let destinationVC = segue.destination as! AddPlayerViewController
+            destinationVC.delegate = self
+        default:
+            break
+        }
+    }
+    
+    func sendAddPlayerData(newPlayer: Player) {
+        savedPlayers.append(newPlayer)
+        playersTableView.reloadData()
     }
 
 }
