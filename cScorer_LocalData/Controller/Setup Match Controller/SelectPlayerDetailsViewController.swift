@@ -14,7 +14,9 @@ protocol SelectPlayerDetailsViewControllerDelegate {
 class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddPlayerViewControlerDelegate {
     
     // MARK: - Variables
-    var savedPlayers: [Player] = [Player(_firstName: "Dominik", _surName: "Thiem", _abbreviation: "Dominik T.", _country: "Österreich", _tennisClub: "", _gender: 0)]
+    var savedPlayers: [Player] = [Player(_firstName: "Dominik", _surName: "Thiem", _abbreviation: "Dominik T.", _country: "Österreich", _tennisClub: "TCT", _gender: 0)]
+    var editPlayer: Bool = false
+    var indexOfPlayer: Int = 0
     var editingEntries: Bool = false
     var selectedPlayer: Player = Player()
     var playerType: String = ""
@@ -34,7 +36,7 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
         searchPlayerTextField.layer.borderWidth = 1
         searchPlayerTextField.layer.cornerRadius = 5
         searchPlayerTextField.layer.borderColor = UIColor(ciColor: .white).cgColor
-        searchPlayerTextField.attributedPlaceholder = NSAttributedString(string: "Suche", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        searchPlayerTextField.attributedPlaceholder = NSAttributedString(string: "Suche", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         playersTableView.delegate = self
         playersTableView.dataSource = self
@@ -90,32 +92,59 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        if editingEntries == true {
-            if editingStyle == .delete {
+        let buttonDelete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, IndexPath) in
+            if self.editingEntries == true {
                 let i = indexPath.row
+                    
+                self.savedPlayers.remove(at: i)
+                self.playersTableView.reloadData()
                 
-                savedPlayers.remove(at: i)
-                
-                playersTableView.reloadData()
+                if self.savedPlayers.count == 0 {
+                    self.editingEntries = false
+                    self.editPlayersButton.tintColor = UIColor.white
+                }
             }
         }
+        
+        let buttonEdit = UITableViewRowAction(style: .default, title: "Edit") { (action, IndexPath) in
+            self.editPlayer = true
+            self.indexOfPlayer = indexPath.row
+            self.performSegue(withIdentifier: "addPlayerSegue", sender: self)
+        }
+        
+        buttonEdit.backgroundColor = UIColor.orange
+        
+        return [buttonDelete, buttonEdit]
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "addPlayerSegue":
             let destinationVC = segue.destination as! AddPlayerViewController
+            
+            if editPlayer == true {
+                destinationVC.editPlayer = true
+                destinationVC.currentPlayer = savedPlayers[indexOfPlayer]
+                destinationVC.indexOfPlayer = indexOfPlayer
+            }
+            
             destinationVC.delegate = self
         default:
             break
         }
     }
     
-    func sendAddPlayerData(newPlayer: Player) {
-        savedPlayers.append(newPlayer)
+    func sendAddPlayerData(newPlayer: Player, editPlayer: Bool, indexOfPlayer: Int) {
+        if editPlayer == true {
+            savedPlayers.remove(at: indexOfPlayer)
+            savedPlayers.insert(newPlayer, at: indexOfPlayer)
+            self.editPlayer = false
+            self.indexOfPlayer = 0
+        } else {
+            savedPlayers.append(newPlayer)
+        }
         playersTableView.reloadData()
     }
-
 }

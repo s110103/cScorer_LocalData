@@ -30,14 +30,27 @@ class SetCourtViewController: UIViewController {
         setCourtView.layer.cornerRadius = 10
         setCourtView.layer.masksToBounds = true
         
+        courtTextField.attributedPlaceholder = NSAttributedString(string: "Court", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
         courtTextField.text = court
     }
     
     // MARK: - Functions
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
     // MARK: - Actions
     @IBAction func closeButtonTapped(_ sender: UIButton) {
-        delegate?.sendCourtData(court: courtTextField.text!)
+        
+        let court = courtTextField.text!
+        
+        if court != "" {
+            delegate?.sendCourtData(court: court)
+        } else {
+            delegate?.sendCourtData(court: "-")
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     

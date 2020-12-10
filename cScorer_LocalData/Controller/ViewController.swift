@@ -97,8 +97,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let row = indexPath.row
                 
                 savedMatches.remove(at: row)
-                
                 matchesTableView.reloadData()
+                
+                if savedMatches.count == 0 {
+                    editingEntries = false
+                    editMatchesButton.tintColor = UIColor.white
+                }
             }
         }
     }

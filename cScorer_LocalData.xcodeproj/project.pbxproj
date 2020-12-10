@@ -20,6 +20,7 @@
 		066F65422572E76C006843D1 /* SetMatchTiebreakPointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066F65412572E76C006843D1 /* SetMatchTiebreakPointsViewController.swift */; };
 		066F65452572E963006843D1 /* SetTiebreakPointsLastSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066F65442572E963006843D1 /* SetTiebreakPointsLastSetViewController.swift */; };
 		066F65492572FCC6006843D1 /* SelectorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066F65482572FCC6006843D1 /* SelectorTableViewCell.swift */; };
+		0679DEA02582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0679DE9F2582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift */; };
 		067FB4FE255EF038001AD911 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067FB4FD255EF038001AD911 /* AppDelegate.swift */; };
 		067FB500255EF038001AD911 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067FB4FF255EF038001AD911 /* SceneDelegate.swift */; };
 		067FB502255EF038001AD911 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067FB501255EF038001AD911 /* ViewController.swift */; };
@@ -57,6 +58,7 @@
 		066F65412572E76C006843D1 /* SetMatchTiebreakPointsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetMatchTiebreakPointsViewController.swift; sourceTree = "<group>"; };
 		066F65442572E963006843D1 /* SetTiebreakPointsLastSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTiebreakPointsLastSetViewController.swift; sourceTree = "<group>"; };
 		066F65482572FCC6006843D1 /* SelectorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorTableViewCell.swift; sourceTree = "<group>"; };
+		0679DE9F2582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		067FB4FA255EF038001AD911 /* cScorer_LocalData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cScorer_LocalData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		067FB4FD255EF038001AD911 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		067FB4FF255EF038001AD911 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,9 +102,42 @@
 			isa = PBXGroup;
 			children = (
 				0648DF16257010C900BC55FB /* TournamentInfoViewController.swift */,
-				0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */,
+				0679DE9D2582C28D00E0D2C9 /* Sub Controllers */,
 			);
 			path = TournamentInfo;
+			sourceTree = "<group>";
+		};
+		0679DE9A2582C24F00E0D2C9 /* Sub Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				066F65352572DDE7006843D1 /* TemplateMatchRuleViewController.swift */,
+				066F65252572D473006843D1 /* SetAmountOfSetsViewController.swift */,
+				066F65282572D484006843D1 /* SetAmountOfGamesViewController.swift */,
+				066F65302572DB3E006843D1 /* SetTrueFalseViewController.swift */,
+				066F65382572E746006843D1 /* SelectAdvantageSetViewController.swift */,
+				066F653B2572E750006843D1 /* SetTiebreakAtViewController.swift */,
+				066F653E2572E763006843D1 /* SetTiebreakPointsViewController.swift */,
+				066F65412572E76C006843D1 /* SetMatchTiebreakPointsViewController.swift */,
+				066F65442572E963006843D1 /* SetTiebreakPointsLastSetViewController.swift */,
+				06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */,
+			);
+			path = "Sub Controllers";
+			sourceTree = "<group>";
+		};
+		0679DE9D2582C28D00E0D2C9 /* Sub Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */,
+			);
+			path = "Sub Controllers";
+			sourceTree = "<group>";
+		};
+		0679DEA62582CA1A00E0D2C9 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				0679DE9F2582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 		067FB4F1255EF038001AD911 = {
@@ -154,6 +189,7 @@
 			children = (
 				067FB501255EF038001AD911 /* ViewController.swift */,
 				067FB521255F16E3001AD911 /* AddMatchViewController.swift */,
+				0679DEA62582CA1A00E0D2C9 /* Objects */,
 				067FB531255F42E9001AD911 /* Setup Match Controller */,
 			);
 			path = Controller;
@@ -206,16 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				06DE1380256EEEE60080EAB0 /* EditMatchRuleViewController.swift */,
-				066F65352572DDE7006843D1 /* TemplateMatchRuleViewController.swift */,
-				066F65252572D473006843D1 /* SetAmountOfSetsViewController.swift */,
-				066F65282572D484006843D1 /* SetAmountOfGamesViewController.swift */,
-				066F65302572DB3E006843D1 /* SetTrueFalseViewController.swift */,
-				066F65382572E746006843D1 /* SelectAdvantageSetViewController.swift */,
-				066F653B2572E750006843D1 /* SetTiebreakAtViewController.swift */,
-				066F653E2572E763006843D1 /* SetTiebreakPointsViewController.swift */,
-				066F65412572E76C006843D1 /* SetMatchTiebreakPointsViewController.swift */,
-				066F65442572E963006843D1 /* SetTiebreakPointsLastSetViewController.swift */,
-				06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */,
+				0679DE9A2582C24F00E0D2C9 /* Sub Controllers */,
 			);
 			path = MatchRule;
 			sourceTree = "<group>";
@@ -367,6 +394,7 @@
 				06D6709A25697C18005CB434 /* SetPlayerNameViewController.swift in Sources */,
 				0648DF17257010C900BC55FB /* TournamentInfoViewController.swift in Sources */,
 				067FB500255EF038001AD911 /* SceneDelegate.swift in Sources */,
+				0679DEA02582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift in Sources */,
 				066F65362572DDE7006843D1 /* TemplateMatchRuleViewController.swift in Sources */,
 				067FB508255EF038001AD911 /* cScorer_LocalData.xcdatamodeld in Sources */,
 				06DE137D256EE97D0080EAB0 /* MatchStatistics.swift in Sources */,

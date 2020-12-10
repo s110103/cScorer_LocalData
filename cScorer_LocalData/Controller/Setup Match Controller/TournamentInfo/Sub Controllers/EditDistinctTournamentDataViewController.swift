@@ -32,6 +32,8 @@ class EditDistinctTournamentDataViewController: UIViewController {
         tournamentDataView.layer.cornerRadius = 10
         tournamentDataView.layer.masksToBounds = true
         
+        tournamentDataTextField.attributedPlaceholder = NSAttributedString(string: selectedItem, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
         tournamentDataLabel.text = selectedItem
         tournamentDataTextField.text = distinctTournamentData
         tournamentDataTextField.placeholder = selectedItem
@@ -45,5 +47,8 @@ class EditDistinctTournamentDataViewController: UIViewController {
     }
     
     // MARK: - Functions
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 
 }

@@ -9,13 +9,15 @@ import UIKit
 import ProgressHUD
 
 protocol AddPlayerViewControlerDelegate {
-    func sendAddPlayerData(newPlayer: Player)
+    func sendAddPlayerData(newPlayer: Player, editPlayer: Bool, indexOfPlayer: Int)
 }
 
 class AddPlayerViewController: UIViewController {
     
     // MARK: - Variables
-    var newPlayer: Player = Player()
+    var editPlayer: Bool = false
+    var indexOfPlayer: Int = 0
+    var currentPlayer: Player = Player()
     var delegate: AddPlayerViewControlerDelegate?
     
     // MARK: - Outlets
@@ -31,6 +33,21 @@ class AddPlayerViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        addPlayerNameTextField.attributedPlaceholder = NSAttributedString(string: "Vorname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        addPlayerSurnameTextField.attributedPlaceholder = NSAttributedString(string: "Nachname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        addPlayerAbbreviationTextField.attributedPlaceholder = NSAttributedString(string: "Kürzel", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        addPlayerOriginTextField.attributedPlaceholder = NSAttributedString(string: "test", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        addPlayerClubTextField.attributedPlaceholder = NSAttributedString(string: "Tennisclub", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        if editPlayer == true {
+            addPlayerNameTextField.text = currentPlayer.firstName
+            addPlayerSurnameTextField.text = currentPlayer.surName
+            addPlayerAbbreviationTextField.text = currentPlayer.abbreviation
+            addPlayerOriginTextField.text = currentPlayer.country
+            addPlayerClubTextField.text = currentPlayer.tennisClub
+            addPlayerGenderSegmentControl.selectedSegmentIndex = currentPlayer.gender
+        }
     }
     
     // MARK: - Actions
@@ -40,14 +57,14 @@ class AddPlayerViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         if addPlayerNameTextField.text != "" || addPlayerSurnameTextField.text != "" {
-            newPlayer.firstName = addPlayerNameTextField.text!
-            newPlayer.surName = addPlayerSurnameTextField.text!
-            newPlayer.abbreviation = addPlayerAbbreviationTextField.text!
-            newPlayer.country = addPlayerOriginTextField.text!
-            newPlayer.tennisClub = addPlayerClubTextField.text!
-            newPlayer.gender = addPlayerGenderSegmentControl.selectedSegmentIndex
+            currentPlayer.firstName = addPlayerNameTextField.text!
+            currentPlayer.surName = addPlayerSurnameTextField.text!
+            currentPlayer.abbreviation = addPlayerAbbreviationTextField.text!
+            currentPlayer.country = addPlayerOriginTextField.text!
+            currentPlayer.tennisClub = addPlayerClubTextField.text!
+            currentPlayer.gender = addPlayerGenderSegmentControl.selectedSegmentIndex
             
-            delegate?.sendAddPlayerData(newPlayer: newPlayer)
+            delegate?.sendAddPlayerData(newPlayer: currentPlayer, editPlayer: editPlayer, indexOfPlayer: indexOfPlayer)
             
             dismiss(animated: true, completion: nil)
         } else {

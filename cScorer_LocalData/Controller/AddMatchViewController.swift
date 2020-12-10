@@ -48,8 +48,11 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         "Benutzerdefiniert"
     ]
     
+    var percentageDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition!
+    
     // MARK: - Outlets
     @IBOutlet weak var matchDataTableView: UITableView!
+    @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -61,6 +64,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         matchDataTableView.dataSource = self
         
         initSubtitles()
+        addGesture()
     }
     
     //MARK: - Actions
@@ -71,8 +75,42 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.popViewController(animated: true)
         delegate?.sendMatch(match: match)
     }
+    @IBAction func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
+        
+        let percent = max(panGesture.translation(in: view).x, 0) / view.frame.width
+        
+        switch panGesture.state {
+        case .began:
+            navigationController?.delegate = self
+            navigationController?.popViewController(animated: true)
+        case .changed:
+            percentageDrivenInteractiveTransition.update(percent)
+        case .ended:
+            let velocity = panGesture.velocity(in: view).x
+            
+            if percent > 0.5 || velocity > 1000 {
+                percentageDrivenInteractiveTransition.finish()
+            } else {
+                percentageDrivenInteractiveTransition.cancel()
+            }
+        case .cancelled, .failed:
+            percentageDrivenInteractiveTransition.cancel()
+        default:
+            break
+        }
+        
+    }
     
     //MARK: - Functions
+    func addGesture() {
+        guard (navigationController?.viewControllers.count)! > 1 else {
+            return
+        }
+        
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(AddMatchViewController.handlePanGesture(_:)))
+        self.view.addGestureRecognizer(panGestureRecognizer)
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 35
     }
@@ -425,5 +463,25 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         
         initSubtitles()
         matchDataTableView.reloadData()
+    }
+}
+
+extension AddMatchViewController: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlideAnimatedTransitioning()
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        navigationController.delegate = nil
+        
+        if panGestureRecognizer.state == .began {
+            percentageDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
+            percentageDrivenInteractiveTransition.completionCurve = .easeOut
+        } else {
+            percentageDrivenInteractiveTransition = nil
+        }
+        
+        return percentageDrivenInteractiveTransition
     }
 }

@@ -255,6 +255,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="v8C-7i-8aJ"/>
                         <color key="backgroundColor" cyan="0.84607630970000003" magenta="0.30719628599999999" yellow="0.38102112980000002" black="0.85885543269999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="IfT-BC-PCm" firstAttribute="leading" secondItem="v8C-7i-8aJ" secondAttribute="leading" constant="20" id="2tb-AJ-dHf"/>
                             <constraint firstAttribute="bottom" secondItem="caV-pP-iVv" secondAttribute="bottom" id="6J8-dc-2fV"/>
@@ -265,12 +266,16 @@
                             <constraint firstItem="IfT-BC-PCm" firstAttribute="top" secondItem="v8C-7i-8aJ" secondAttribute="top" constant="5" id="mqf-jb-DQe"/>
                             <constraint firstItem="v8C-7i-8aJ" firstAttribute="trailing" secondItem="IfT-BC-PCm" secondAttribute="trailing" constant="20" id="xuY-ap-kY0"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="LNb-2b-SHe" appends="YES" id="hek-uA-dbq"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Neues Match" id="k2p-eE-sY2">
                         <barButtonItem key="backBarButtonItem" title="Zurück" id="aKI-x8-aJn"/>
                     </navigationItem>
                     <connections>
                         <outlet property="matchDataTableView" destination="caV-pP-iVv" id="E7N-PP-nFM"/>
+                        <outlet property="panGestureRecognizer" destination="LNb-2b-SHe" id="e1B-vg-0kf"/>
                         <segue destination="H8d-up-BjB" kind="presentation" identifier="selectMatchTypeSegue" id="gnk-sd-lnO"/>
                         <segue destination="m8b-AR-4ZA" kind="presentation" identifier="setPlayerNameSegue" id="I0Z-9K-ezH"/>
                         <segue destination="19J-Ba-lfD" kind="presentation" identifier="setCourtSegue" id="j8Y-hg-OEA"/>
@@ -280,6 +285,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FQc-WV-ygz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="LNb-2b-SHe">
+                    <connections>
+                        <action selector="handlePanGesture:" destination="4vP-TD-oqp" id="3wP-0n-xw7"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1989.8550724637682" y="87.723214285714278"/>
         </scene>
@@ -988,6 +998,7 @@
                                                         </constraints>
                                                     </stackView>
                                                 </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="rnn-rj-Lic" firstAttribute="leading" secondItem="K3x-Ni-Dmh" secondAttribute="leading" id="1XP-iK-vPo"/>
                                                     <constraint firstItem="i2g-8O-EIs" firstAttribute="leading" secondItem="K3x-Ni-Dmh" secondAttribute="leading" id="GVJ-XX-cm2"/>
@@ -1004,7 +1015,7 @@
                                                 </constraints>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.00041263346790000003" green="0.1098271087" blue="0.1058841422" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.00048826323470000001" green="0.1176071689" blue="0.11764947319999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstItem="K3x-Ni-Dmh" firstAttribute="top" secondItem="Np4-wF-fuc" secondAttribute="top" constant="24" id="Msi-x0-xHw"/>
                                             <constraint firstAttribute="trailing" secondItem="K3x-Ni-Dmh" secondAttribute="trailing" constant="8" id="TPF-yp-pgZ"/>
@@ -1014,7 +1025,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.00048875773790000004" green="0.1215891913" blue="0.1176489964" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Np4-wF-fuc" firstAttribute="top" secondItem="seO-p6-g0v" secondAttribute="top" id="6o5-AE-eU6"/>
                                     <constraint firstItem="Np4-wF-fuc" firstAttribute="leading" secondItem="seO-p6-g0v" secondAttribute="leading" id="FsF-LX-lw2"/>
@@ -1048,7 +1059,7 @@
                         <outlet property="addPlayerClubTextField" destination="Jp2-NN-JMA" id="rlk-QF-rQ9"/>
                         <outlet property="addPlayerGenderSegmentControl" destination="FZj-95-fJZ" id="Abd-ka-zoG"/>
                         <outlet property="addPlayerNameTextField" destination="QTS-F1-abV" id="FZI-3w-d5d"/>
-                        <outlet property="addPlayerOriginTextField" destination="Jp2-NN-JMA" id="Ihl-rk-3aU"/>
+                        <outlet property="addPlayerOriginTextField" destination="5FG-7D-v0d" id="gVJ-w8-sc2"/>
                         <outlet property="addPlayerSurnameTextField" destination="WKJ-Xu-txx" id="SYi-e8-tXT"/>
                     </connections>
                 </viewController>

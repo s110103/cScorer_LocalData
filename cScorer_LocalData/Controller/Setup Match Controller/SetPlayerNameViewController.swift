@@ -18,7 +18,7 @@ class SetPlayerNameViewController: UIViewController {
     var selectedPlayerName: String = ""
     var selectedPlayerSurname: String = ""
     var delegate: SetPlayerNameViewControllerDelegate?
-
+    
     // MARK: - Outlets
     @IBOutlet weak var setPlayerNameView: UIView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -34,12 +34,20 @@ class SetPlayerNameViewController: UIViewController {
         setPlayerNameView.layer.cornerRadius = 10
         setPlayerNameView.layer.masksToBounds = true
         
+        nameTextField.attributedPlaceholder = NSAttributedString(string: "Vorname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        surnameTextField.attributedPlaceholder = NSAttributedString(string: "Nachname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
         setPlayerHeadingLabel.text = "Spieler \(selectedPlayer)"
         nameTextField.text = selectedPlayerName
         surnameTextField.text = selectedPlayerSurname
+        
+        view.endEditing(true)
     }
     
     // MARK: - Functions
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 
     // MARK: - Actions
     @IBAction func closeButtonTapped(_ sender: UIButton) {
