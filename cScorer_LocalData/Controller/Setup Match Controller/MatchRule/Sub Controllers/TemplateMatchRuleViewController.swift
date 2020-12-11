@@ -40,7 +40,7 @@ class TemplateMatchRuleViewController: UIViewController, UITableViewDelegate, UI
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         templateView.layer.cornerRadius = 10

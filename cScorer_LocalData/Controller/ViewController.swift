@@ -7,10 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate, ChairUmpireOnCourtViewControllerDelegate {
     
     // MARK: - Variables
     var savedMatches: [Match] = []
+    var selectedIndex: Int = 0
+    var selectedMatch: Match = Match()
     
     var editingEntries: Bool = false
 
@@ -84,6 +86,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        selectedIndex = indexPath.row
+        selectedMatch = savedMatches[selectedIndex]
+        
+        if selectedMatch.matchStatistics.chairUmpireOnCourt == false {
+            performSegue(withIdentifier: "chairUmpireOnCourtSegue", sender: self)
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -113,6 +122,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case "addMatchSegue":
             let destinationVC = segue.destination as! AddMatchViewController
             destinationVC.delegate = self
+        case "chairUmpireOnCourtSegue":
+            let destinationVC = segue.destination as! ChairUmpireOnCourtViewController
+            
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
         default:
             break
         }
@@ -121,6 +136,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func sendMatch(match: Match) {
         savedMatches.append(match)
         matchesTableView.reloadData()
+    }
+    
+    func sendSelectedMatch(currentMatch: Match) {
     }
     
 }

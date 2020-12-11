@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0630520A2583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */; };
 		06339B412577E79C00CA5AC0 /* AddPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */; };
 		0648DF17257010C900BC55FB /* TournamentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0648DF16257010C900BC55FB /* TournamentInfoViewController.swift */; };
 		0648DF1D2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChairUmpireOnCourtViewController.swift; sourceTree = "<group>"; };
 		06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerViewController.swift; sourceTree = "<group>"; };
 		0648DF16257010C900BC55FB /* TournamentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentInfoViewController.swift; sourceTree = "<group>"; };
 		0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDistinctTournamentDataViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		063052082583E11E00B9F5D2 /* Match */ = {
+			isa = PBXGroup;
+			children = (
+				063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */,
+			);
+			path = Match;
+			sourceTree = "<group>";
+		};
 		0648DF19257010D000BC55FB /* TournamentInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +199,7 @@
 			children = (
 				067FB501255EF038001AD911 /* ViewController.swift */,
 				067FB521255F16E3001AD911 /* AddMatchViewController.swift */,
+				063052082583E11E00B9F5D2 /* Match */,
 				0679DEA62582CA1A00E0D2C9 /* Objects */,
 				067FB531255F42E9001AD911 /* Setup Match Controller */,
 			);
@@ -372,6 +383,7 @@
 				06A86A272574287800ED0A80 /* SelectPlayerDetailsViewController.swift in Sources */,
 				06339B412577E79C00CA5AC0 /* AddPlayerViewController.swift in Sources */,
 				067FB51D255F06A9001AD911 /* SinglesTableViewCell.swift in Sources */,
+				0630520A2583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift in Sources */,
 				067FB502255EF038001AD911 /* ViewController.swift in Sources */,
 				066F65312572DB3E006843D1 /* SetTrueFalseViewController.swift in Sources */,
 				067FB522255F16E3001AD911 /* AddMatchViewController.swift in Sources */,

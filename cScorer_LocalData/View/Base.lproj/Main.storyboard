@@ -174,6 +174,7 @@
                     <connections>
                         <outlet property="editMatchesButton" destination="CZh-3c-Jkv" id="fnd-31-BRh"/>
                         <outlet property="matchesTableView" destination="Pl5-fl-POt" id="hBP-a3-ZTG"/>
+                        <segue destination="iVb-UC-Alr" kind="show" identifier="chairUmpireOnCourtSegue" id="ZJa-Pi-ciA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -292,6 +293,100 @@
                 </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1989.8550724637682" y="87.723214285714278"/>
+        </scene>
+        <!--Chair Umpire On Court View Controller-->
+        <scene sceneID="erC-Te-ZDH">
+            <objects>
+                <viewController id="iVb-UC-Alr" customClass="ChairUmpireOnCourtViewController" customModule="cScorer_LocalData" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Abx-rC-bDh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zls-aO-3Hs">
+                                <rect key="frame" x="20" y="246" width="374" height="616"/>
+                                <color key="backgroundColor" red="0.0060246014040000002" green="0.27461627129999999" blue="0.26274809240000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                <state key="normal" title="Chair Umpire on Court">
+                                    <color key="titleColor" red="0.92157477139999999" green="0.92155748609999999" blue="0.92156922819999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="chairUmpireOnCourtButtonTapped:" destination="iVb-UC-Alr" eventType="touchUpInside" id="xzh-T1-zJb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qw2-bq-4e1">
+                                <rect key="frame" x="20" y="52" width="14" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="14" id="7fB-ax-PcO"/>
+                                    <constraint firstAttribute="height" constant="36" id="bSG-u9-RSA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="4Yq-RL-AZM"/>
+                                    <action selector="closeButtonTapped:" destination="iVb-UC-Alr" eventType="touchUpInside" id="gmS-gF-BvE"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6m-2h-Zo5">
+                                <rect key="frame" x="20" y="96" width="374" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="u52-cU-zQ3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.92157477139999999" green="0.92155748609999999" blue="0.92156922819999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc4-x7-KDj">
+                                <rect key="frame" x="20" y="186" width="374" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="w70-og-JYB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.92157477139999999" green="0.92155748609999999" blue="0.92156922819999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUC-Fv-eTo">
+                                <rect key="frame" x="197" y="156" width="20" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="Pxd-RI-RIZ"/>
+                                    <constraint firstAttribute="width" constant="20" id="mkH-lv-aft"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.92157477139999999" green="0.92155748609999999" blue="0.92156922819999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="fwD-Rf-4UJ"/>
+                        <color key="backgroundColor" red="0.012218423189999999" green="0.11362587659999999" blue="0.1176497564" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="Qw2-bq-4e1" firstAttribute="top" secondItem="fwD-Rf-4UJ" secondAttribute="top" constant="8" id="0Fl-uN-Tc7"/>
+                            <constraint firstItem="zls-aO-3Hs" firstAttribute="top" secondItem="zc4-x7-KDj" secondAttribute="bottom" constant="8" id="9vh-Zn-YG5"/>
+                            <constraint firstItem="zls-aO-3Hs" firstAttribute="bottom" secondItem="fwD-Rf-4UJ" secondAttribute="bottom" id="GMq-4R-d1H"/>
+                            <constraint firstItem="fwD-Rf-4UJ" firstAttribute="trailing" secondItem="M6m-2h-Zo5" secondAttribute="trailing" constant="20" id="YNn-bn-F2a"/>
+                            <constraint firstItem="mUC-Fv-eTo" firstAttribute="centerX" secondItem="Abx-rC-bDh" secondAttribute="centerX" id="azp-Uf-QGm"/>
+                            <constraint firstItem="fwD-Rf-4UJ" firstAttribute="trailing" secondItem="zc4-x7-KDj" secondAttribute="trailing" constant="20" id="biJ-iL-pzs"/>
+                            <constraint firstItem="fwD-Rf-4UJ" firstAttribute="trailing" secondItem="zls-aO-3Hs" secondAttribute="trailing" constant="20" id="e8f-Jc-0Z0"/>
+                            <constraint firstItem="zls-aO-3Hs" firstAttribute="leading" secondItem="fwD-Rf-4UJ" secondAttribute="leading" constant="20" id="eFN-iw-kD9"/>
+                            <constraint firstItem="M6m-2h-Zo5" firstAttribute="leading" secondItem="fwD-Rf-4UJ" secondAttribute="leading" constant="20" id="lFx-6G-NiB"/>
+                            <constraint firstItem="zc4-x7-KDj" firstAttribute="top" secondItem="mUC-Fv-eTo" secondAttribute="bottom" constant="8" id="lJD-8y-N4U"/>
+                            <constraint firstItem="M6m-2h-Zo5" firstAttribute="top" secondItem="Qw2-bq-4e1" secondAttribute="bottom" constant="8" id="r1E-yc-WeX"/>
+                            <constraint firstItem="zc4-x7-KDj" firstAttribute="leading" secondItem="fwD-Rf-4UJ" secondAttribute="leading" constant="20" id="uhW-30-tcm"/>
+                            <constraint firstItem="mUC-Fv-eTo" firstAttribute="top" secondItem="M6m-2h-Zo5" secondAttribute="bottom" constant="8" id="wxc-EE-q8R"/>
+                            <constraint firstItem="Qw2-bq-4e1" firstAttribute="leading" secondItem="fwD-Rf-4UJ" secondAttribute="leading" constant="20" id="xRh-ei-aaC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ELL-J5-EtW"/>
+                    <connections>
+                        <outlet property="chairUmpireOnCourtButton" destination="zls-aO-3Hs" id="Bxg-99-aqt"/>
+                        <outlet property="firstTeamLabel" destination="M6m-2h-Zo5" id="t7I-tI-xff"/>
+                        <outlet property="secondTeamLabel" destination="zc4-x7-KDj" id="1Bs-qc-aYY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wMf-KT-w9y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="808.92857142857144"/>
         </scene>
         <!--Set Court View Controller-->
         <scene sceneID="Ee6-g9-9JE">
