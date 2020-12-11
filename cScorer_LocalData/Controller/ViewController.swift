@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import ProgressHUD
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate, ChairUmpireOnCourtViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate, ChairUmpireOnCourtViewControllerDelegate, PlayersOnCourtViewControllerDelegate {
     
     // MARK: - Variables
     var savedMatches: [Match] = []
@@ -15,6 +16,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var selectedMatch: Match = Match()
     
     var editingEntries: Bool = false
+    var editDistinctMatch: Bool = false
 
     // MARK: - Outelts
     @IBOutlet weak var matchesTableView: UITableView!
@@ -92,6 +94,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if selectedMatch.matchStatistics.chairUmpireOnCourt == false {
             performSegue(withIdentifier: "chairUmpireOnCourtSegue", sender: self)
+        } else {
+            if selectedMatch.matchStatistics.playersOnCourt == false {
+                performSegue(withIdentifier: "playersOnCourtSegueAnimated", sender: self)
+            }
         }
     }
     
@@ -99,21 +105,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        if editingEntries == true {
-            if editingStyle == .delete {
-                let row = indexPath.row
+        let buttonDelete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, IndexPath) in
+            if self.editingEntries == true {
+                let i = indexPath.row
+                    
+                self.savedMatches.remove(at: i)
+                self.matchesTableView.reloadData()
                 
-                savedMatches.remove(at: row)
-                matchesTableView.reloadData()
-                
-                if savedMatches.count == 0 {
-                    editingEntries = false
-                    editMatchesButton.tintColor = UIColor.white
+                if self.savedMatches.count == 0 {
+                    self.editingEntries = false
+                    self.editMatchesButton.tintColor = UIColor.white
                 }
+            } else {
+                ProgressHUD.show("Aktiviere Bearbeitungsmodus", icon: .failed, interaction: true)
             }
         }
+        
+        let buttonEdit = UITableViewRowAction(style: .default, title: "Edit") { (action, IndexPath) in
+            self.editDistinctMatch = true
+            self.selectedIndex = indexPath.row
+            self.selectedMatch = self.savedMatches[self.selectedIndex]
+            self.performSegue(withIdentifier: "addMatchSegue", sender: self)
+        }
+        
+        buttonEdit.backgroundColor = UIColor.orange
+        
+        return [buttonDelete, buttonEdit]
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,10 +140,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         switch segue.identifier {
         case "addMatchSegue":
             let destinationVC = segue.destination as! AddMatchViewController
+            
+            if editDistinctMatch == true {
+                destinationVC.match = selectedMatch
+                destinationVC.editingDistinctMatch = true
+                destinationVC.indexOfMatch = selectedIndex
+            }
+            
             destinationVC.delegate = self
         case "chairUmpireOnCourtSegue":
             let destinationVC = segue.destination as! ChairUmpireOnCourtViewController
             
+            destinationVC.selectedIndex = selectedIndex
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
+        case "playersOnCourtSegue":
+            let destinationVC = segue.destination as! PlayersOnCourtViewController
+            
+            destinationVC.selectedIndex = selectedIndex
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
+        case "playersOnCourtSegueAnimated":
+            let destinationVC = segue.destination as! PlayersOnCourtViewController
+            
+            destinationVC.selectedIndex = selectedIndex
             destinationVC.currentMatch = selectedMatch
             
             destinationVC.delegate = self
@@ -133,12 +174,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func sendMatch(match: Match) {
-        savedMatches.append(match)
-        matchesTableView.reloadData()
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
+        if editingDistinctMatch == true {
+            savedMatches.remove(at: indexOfMatch)
+            savedMatches.insert(match, at: indexOfMatch)
+            editDistinctMatch = false
+            matchesTableView.reloadData()
+        } else {
+            savedMatches.append(match)
+            editDistinctMatch = false
+            matchesTableView.reloadData()
+        }
     }
     
-    func sendSelectedMatch(currentMatch: Match) {
+    func sendSelectedMatchChairUmpire(currentMatch: Match, selectedIndex: Int) {
+        selectedMatch = currentMatch
+        self.selectedIndex = selectedIndex
+        savedMatches.remove(at: selectedIndex)
+        savedMatches.insert(currentMatch, at: selectedIndex)
+        
+        matchesTableView.reloadData()
+        
+        if selectedMatch.matchStatistics.playersOnCourt == false {
+            performSegue(withIdentifier: "playersOnCourtSegue", sender: self)
+        } else {
+            
+        }
+    }
+    
+    func sendSelectedMatchPlayers(currentMatch: Match, selectedIndex: Int) {
+        selectedMatch = currentMatch
+        self.selectedIndex = selectedIndex
+        savedMatches.remove(at: selectedIndex)
+        savedMatches.insert(currentMatch, at: selectedIndex)
+        matchesTableView.reloadData()
     }
     
 }

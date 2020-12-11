@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0630520A2583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */; };
+		0630523025840C9C00B9F5D2 /* PlayersOnCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */; };
 		06339B412577E79C00CA5AC0 /* AddPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */; };
 		0648DF17257010C900BC55FB /* TournamentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0648DF16257010C900BC55FB /* TournamentInfoViewController.swift */; };
 		0648DF1D2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChairUmpireOnCourtViewController.swift; sourceTree = "<group>"; };
+		0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersOnCourtViewController.swift; sourceTree = "<group>"; };
 		06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerViewController.swift; sourceTree = "<group>"; };
 		0648DF16257010C900BC55FB /* TournamentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentInfoViewController.swift; sourceTree = "<group>"; };
 		0648DF1C2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDistinctTournamentDataViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */,
+				0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				06D6709A25697C18005CB434 /* SetPlayerNameViewController.swift in Sources */,
 				0648DF17257010C900BC55FB /* TournamentInfoViewController.swift in Sources */,
 				067FB500255EF038001AD911 /* SceneDelegate.swift in Sources */,
+				0630523025840C9C00B9F5D2 /* PlayersOnCourtViewController.swift in Sources */,
 				0679DEA02582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift in Sources */,
 				066F65362572DDE7006843D1 /* TemplateMatchRuleViewController.swift in Sources */,
 				067FB508255EF038001AD911 /* cScorer_LocalData.xcdatamodeld in Sources */,

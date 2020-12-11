@@ -1,5 +1,5 @@
 //
-//  ChairUmpireOnCourtViewController.swift
+//  PlayersOnCourtViewController.swift
 //  cScorer_LocalData
 //
 //  Created by Lukas Schauer on 11.12.20.
@@ -7,22 +7,22 @@
 
 import UIKit
 
-protocol ChairUmpireOnCourtViewControllerDelegate {
-    func sendSelectedMatchChairUmpire(currentMatch: Match, selectedIndex: Int)
+protocol PlayersOnCourtViewControllerDelegate {
+    func sendSelectedMatchPlayers(currentMatch: Match, selectedIndex: Int)
 }
 
-class ChairUmpireOnCourtViewController: UIViewController {
+class PlayersOnCourtViewController: UIViewController {
     
     // MARK: - Variables
     var selectedIndex: Int = 0
     var currentMatch: Match = Match()
-    var delegate: ChairUmpireOnCourtViewControllerDelegate?
+    var delegate: PlayersOnCourtViewControllerDelegate?
     var percentageDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition!
     
     // MARK: - Outlets
     @IBOutlet weak var firstTeamLabel: UILabel!
     @IBOutlet weak var secondTeamLabel: UILabel!
-    @IBOutlet weak var chairUmpireOnCourtButton: UIButton!
+    @IBOutlet weak var playersOnCourtButton: UIButton!
     @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
     
     // MARK: - Lifecycle
@@ -31,8 +31,8 @@ class ChairUmpireOnCourtViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        chairUmpireOnCourtButton.layer.cornerRadius = 10
-        chairUmpireOnCourtButton.layer.masksToBounds = true
+        playersOnCourtButton.layer.cornerRadius = 10
+        playersOnCourtButton.layer.masksToBounds = true
         
         initLabels()
         addGesture()
@@ -42,11 +42,11 @@ class ChairUmpireOnCourtViewController: UIViewController {
     @IBAction func closeButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
-    @IBAction func chairUmpireOnCourtButtonTapped(_ sender: UIButton) {
-        currentMatch.matchStatistics.chairUmpireOnCourt = true
-        currentMatch.matchStatistics.chairUmpireOnCourtTimeStamp = NSDate()
-        navigationController?.popViewController(animated: false)
-        delegate?.sendSelectedMatchChairUmpire(currentMatch: currentMatch, selectedIndex: selectedIndex)
+    @IBAction func playersOnCourtButtonTapped(_ sender: UIButton) {
+        currentMatch.matchStatistics.playersOnCourt = true
+        currentMatch.matchStatistics.playersOnCourtTimeStamp = NSDate()
+        navigationController?.popViewController(animated: true)
+        delegate?.sendSelectedMatchPlayers(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     
     @IBAction func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
@@ -95,7 +95,7 @@ class ChairUmpireOnCourtViewController: UIViewController {
 
 }
 
-extension ChairUmpireOnCourtViewController: UINavigationControllerDelegate {
+extension PlayersOnCourtViewController: UINavigationControllerDelegate {
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SlideAnimatedTransitioning()

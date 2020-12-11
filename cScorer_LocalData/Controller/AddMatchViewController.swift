@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddMatchViewControllerDelegate {
-    func sendMatch(match: Match)
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int)
 }
 
 class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate, EditMatchRuleViewControllerDelegate, TournamentInfoViewControllerDelegate, SelectPlayerDetailsViewControllerDelegate {
@@ -20,6 +20,8 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     var selectedPlayerSurname: String = ""
         
     var match: Match = Match()
+    var editingDistinctMatch: Bool = false
+    var indexOfMatch: Int = 0
     
     let sectionHeaders: [String] =
     [
@@ -52,6 +54,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Outlets
     @IBOutlet weak var matchDataTableView: UITableView!
+    @IBOutlet weak var addMatchButton: UIButton!
     @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
     
     // MARK: - Lifecycle
@@ -65,6 +68,10 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         
         initSubtitles()
         addGesture()
+        
+        if editingDistinctMatch == true {
+            addMatchButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        }
     }
     
     //MARK: - Actions
@@ -73,7 +80,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @IBAction func addMatchButtonTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
-        delegate?.sendMatch(match: match)
+        delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
     }
     @IBAction func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
         
