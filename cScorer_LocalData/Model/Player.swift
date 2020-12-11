@@ -25,11 +25,16 @@ class Player {
         tennisClub = _tennisClub
         gender = _gender
         
-        storingKey = "randomKey"
+        storingKey = generateKey(length: 10)
     }
     
     init() {
-        storingKey = "randomKey"
+        storingKey = generateKey(length: 10)
+    }
+    
+    func generateKey(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
 }
