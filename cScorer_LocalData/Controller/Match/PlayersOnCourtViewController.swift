@@ -45,7 +45,7 @@ class PlayersOnCourtViewController: UIViewController {
     @IBAction func playersOnCourtButtonTapped(_ sender: UIButton) {
         currentMatch.matchStatistics.playersOnCourt = true
         currentMatch.matchStatistics.playersOnCourtTimeStamp = NSDate()
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
         delegate?.sendSelectedMatchPlayers(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     

@@ -25,6 +25,7 @@ class MatchStatistics {
     var madeChoice: Int = 0
     var isServer: Int = 0
     var onLeftSide: Int = 0
+    var matchInitiated: Bool = false
     
     var gmaesFirstSetFirstPlayer: Int = 0
     var tiebreakFirstSetFirstPlayer: Int = 0
@@ -56,7 +57,7 @@ class MatchStatistics {
     var currentGame: String = "0:0"
     var currentSets: String = "0:0"
     
-    init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: Int, _onLeftSide: Int) {
+    init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: Int, _onLeftSide: Int, _matchInitiated: Bool) {
         
         chairUmpireOnCourtTimeStamp = _chairUmpireOnCourtTimeStamp
         playersOnCourtTimeStamp = _playersOnCourtTimeStamp
@@ -74,6 +75,7 @@ class MatchStatistics {
         madeChoice = _madeChoice
         isServer = _isServer
         onLeftSide = _onLeftSide
+        matchInitiated = _matchInitiated
     }
     
     init() {

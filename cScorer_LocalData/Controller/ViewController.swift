@@ -8,7 +8,7 @@
 import UIKit
 import ProgressHUD
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate, ChairUmpireOnCourtViewControllerDelegate, PlayersOnCourtViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate, ChairUmpireOnCourtViewControllerDelegate, PlayersOnCourtViewControllerDelegate, StartMatchViewControllerDelegate {
     
     // MARK: - Variables
     var savedMatches: [Match] = []
@@ -97,6 +97,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             if selectedMatch.matchStatistics.playersOnCourt == false {
                 performSegue(withIdentifier: "playersOnCourtSegueAnimated", sender: self)
+            } else {
+                if selectedMatch.matchStatistics.matchInitiated == false {
+                    performSegue(withIdentifier: "startMatchSegueAnimated", sender: self)
+                }
             }
         }
     }
@@ -169,6 +173,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             destinationVC.currentMatch = selectedMatch
             
             destinationVC.delegate = self
+        case "startMatchSegue":
+            let destinationVC = segue.destination as! StartMatchViewController
+            
+            destinationVC.selectedIndex = selectedIndex
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
+        case "startMatchSegueAnimated":
+            let destinationVC = segue.destination as! StartMatchViewController
+            
+            destinationVC.selectedIndex = selectedIndex
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
         default:
             break
         }
@@ -198,11 +216,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if selectedMatch.matchStatistics.playersOnCourt == false {
             performSegue(withIdentifier: "playersOnCourtSegue", sender: self)
         } else {
-            
+            if selectedMatch.matchStatistics.matchInitiated == false {
+                performSegue(withIdentifier: "startMatchSegue", sender: self)
+            } else {
+                
+            }
         }
     }
     
     func sendSelectedMatchPlayers(currentMatch: Match, selectedIndex: Int) {
+        selectedMatch = currentMatch
+        self.selectedIndex = selectedIndex
+        savedMatches.remove(at: selectedIndex)
+        savedMatches.insert(currentMatch, at: selectedIndex)
+        matchesTableView.reloadData()
+        
+        if selectedMatch.matchStatistics.matchInitiated == false {
+            performSegue(withIdentifier: "startMatchSegue", sender: self)
+        } else {
+            
+        }
+    }
+    
+    func sendStartMatchData(currentMatch: Match, selectedIndex: Int) {
         selectedMatch = currentMatch
         self.selectedIndex = selectedIndex
         savedMatches.remove(at: selectedIndex)

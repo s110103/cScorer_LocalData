@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0620B78C25853B59006AA479 /* StartMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0620B78B25853B59006AA479 /* StartMatchViewController.swift */; };
 		0630520A2583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */; };
 		0630523025840C9C00B9F5D2 /* PlayersOnCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */; };
 		06339B412577E79C00CA5AC0 /* AddPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0620B78B25853B59006AA479 /* StartMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMatchViewController.swift; sourceTree = "<group>"; };
 		063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChairUmpireOnCourtViewController.swift; sourceTree = "<group>"; };
 		0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersOnCourtViewController.swift; sourceTree = "<group>"; };
 		06339B402577E79C00CA5AC0 /* AddPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */,
 				0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */,
+				0620B78B25853B59006AA479 /* StartMatchViewController.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06A86A272574287800ED0A80 /* SelectPlayerDetailsViewController.swift in Sources */,
+				0620B78C25853B59006AA479 /* StartMatchViewController.swift in Sources */,
 				06339B412577E79C00CA5AC0 /* AddPlayerViewController.swift in Sources */,
 				067FB51D255F06A9001AD911 /* SinglesTableViewCell.swift in Sources */,
 				0630520A2583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift in Sources */,
