@@ -565,6 +565,7 @@
                                 <connections>
                                     <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="qNh-Pm-WKG"/>
                                     <action selector="closeButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="4bH-nb-FxX"/>
+                                    <action selector="closeButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="wvo-Rn-0ri"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UPe-8K-0Fl">
@@ -581,6 +582,7 @@
                                 <connections>
                                     <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="5ig-xs-Rst"/>
                                     <action selector="closeButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="dwH-b9-AoH"/>
+                                    <action selector="editMatchButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="blz-iw-DT5"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Si-XM-f1e" userLabel="secondTeamFirstTop">
@@ -679,7 +681,7 @@
                                     <constraint firstAttribute="height" constant="46" id="cuY-uI-vDt"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4Z-iS-2SQ" userLabel="secondTeamFirstBottom">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4Z-iS-2SQ" userLabel="secondTeamSecondBottom">
                                 <rect key="frame" x="211" y="150" width="183" height="46"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.10000000149011612" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fognini F." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="oCI-3i-sdV">
@@ -699,7 +701,7 @@
                                     <constraint firstItem="oCI-3i-sdV" firstAttribute="leading" secondItem="U4Z-iS-2SQ" secondAttribute="leading" constant="8" id="rw5-DJ-Ayv"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bc9-md-m6h" userLabel="firstTeamFirstBottom">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bc9-md-m6h" userLabel="firstTeamSecondBottom">
                                 <rect key="frame" x="20" y="150" width="183" height="46"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.10000000149011612" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kachanov K." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="k9Z-Pm-9ei">
@@ -835,6 +837,9 @@
                                 <state key="normal" title="Start">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="startButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="8ff-pM-siR"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pyv-5d-9ca">
                                 <rect key="frame" x="20" y="744" width="374" height="55"/>
@@ -846,6 +851,9 @@
                                 <state key="normal" title="Warmup">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="warmupButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="CH3-gK-AQo"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmk-xw-fRa">
                                 <rect key="frame" x="68" y="700" width="278" height="36"/>
@@ -857,6 +865,9 @@
                                 <state key="normal" title="Neustart">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="restartButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="UX0-cM-Onu"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cy-JA-2Cd">
                                 <rect key="frame" x="20" y="528" width="374" height="164"/>
@@ -867,6 +878,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="goX-0k-TmN"/>
                         <color key="backgroundColor" red="0.00048875773790000004" green="0.1215891913" blue="0.1176489964" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="X9b-c0-Uy3" firstAttribute="width" secondItem="9Q7-lD-zQH" secondAttribute="width" id="0rZ-Th-p55"/>
                             <constraint firstItem="9hw-OQ-6he" firstAttribute="top" secondItem="goX-0k-TmN" secondAttribute="top" constant="8" id="1WT-0p-NHf"/>
@@ -940,10 +952,44 @@
                             <constraint firstItem="bc9-md-m6h" firstAttribute="top" secondItem="CFW-xS-bQG" secondAttribute="bottom" constant="8" id="ybd-O8-4Se"/>
                             <constraint firstItem="9cy-JA-2Cd" firstAttribute="top" secondItem="nNh-RN-NRs" secondAttribute="bottom" constant="8" id="zJY-m9-xjf"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Elb-Kd-1Ag" appends="YES" id="Gza-D9-vis"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="8Ub-D4-Oxb"/>
+                    <connections>
+                        <outlet property="choiceMakerTextField" destination="nNh-RN-NRs" id="xbM-lf-DQe"/>
+                        <outlet property="firstTeamFirstBottomLabel" destination="Gov-M0-BoU" id="2Ch-Am-Lot"/>
+                        <outlet property="firstTeamFirstBottomView" destination="Y6G-Du-P3Y" id="bQH-iK-lBy"/>
+                        <outlet property="firstTeamFirstTargetView" destination="9Q7-lD-zQH" id="mMr-g1-v5p"/>
+                        <outlet property="firstTeamFirstTopLabel" destination="OZk-9X-aeX" id="R8c-A2-lPH"/>
+                        <outlet property="firstTeamFirstTopView" destination="CFW-xS-bQG" id="8R6-Gm-4oO"/>
+                        <outlet property="firstTeamSecondBottomLabel" destination="k9Z-Pm-9ei" id="xlW-JR-cJL"/>
+                        <outlet property="firstTeamSecondBottomView" destination="bc9-md-m6h" id="evf-uX-xh9"/>
+                        <outlet property="firstTeamSecondTargetView" destination="tau-O1-Fm5" id="2P2-1U-T2J"/>
+                        <outlet property="firstTeamSecondTopLabel" destination="D4X-sH-FQc" id="30e-Q6-yoE"/>
+                        <outlet property="firstTeamSecondTopView" destination="erp-MG-ZIf" id="F74-uP-mbw"/>
+                        <outlet property="panGestureRecognizer" destination="Elb-Kd-1Ag" id="sCp-GI-rRf"/>
+                        <outlet property="restartButton" destination="pmk-xw-fRa" id="V7g-V2-q6Y"/>
+                        <outlet property="secondTeamFirstBottomLabel" destination="SSz-kE-TEF" id="gVV-tL-q1W"/>
+                        <outlet property="secondTeamFirstBottomView" destination="eWn-4K-aBq" id="iEK-96-vOw"/>
+                        <outlet property="secondTeamFirstTargetView" destination="X9b-c0-Uy3" id="qj3-LZ-6UY"/>
+                        <outlet property="secondTeamFirstTopLabel" destination="LOq-q6-MPt" id="Tbm-y8-l9f"/>
+                        <outlet property="secondTeamFirstTopView" destination="2Si-XM-f1e" id="Jc7-fz-2ks"/>
+                        <outlet property="secondTeamSecondBottomLabel" destination="oCI-3i-sdV" id="lLb-3j-rw3"/>
+                        <outlet property="secondTeamSecondBottomView" destination="U4Z-iS-2SQ" id="npv-dy-glV"/>
+                        <outlet property="secondTeamSecondTargetView" destination="mAY-qy-IL4" id="eSH-kp-I0F"/>
+                        <outlet property="secondTeamSecondTopLabel" destination="ipX-8x-o6E" id="xJE-wL-t1c"/>
+                        <outlet property="secondTeamSecondTopView" destination="jvf-0f-7Ez" id="Xba-39-FzC"/>
+                        <outlet property="serverView" destination="IWw-Mb-PYp" id="1ZQ-wV-jf4"/>
+                        <outlet property="startMatchButton" destination="d5d-Ds-Fh3" id="GwN-p2-vxh"/>
+                        <outlet property="timerLabel" destination="9cy-JA-2Cd" id="8E9-QN-alG"/>
+                        <outlet property="tossWinnerTextField" destination="0w1-4h-XbC" id="v8U-dG-xVe"/>
+                        <outlet property="warmupButton" destination="pyv-5d-9ca" id="6iw-7v-0O4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fl9-ER-FdO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Elb-Kd-1Ag"/>
             </objects>
             <point key="canvasLocation" x="1989.8550724637682" y="1489.9553571428571"/>
         </scene>
