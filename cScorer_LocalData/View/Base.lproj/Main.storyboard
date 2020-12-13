@@ -952,9 +952,6 @@
                             <constraint firstItem="bc9-md-m6h" firstAttribute="top" secondItem="CFW-xS-bQG" secondAttribute="bottom" constant="8" id="ybd-O8-4Se"/>
                             <constraint firstItem="9cy-JA-2Cd" firstAttribute="top" secondItem="nNh-RN-NRs" secondAttribute="bottom" constant="8" id="zJY-m9-xjf"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="Elb-Kd-1Ag" appends="YES" id="Gza-D9-vis"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="8Ub-D4-Oxb"/>
                     <connections>
@@ -969,7 +966,6 @@
                         <outlet property="firstTeamSecondTargetView" destination="tau-O1-Fm5" id="2P2-1U-T2J"/>
                         <outlet property="firstTeamSecondTopLabel" destination="D4X-sH-FQc" id="30e-Q6-yoE"/>
                         <outlet property="firstTeamSecondTopView" destination="erp-MG-ZIf" id="F74-uP-mbw"/>
-                        <outlet property="panGestureRecognizer" destination="Elb-Kd-1Ag" id="sCp-GI-rRf"/>
                         <outlet property="restartButton" destination="pmk-xw-fRa" id="V7g-V2-q6Y"/>
                         <outlet property="secondTeamFirstBottomLabel" destination="SSz-kE-TEF" id="gVV-tL-q1W"/>
                         <outlet property="secondTeamFirstBottomView" destination="eWn-4K-aBq" id="iEK-96-vOw"/>
@@ -989,7 +985,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fl9-ER-FdO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="Elb-Kd-1Ag"/>
             </objects>
             <point key="canvasLocation" x="1989.8550724637682" y="1489.9553571428571"/>
         </scene>
