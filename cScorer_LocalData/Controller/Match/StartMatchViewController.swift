@@ -78,6 +78,9 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     @IBOutlet weak var firstTeamFirstTopViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var firstTeamFirstTopViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var firstTeamSecondTopViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var firstTeamSecondTopViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var secondTeamFirstTopViewTopConstraint: NSLayoutConstraint!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -554,7 +557,7 @@ extension StartMatchViewController {
         guard let touch = touches.first else {
             return
         }
-        print("\(firstTeamFirstTopViewTopConstraint.constant)")
+
         let touchedLocation: CGPoint = touch.location(in: view)
         
         if receiveViewTouchedIn(touchedLocation: touchedLocation) != nil {
@@ -562,7 +565,7 @@ extension StartMatchViewController {
             xOffset = touch.location(in: touchedView).x
             yOffset = touch.location(in: touchedView).y
             
-            if touchedView == firstTeamFirstTopView || touchedView == firstTeamSecondTopView || touchedView == secondTeamFirstTopView || touchedView == secondTeamSecondTopView {
+            if touchedView == firstTeamFirstTopView || touchedView == firstTeamSecondTopView || touchedView == secondTeamFirstTopView || touchedView == secondTeamSecondTopView {
                 isDragging = true
                 currentView = touchedView
                 view.bringSubviewToFront(currentView!)
@@ -590,8 +593,6 @@ extension StartMatchViewController {
                 firstTeamFirstTopViewTopConstraint.constant = currentLocation.y - yOffset - firstTeamFirstInitialLocation.y
                 firstTeamFirstTopViewLeadingConstraint.constant = currentLocation.x - xOffset - firstTeamFirstInitialLocation.x
                 firstTeamFirstTopView.updateConstraints()
-                
-                print("\(firstTeamFirstTopViewTopConstraint.constant)")
             }
             
             if isDraggingServer == true {
