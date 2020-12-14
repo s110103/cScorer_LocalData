@@ -961,6 +961,8 @@
                         <outlet property="firstTeamFirstTargetView" destination="9Q7-lD-zQH" id="mMr-g1-v5p"/>
                         <outlet property="firstTeamFirstTopLabel" destination="OZk-9X-aeX" id="R8c-A2-lPH"/>
                         <outlet property="firstTeamFirstTopView" destination="CFW-xS-bQG" id="8R6-Gm-4oO"/>
+                        <outlet property="firstTeamFirstTopViewLeadingConstraint" destination="pyJ-Tf-AU2" id="mmQ-t8-0TI"/>
+                        <outlet property="firstTeamFirstTopViewTopConstraint" destination="823-h4-H7v" id="9xr-UB-AuI"/>
                         <outlet property="firstTeamSecondBottomLabel" destination="k9Z-Pm-9ei" id="xlW-JR-cJL"/>
                         <outlet property="firstTeamSecondBottomView" destination="bc9-md-m6h" id="evf-uX-xh9"/>
                         <outlet property="firstTeamSecondTargetView" destination="tau-O1-Fm5" id="2P2-1U-T2J"/>

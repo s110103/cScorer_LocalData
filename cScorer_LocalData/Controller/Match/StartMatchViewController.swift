@@ -19,6 +19,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var delegate: StartMatchViewControllerDelegate?
         
     var isDragging: Bool = false
+    var isDraggingServer: Bool = false
     var draggingPlayer: String = ""
     var finalLocation: CGPoint = CGPoint(x: 0, y: 0)
     var xOffset: CGFloat = 0
@@ -72,7 +73,12 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var restartButton: UIButton!
     @IBOutlet weak var warmupButton: UIButton!
     @IBOutlet weak var startMatchButton: UIButton!
-        
+    
+    // MARK: - Constraint Outlets
+    
+    @IBOutlet weak var firstTeamFirstTopViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var firstTeamFirstTopViewLeadingConstraint: NSLayoutConstraint!
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -305,6 +311,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
 extension StartMatchViewController {
     
+    /*
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         
@@ -538,5 +545,90 @@ extension StartMatchViewController {
             }
             currentView = nil
         }
+    }
+ */
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        
+        guard let touch = touches.first else {
+            return
+        }
+        print("\(firstTeamFirstTopViewTopConstraint.constant)")
+        let touchedLocation: CGPoint = touch.location(in: view)
+        
+        if receiveViewTouchedIn(touchedLocation: touchedLocation) != nil {
+            let touchedView: UIView = receiveViewTouchedIn(touchedLocation: touchedLocation)!
+            xOffset = touch.location(in: touchedView).x
+            yOffset = touch.location(in: touchedView).y
+            
+            if touchedView == firstTeamFirstTopView || touchedView == firstTeamSecondTopView || touchedView == secondTeamFirstTopView || touchedView == secondTeamSecondTopView {
+                isDragging = true
+                currentView = touchedView
+                view.bringSubviewToFront(currentView!)
+            } else if touchedView == serverView {
+                isDragging = true
+                isDraggingServer = true
+                currentView = touchedView
+                view.bringSubviewToFront(currentView!)
+            }
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let currentLocation: CGPoint = touch.location(in: view)
+        
+        if isDragging == true {
+            currentView?.frame.origin.x = currentLocation.x - xOffset
+            currentView?.frame.origin.y = currentLocation.y - yOffset
+            
+            if currentView == firstTeamFirstTopView {
+                firstTeamFirstTopViewTopConstraint.constant = currentLocation.y - yOffset - firstTeamFirstInitialLocation.y
+                firstTeamFirstTopViewLeadingConstraint.constant = currentLocation.x - xOffset - firstTeamFirstInitialLocation.x
+                firstTeamFirstTopView.updateConstraints()
+                
+                print("\(firstTeamFirstTopViewTopConstraint.constant)")
+            }
+            
+            if isDraggingServer == true {
+                
+            } else {
+                
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //
+    }
+    
+    func receiveViewTouchedIn(touchedLocation: CGPoint) -> UIView? {
+        var touchedView: UIView? = nil
+        
+        if touchedLocation.x >= firstTeamFirstTopView.frame.minX && touchedLocation.x <= firstTeamFirstTopView.frame.maxX && touchedLocation.y >= firstTeamFirstTopView.frame.minY && touchedLocation.y <= firstTeamFirstTopView.frame.maxY {
+            touchedView = firstTeamFirstTopView
+        } else if touchedLocation.x >= firstTeamSecondTopView.frame.minX && touchedLocation.x <= firstTeamSecondTopView.frame.maxX && touchedLocation.y >= firstTeamSecondTopView.frame.minY && touchedLocation.y <= firstTeamSecondTopView.frame.maxY {
+            touchedView = firstTeamSecondTopView
+        } else if touchedLocation.x >= secondTeamFirstTopView.frame.minX && touchedLocation.x <= secondTeamFirstTopView.frame.maxX && touchedLocation.y >= secondTeamFirstTopView.frame.minY && touchedLocation.y <= secondTeamFirstTopView.frame.maxY {
+            touchedView = secondTeamFirstTopView
+        } else if touchedLocation.x >= secondTeamSecondTopView.frame.minX && touchedLocation.x <= secondTeamSecondTopView.frame.maxX && touchedLocation.y >= secondTeamSecondTopView.frame.minY && touchedLocation.y <= secondTeamSecondTopView.frame.maxY {
+            touchedView = secondTeamSecondTopView
+        } else if touchedLocation.x >= serverView.frame.minX && touchedLocation.x <= serverView.frame.maxX && touchedLocation.y >= serverView.frame.minY && touchedLocation.y <= serverView.frame.maxY {
+            touchedView = serverView
+        } else if touchedLocation.x >= firstTeamFirstTargetView.frame.minX && touchedLocation.x <= firstTeamFirstTargetView.frame.maxX && touchedLocation.y >= firstTeamFirstTargetView.frame.minY && touchedLocation.y <= firstTeamFirstTargetView.frame.maxY {
+            touchedView = firstTeamFirstTargetView
+        } else if touchedLocation.x >= firstTeamSecondTargetView.frame.minX && touchedLocation.x <= firstTeamSecondTargetView.frame.maxX && touchedLocation.y >= firstTeamSecondTargetView.frame.minY && touchedLocation.y <= firstTeamSecondTargetView.frame.maxY {
+            touchedView = firstTeamSecondTargetView
+        } else if touchedLocation.x >= secondTeamFirstTargetView.frame.minX && touchedLocation.x <= secondTeamFirstTargetView.frame.maxX && touchedLocation.y >= secondTeamFirstTargetView.frame.minY && touchedLocation.y <= secondTeamFirstTargetView.frame.maxY {
+            touchedView = secondTeamFirstTargetView
+        } else if touchedLocation.x >= secondTeamSecondTargetView.frame.minX && touchedLocation.x <= secondTeamSecondTopView.frame.maxX && touchedLocation.y >= secondTeamSecondTargetView.frame.minY && touchedLocation.y <= secondTeamSecondTargetView.frame.maxY {
+            touchedView = secondTeamSecondTargetView
+        }
+        
+        return touchedView
     }
 }
