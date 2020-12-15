@@ -580,12 +580,12 @@ extension StartMatchViewController {
             if touchedView == firstTeamFirstTopView || touchedView == firstTeamSecondTopView || touchedView == secondTeamFirstTopView || touchedView == secondTeamSecondTopView {
                 isDragging = true
                 currentView = touchedView
-                view.bringSubviewToFront(currentView!)
+                //view.bringSubviewToFront(currentView!)
             } else if touchedView == serverView {
                 isDragging = true
                 isDraggingServer = true
                 currentView = touchedView
-                view.bringSubviewToFront(currentView!)
+                //view.bringSubviewToFront(currentView!)
             }
         }
     }
@@ -608,8 +608,6 @@ extension StartMatchViewController {
             }
             
             if isDraggingServer == true {
-                serverView.frame.origin.x = currentLocation.x - xOffset
-                serverView.frame.origin.y = currentLocation.y - yOffset
                 
                 if receiveViewTouchedIn(touchedLocation: currentLocation) != nil {
                     switch receiveViewTouchedIn(touchedLocation: currentLocation) {
