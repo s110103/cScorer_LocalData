@@ -24,6 +24,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var finalLocation: CGPoint = CGPoint(x: 0, y: 0)
     var xOffset: CGFloat = 0
     var yOffset: CGFloat = 0
+    var playerViewWidth: CGFloat = 0
+    var playerViewHeight: CGFloat = 0
     var currentView: UIView?
     
     var firstTeamFirstInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
@@ -31,6 +33,11 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var secondTeamFirstInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
     var secondTeamSecondInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
     var serverInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
+    
+    var containsPlayerFirstTeamFirstTarget: Bool = false
+    var containtsPlayerFirstTeamSecondTarget: Bool = false
+    var containsPlayerSecondTeamFirstTarget: Bool = false
+    var containsPlayerSecondTeamSecondTarget: Bool = false
     
     var pickerViewToss: UIPickerView = UIPickerView()
     var pickerViewChoice: UIPickerView = UIPickerView()
@@ -248,6 +255,9 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             self.pickerViewChoice.selectRow(madeChoiceRow-1, inComponent: 0, animated: true)
             self.pickerView(self.pickerViewChoice, didSelectRow: madeChoiceRow-1, inComponent: 0)
         }
+        
+        playerViewWidth = firstTeamFirstTopView.frame.maxX - firstTeamFirstTopView.frame.minX
+        playerViewHeight = firstTeamFirstTopView.frame.maxY - firstTeamFirstTopView.frame.minY
         
         startMatchButton.layer.cornerRadius = 5
         warmupButton.layer.cornerRadius = 5
@@ -557,6 +567,8 @@ extension StartMatchViewController {
         guard let touch = touches.first else {
             return
         }
+        
+        containsPlayerFirstTeamFirstTarget = true
 
         let touchedLocation: CGPoint = touch.location(in: view)
         
@@ -596,7 +608,25 @@ extension StartMatchViewController {
             }
             
             if isDraggingServer == true {
+                serverView.frame.origin.x = currentLocation.x - xOffset
+                serverView.frame.origin.y = currentLocation.y - yOffset
                 
+                if receiveViewTouchedIn(touchedLocation: currentLocation) != nil {
+                    switch receiveViewTouchedIn(touchedLocation: currentLocation) {
+                    case firstTeamFirstTargetView:
+                        if containsPlayerFirstTeamFirstTarget == true {
+                            serverView.isHidden = true
+                            firstTeamFirstTargetView.layer.borderWidth = 2
+                            firstTeamFirstTargetView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        } else {
+                            firstTeamFirstTargetView.layer.borderWidth = 0
+                            firstTeamFirstTargetView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                            serverView.isHidden = false
+                        }
+                    default:
+                        serverView.isHidden = false
+                    }
+                }
             } else {
                 
             }
@@ -604,7 +634,7 @@ extension StartMatchViewController {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //
+        serverView.isHidden = false
     }
     
     func receiveViewTouchedIn(touchedLocation: CGPoint) -> UIView? {
