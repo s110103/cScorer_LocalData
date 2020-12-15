@@ -27,6 +27,7 @@ class AddPlayerViewController: UIViewController {
     @IBOutlet weak var addPlayerOriginTextField: UITextField!
     @IBOutlet weak var addPlayerClubTextField: UITextField!
     @IBOutlet weak var addPlayerGenderSegmentControl: UISegmentedControl!
+    @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -34,20 +35,7 @@ class AddPlayerViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        addPlayerNameTextField.attributedPlaceholder = NSAttributedString(string: "Vorname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        addPlayerSurnameTextField.attributedPlaceholder = NSAttributedString(string: "Nachname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        addPlayerAbbreviationTextField.attributedPlaceholder = NSAttributedString(string: "Kürzel", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        addPlayerOriginTextField.attributedPlaceholder = NSAttributedString(string: "test", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        addPlayerClubTextField.attributedPlaceholder = NSAttributedString(string: "Tennisclub", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        
-        if editPlayer == true {
-            addPlayerNameTextField.text = currentPlayer.firstName
-            addPlayerSurnameTextField.text = currentPlayer.surName
-            addPlayerAbbreviationTextField.text = currentPlayer.abbreviation
-            addPlayerOriginTextField.text = currentPlayer.country
-            addPlayerClubTextField.text = currentPlayer.tennisClub
-            addPlayerGenderSegmentControl.selectedSegmentIndex = currentPlayer.gender
-        }
+        initObjects()
     }
     
     // MARK: - Actions
@@ -73,5 +61,36 @@ class AddPlayerViewController: UIViewController {
     }
     
     // MARK: - Functions
+    func initObjects() {
+        addPlayerNameTextField.layer.cornerRadius = 5
+        addPlayerNameTextField.attributedPlaceholder = NSAttributedString(string: "Vorname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        addPlayerSurnameTextField.layer.cornerRadius = 5
+        addPlayerSurnameTextField.attributedPlaceholder = NSAttributedString(string: "Nachname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        addPlayerAbbreviationTextField.layer.cornerRadius = 5
+        addPlayerAbbreviationTextField.attributedPlaceholder = NSAttributedString(string: "Kürzel", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        addPlayerOriginTextField.layer.cornerRadius = 5
+        addPlayerOriginTextField.attributedPlaceholder = NSAttributedString(string: "Herkunftsland", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        addPlayerClubTextField.layer.cornerRadius = 5
+        addPlayerClubTextField.attributedPlaceholder = NSAttributedString(string: "Tennisclub", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        saveButton.layer.cornerRadius = 5
+        
+        if editPlayer == true {
+            addPlayerNameTextField.text = currentPlayer.firstName
+            addPlayerSurnameTextField.text = currentPlayer.surName
+            addPlayerAbbreviationTextField.text = currentPlayer.abbreviation
+            addPlayerOriginTextField.text = currentPlayer.country
+            addPlayerClubTextField.text = currentPlayer.tennisClub
+            addPlayerGenderSegmentControl.selectedSegmentIndex = currentPlayer.gender
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 
 }

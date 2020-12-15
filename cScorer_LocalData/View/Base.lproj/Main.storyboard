@@ -190,11 +190,11 @@
             <objects>
                 <viewController id="4vP-TD-oqp" customClass="AddMatchViewController" customModule="cScorer_LocalData" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wHm-6E-6EW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="84" translatesAutoresizingMaskIntoConstraints="NO" id="IfT-BC-PCm">
-                                <rect key="frame" x="20" y="49" width="374" height="36"/>
+                                <rect key="frame" x="20" y="5" width="374" height="36"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hX-fV-XdW">
                                         <rect key="frame" x="0.0" y="0.0" width="13" height="36"/>
@@ -227,7 +227,7 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="caV-pP-iVv">
-                                <rect key="frame" x="0.0" y="95" width="414" height="801"/>
+                                <rect key="frame" x="0.0" y="51" width="414" height="791"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="matchDataCell" textLabel="FWK-MY-YfW" detailTextLabel="xmM-R6-yzZ" rowHeight="72" style="IBUITableViewCellStyleSubtitle" id="GHJ-l9-0ce">
@@ -280,6 +280,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addMatchButton" destination="7zp-vq-dcd" id="sts-N2-M8w"/>
+                        <outlet property="addMatchHeaderLabel" destination="8D4-dt-b7O" id="1TL-is-5Bk"/>
                         <outlet property="matchDataTableView" destination="caV-pP-iVv" id="E7N-PP-nFM"/>
                         <outlet property="panGestureRecognizer" destination="LNb-2b-SHe" id="e1B-vg-0kf"/>
                         <segue destination="H8d-up-BjB" kind="presentation" identifier="selectMatchTypeSegue" id="gnk-sd-lnO"/>
@@ -376,6 +377,7 @@
                                 <connections>
                                     <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="wJ8-f5-IwI"/>
                                     <action selector="closeButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="j2V-nW-c3p"/>
+                                    <action selector="editMatchButtonTapped:" destination="iVb-UC-Alr" eventType="touchUpInside" id="dGX-Zf-adt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -410,6 +412,7 @@
                         <outlet property="firstTeamLabel" destination="M6m-2h-Zo5" id="t7I-tI-xff"/>
                         <outlet property="panGestureRecognizer" destination="JLj-ra-53l" id="IA7-7O-KOq"/>
                         <outlet property="secondTeamLabel" destination="zc4-x7-KDj" id="1Bs-qc-aYY"/>
+                        <segue destination="4vP-TD-oqp" kind="presentation" identifier="editMatchChairUmpireSegue" id="Js5-6F-bgI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wMf-KT-w9y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -498,6 +501,7 @@
                                 <connections>
                                     <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="CAx-8w-0Ba"/>
                                     <action selector="closeButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="Dgd-Ad-ftL"/>
+                                    <action selector="editMatchButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="vNQ-tv-LhT"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -532,6 +536,7 @@
                         <outlet property="panGestureRecognizer" destination="DKa-7A-jrk" id="dzp-ys-2ni"/>
                         <outlet property="playersOnCourtButton" destination="wlA-s0-wi8" id="xHn-SP-bHj"/>
                         <outlet property="secondTeamLabel" destination="ias-vY-q20" id="Zsa-Qi-B6s"/>
+                        <segue destination="4vP-TD-oqp" kind="presentation" identifier="editMatchPlayerSegue" id="wKk-uL-3Yr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XPq-yd-ap1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -987,6 +992,7 @@
                         <outlet property="timerLabel" destination="9cy-JA-2Cd" id="8E9-QN-alG"/>
                         <outlet property="tossWinnerTextField" destination="0w1-4h-XbC" id="v8U-dG-xVe"/>
                         <outlet property="warmupButton" destination="pyv-5d-9ca" id="6iw-7v-0O4"/>
+                        <segue destination="4vP-TD-oqp" kind="presentation" identifier="editMatchSetupSegue" id="cyB-Cr-Kwa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fl9-ER-FdO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1761,6 +1767,7 @@
                         <outlet property="addPlayerNameTextField" destination="QTS-F1-abV" id="FZI-3w-d5d"/>
                         <outlet property="addPlayerOriginTextField" destination="5FG-7D-v0d" id="gVJ-w8-sc2"/>
                         <outlet property="addPlayerSurnameTextField" destination="WKJ-Xu-txx" id="SYi-e8-tXT"/>
+                        <outlet property="saveButton" destination="OTN-yj-CLM" id="CFj-g1-Qrd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GPt-dR-wQg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3592,6 +3599,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="a12-7m-IqZ"/>
         <segue reference="qiU-K6-lD1"/>
+        <segue reference="cyB-Cr-Kwa"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>

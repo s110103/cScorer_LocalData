@@ -34,7 +34,10 @@ class SetPlayerNameViewController: UIViewController {
         setPlayerNameView.layer.cornerRadius = 10
         setPlayerNameView.layer.masksToBounds = true
         
+        nameTextField.layer.cornerRadius = 5
         nameTextField.attributedPlaceholder = NSAttributedString(string: "Vorname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        surnameTextField.layer.cornerRadius = 5
         surnameTextField.attributedPlaceholder = NSAttributedString(string: "Nachname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         setPlayerHeadingLabel.text = "Spieler \(selectedPlayer)"

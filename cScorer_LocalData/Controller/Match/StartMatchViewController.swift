@@ -11,7 +11,7 @@ protocol StartMatchViewControllerDelegate {
     func sendStartMatchData(currentMatch: Match, selectedIndex: Int)
 }
 
-class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, AddMatchViewControllerDelegate {
     
     // MARK: - Variables
     var selectedIndex: Int = 0
@@ -110,6 +110,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "editMatchSetupSegue", sender: self)
     }
     @IBAction func startButtonTapped(_ sender: UIButton) {
     }
@@ -119,6 +120,21 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     // MARK: - Functions
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "editMatchSetupSegue":
+            let destinationVC = segue.destination as! AddMatchViewController
+            
+            destinationVC.match = currentMatch
+            destinationVC.editingDistinctMatch = true
+            destinationVC.indexOfMatch = selectedIndex
+            
+            destinationVC.delegate = self
+        default:
+            return
+        }
+    }
+    
     func initPlayers() {
         if currentMatch.matchType.matchType == 0 {
             
@@ -659,5 +675,10 @@ extension StartMatchViewController {
         }
         
         return touchedView
+    }
+    
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
+        currentMatch = match
+        selectedIndex = indexOfMatch
     }
 }

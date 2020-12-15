@@ -30,6 +30,7 @@ class SetCourtViewController: UIViewController {
         setCourtView.layer.cornerRadius = 10
         setCourtView.layer.masksToBounds = true
         
+        courtTextField.layer.cornerRadius = 5
         courtTextField.attributedPlaceholder = NSAttributedString(string: "Court", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         courtTextField.text = court

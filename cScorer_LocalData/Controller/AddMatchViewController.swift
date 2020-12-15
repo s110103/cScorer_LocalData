@@ -53,6 +53,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     var percentageDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition!
     
     // MARK: - Outlets
+    @IBOutlet weak var addMatchHeaderLabel: UILabel!
     @IBOutlet weak var matchDataTableView: UITableView!
     @IBOutlet weak var addMatchButton: UIButton!
     @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
@@ -70,6 +71,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         addGesture()
         
         if editingDistinctMatch == true {
+            addMatchHeaderLabel.text = "Match bearbeiten"
             addMatchButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
         }
     }
@@ -110,12 +112,14 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: - Functions
     func addGesture() {
-        guard (navigationController?.viewControllers.count)! > 1 else {
-            return
+        if navigationController?.viewControllers.count != nil {
+            guard (navigationController?.viewControllers.count)! > 1 else {
+                return
+            }
+            
+            panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(AddMatchViewController.handlePanGesture(_:)))
+            self.view.addGestureRecognizer(panGestureRecognizer)
         }
-        
-        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(AddMatchViewController.handlePanGesture(_:)))
-        self.view.addGestureRecognizer(panGestureRecognizer)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -32,6 +32,7 @@ class EditDistinctTournamentDataViewController: UIViewController {
         tournamentDataView.layer.cornerRadius = 10
         tournamentDataView.layer.masksToBounds = true
         
+        tournamentDataTextField.layer.cornerRadius = 5
         tournamentDataTextField.attributedPlaceholder = NSAttributedString(string: selectedItem, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         tournamentDataLabel.text = selectedItem

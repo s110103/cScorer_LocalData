@@ -11,7 +11,7 @@ protocol PlayersOnCourtViewControllerDelegate {
     func sendSelectedMatchPlayers(currentMatch: Match, selectedIndex: Int)
 }
 
-class PlayersOnCourtViewController: UIViewController {
+class PlayersOnCourtViewController: UIViewController, AddMatchViewControllerDelegate {
     
     // MARK: - Variables
     var selectedIndex: Int = 0
@@ -41,6 +41,9 @@ class PlayersOnCourtViewController: UIViewController {
     // MARK: - Actions
     @IBAction func closeButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
+    }
+    @IBAction func editMatchButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "editMatchPlayerSegue", sender: self)
     }
     @IBAction func playersOnCourtButtonTapped(_ sender: UIButton) {
         currentMatch.matchStatistics.playersOnCourt = true
@@ -74,6 +77,21 @@ class PlayersOnCourtViewController: UIViewController {
     }
     
     // MARK: - Functions
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "editMatchPlayerSegue":
+            let destinationVC = segue.destination as! AddMatchViewController
+            
+            destinationVC.match = currentMatch
+            destinationVC.editingDistinctMatch = true
+            destinationVC.indexOfMatch = selectedIndex
+            
+            destinationVC.delegate = self
+        default:
+            return
+        }
+    }
+    
     func addGesture() {
         guard (navigationController?.viewControllers.count)! > 1 else {
             return
@@ -112,5 +130,10 @@ extension PlayersOnCourtViewController: UINavigationControllerDelegate {
         }
         
         return percentageDrivenInteractiveTransition
+    }
+    
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
+        currentMatch = match
+        selectedIndex = indexOfMatch
     }
 }
