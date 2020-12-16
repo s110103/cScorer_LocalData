@@ -17,6 +17,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var editingEntries: Bool = false
     var editDistinctMatch: Bool = false
+    var backToChairUmpire: Bool = false
+    var backToPlayers: Bool = false
+    var backToStartMatch: Bool = false
 
     // MARK: - Outelts
     @IBOutlet weak var matchesTableView: UITableView!
@@ -131,7 +134,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.editDistinctMatch = true
             self.selectedIndex = indexPath.row
             self.selectedMatch = self.savedMatches[self.selectedIndex]
-            self.performSegue(withIdentifier: "addMatchSegue", sender: self)
+            self.performSegue(withIdentifier: "addMatchSegueAnimated", sender: self)
         }
         
         buttonEdit.backgroundColor = UIColor.orange
@@ -148,6 +151,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if editDistinctMatch == true {
                 destinationVC.match = selectedMatch
                 destinationVC.editingDistinctMatch = true
+                destinationVC.indexOfMatch = selectedIndex
+            } else {
+                destinationVC.match = selectedMatch
+                destinationVC.editingDistinctMatch = false
+                destinationVC.indexOfMatch = selectedIndex
+            }
+            
+            destinationVC.delegate = self
+        case "addMatchSegueAnimated":
+            let destinationVC = segue.destination as! AddMatchViewController
+            
+            if editDistinctMatch == true {
+                destinationVC.match = selectedMatch
+                destinationVC.editingDistinctMatch = true
+                destinationVC.indexOfMatch = selectedIndex
+            } else {
+                destinationVC.match = selectedMatch
+                destinationVC.editingDistinctMatch = false
                 destinationVC.indexOfMatch = selectedIndex
             }
             
@@ -194,6 +215,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
         if editingDistinctMatch == true {
+            if match.backToChairUmpireViewController == true {
+                performSegue(withIdentifier: "chairUmpireOnCourtSegue", sender: self)
+                match.backToChairUmpireViewController = false
+            }
+            if match.backToPlayersViewController == true {
+                performSegue(withIdentifier: "playersOnCourtSegue", sender: self)
+                match.backToPlayersViewController = false
+            }
+            if match.backToStartMatchViewController == true {
+                performSegue(withIdentifier: "startMatchSegue", sender: self)
+                match.backToStartMatchViewController = false
+            }
+            
             savedMatches.remove(at: indexOfMatch)
             savedMatches.insert(match, at: indexOfMatch)
             editDistinctMatch = false
@@ -244,6 +278,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         savedMatches.remove(at: selectedIndex)
         savedMatches.insert(currentMatch, at: selectedIndex)
         matchesTableView.reloadData()
+    }
+    
+    func sendEditMatchFromChairUmpire(currentMatch: Match, selectedIndex: Int) {
+        currentMatch.backToChairUmpireViewController = true
+        self.editDistinctMatch = true
+        self.selectedIndex = selectedIndex
+        self.selectedMatch = self.savedMatches[self.selectedIndex]
+        self.performSegue(withIdentifier: "addMatchSegue", sender: self)
     }
     
 }

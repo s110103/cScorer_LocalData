@@ -26,6 +26,11 @@ class Match {
     
     var court: String = "-"
     var syncedWithCloud: Bool = false
+    
+    var backToChairUmpireViewController: Bool = false
+    var backToPlayersViewController: Bool = false
+    var backToStartMatchViewController: Bool = false
+    
     var matchType: MatchType = MatchType()
     var tournamendData: TournamentData = TournamentData()
     var matchStatistics: MatchStatistics = MatchStatistics()

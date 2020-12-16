@@ -43,7 +43,8 @@ class PlayersOnCourtViewController: UIViewController, AddMatchViewControllerDele
         navigationController?.popViewController(animated: true)
     }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "editMatchPlayerSegue", sender: self)
+        navigationController?.popViewController(animated: false)
+        delegate?.sendSelectedMatchPlayers(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func playersOnCourtButtonTapped(_ sender: UIButton) {
         currentMatch.matchStatistics.playersOnCourt = true

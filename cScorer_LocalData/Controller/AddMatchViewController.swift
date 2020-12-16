@@ -73,6 +73,9 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         if editingDistinctMatch == true {
             addMatchHeaderLabel.text = "Match bearbeiten"
             addMatchButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        } else {
+            addMatchHeaderLabel.text = "Neues Match"
+            addMatchButton.setImage(UIImage(systemName: "plus"), for: .normal)
         }
     }
     
@@ -81,8 +84,13 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func addMatchButtonTapped(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
-        delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+        if match.backToChairUmpireViewController == true || match.backToPlayersViewController == true || match.backToStartMatchViewController == true {
+            self.navigationController?.popViewController(animated: false)
+            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+        }
     }
     @IBAction func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
         

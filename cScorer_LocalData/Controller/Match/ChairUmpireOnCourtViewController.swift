@@ -9,6 +9,7 @@ import UIKit
 
 protocol ChairUmpireOnCourtViewControllerDelegate {
     func sendSelectedMatchChairUmpire(currentMatch: Match, selectedIndex: Int)
+    func sendEditMatchFromChairUmpire(currentMatch: Match, selectedIndex: Int)
 }
 
 class ChairUmpireOnCourtViewController: UIViewController, AddMatchViewControllerDelegate {
@@ -43,7 +44,8 @@ class ChairUmpireOnCourtViewController: UIViewController, AddMatchViewController
         navigationController?.popViewController(animated: true)
     }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "editMatchChairUmpireSegue", sender: self)
+        navigationController?.popViewController(animated: false)
+        delegate?.sendEditMatchFromChairUmpire(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func chairUmpireOnCourtButtonTapped(_ sender: UIButton) {
         currentMatch.matchStatistics.chairUmpireOnCourt = true

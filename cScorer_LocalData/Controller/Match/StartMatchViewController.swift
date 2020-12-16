@@ -110,7 +110,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "editMatchSetupSegue", sender: self)
+        navigationController?.popViewController(animated: false)
+        delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func startButtonTapped(_ sender: UIButton) {
     }
