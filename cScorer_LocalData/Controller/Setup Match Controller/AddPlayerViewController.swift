@@ -20,6 +20,8 @@ class AddPlayerViewController: UIViewController {
     var currentPlayer: Player = Player()
     var delegate: AddPlayerViewControlerDelegate?
     
+    var activeTextField: UITextField? = nil
+    
     // MARK: - Outlets
     @IBOutlet weak var addPlayerNameTextField: UITextField!
     @IBOutlet weak var addPlayerSurnameTextField: UITextField!
@@ -36,6 +38,9 @@ class AddPlayerViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        NotificationCenter.default.addObserver(self, selector: #selector(AddPlayerViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddPlayerViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
         initObjects()
     }
     
@@ -62,7 +67,49 @@ class AddPlayerViewController: UIViewController {
     }
     
     // MARK: - Functions
+    @objc func keyboardWillShow(notification: NSNotification) {
+        
+      guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+        return
+      }
+
+      var shouldMoveViewUp = false
+
+      if let activeTextField = activeTextField {
+
+        let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY;
+        
+        let topOfKeyboard = self.view.frame.height - keyboardSize.height
+        
+        if bottomOfTextField > topOfKeyboard {
+          shouldMoveViewUp = true
+        }
+      }
+
+      if(shouldMoveViewUp) {
+        self.view.frame.origin.y = 0 - keyboardSize.height
+      }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+      self.view.frame.origin.y = 0
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        view.endEditing(true)
+    }
+    
     func initObjects() {
+        addPlayerStackView.isUserInteractionEnabled = true
+        let tapInStackView = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        addPlayerStackView.addGestureRecognizer(tapInStackView)
+        
+        addPlayerNameTextField.delegate = self
+        addPlayerSurnameTextField.delegate = self
+        addPlayerAbbreviationTextField.delegate = self
+        addPlayerOriginTextField.delegate = self
+        addPlayerClubTextField.delegate = self
+        
         addPlayerNameTextField.layer.cornerRadius = 5
         addPlayerNameTextField.attributedPlaceholder = NSAttributedString(string: "Vorname", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
@@ -92,7 +139,16 @@ class AddPlayerViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-        addPlayerStackView.endEditing(true)
     }
+}
 
+extension AddPlayerViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeTextField = nil
+    }
 }
