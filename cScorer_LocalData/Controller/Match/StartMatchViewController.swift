@@ -9,6 +9,7 @@ import UIKit
 
 protocol StartMatchViewControllerDelegate {
     func sendStartMatchData(currentMatch: Match, selectedIndex: Int)
+    func sendEditMatchFromStartMatch(currentMatch: Match, selectedIndex: Int)
 }
 
 class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, AddMatchViewControllerDelegate {
@@ -111,7 +112,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: false)
-        delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
+        delegate?.sendEditMatchFromStartMatch(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func startButtonTapped(_ sender: UIButton) {
     }

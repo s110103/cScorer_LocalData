@@ -61,7 +61,7 @@
                                             <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
                                         </state>
                                         <connections>
-                                            <segue destination="4vP-TD-oqp" kind="show" identifier="addMatchSegueAnimated" id="4x9-su-OCA"/>
+                                            <action selector="addMatchButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Iu6-yv-Bux"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -174,12 +174,14 @@
                     <connections>
                         <outlet property="editMatchesButton" destination="CZh-3c-Jkv" id="fnd-31-BRh"/>
                         <outlet property="matchesTableView" destination="Pl5-fl-POt" id="hBP-a3-ZTG"/>
-                        <segue destination="iVb-UC-Alr" kind="show" identifier="chairUmpireOnCourtSegue" id="ZJa-Pi-ciA"/>
+                        <segue destination="iVb-UC-Alr" kind="show" identifier="chairUmpireOnCourtSegue" animates="NO" id="ZJa-Pi-ciA"/>
                         <segue destination="WVE-ZA-9yy" kind="show" identifier="playersOnCourtSegue" animates="NO" id="tQQ-Mt-LYQ"/>
                         <segue destination="WVE-ZA-9yy" kind="show" identifier="playersOnCourtSegueAnimated" id="qiU-K6-lD1"/>
                         <segue destination="TbA-co-MFg" kind="show" identifier="startMatchSegueAnimated" id="ozi-mQ-b8G"/>
                         <segue destination="TbA-co-MFg" kind="show" identifier="startMatchSegue" animates="NO" id="a12-7m-IqZ"/>
                         <segue destination="4vP-TD-oqp" kind="show" identifier="addMatchSegue" animates="NO" id="mef-pT-nP0"/>
+                        <segue destination="4vP-TD-oqp" kind="show" identifier="addMatchSegueAnimated" id="1tk-Xd-wk4"/>
+                        <segue destination="iVb-UC-Alr" kind="show" identifier="chairUmpireOnCourtSegueAnimated" id="0Jq-hi-n3a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -194,11 +196,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="84" translatesAutoresizingMaskIntoConstraints="NO" id="IfT-BC-PCm">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="IfT-BC-PCm">
                                 <rect key="frame" x="20" y="49" width="374" height="36"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hX-fV-XdW">
-                                        <rect key="frame" x="0.0" y="0.0" width="13" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hX-fV-XdW">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="CFc-r1-q0g"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal">
@@ -209,13 +214,16 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Neues Match" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="8D4-dt-b7O">
-                                        <rect key="frame" x="97" y="0.0" width="171.5" height="36"/>
+                                        <rect key="frame" x="101.5" y="0.0" width="171.5" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <color key="textColor" cyan="0.89966823630000003" magenta="0.17133989729999999" yellow="0.53170483729999996" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zp-vq-dcd">
-                                        <rect key="frame" x="352.5" y="0.0" width="21.5" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zp-vq-dcd">
+                                        <rect key="frame" x="324" y="0.0" width="50" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="ax1-n8-yZK"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal">
@@ -500,7 +508,6 @@
                                 </state>
                                 <connections>
                                     <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="CAx-8w-0Ba"/>
-                                    <action selector="closeButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="Dgd-Ad-ftL"/>
                                     <action selector="editMatchButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="vNQ-tv-LhT"/>
                                 </connections>
                             </button>
@@ -545,7 +552,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="1489.9553571428571"/>
+            <point key="canvasLocation" x="1048" y="1490"/>
         </scene>
         <!--Start Match View Controller-->
         <scene sceneID="o8V-NJ-abv">
@@ -3596,8 +3603,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="a12-7m-IqZ"/>
+        <segue reference="ozi-mQ-b8G"/>
         <segue reference="qiU-K6-lD1"/>
+        <segue reference="ZJa-Pi-ciA"/>
         <segue reference="mef-pT-nP0"/>
     </inferredMetricsTieBreakers>
     <resources>

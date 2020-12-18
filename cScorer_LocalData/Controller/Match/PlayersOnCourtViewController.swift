@@ -9,6 +9,7 @@ import UIKit
 
 protocol PlayersOnCourtViewControllerDelegate {
     func sendSelectedMatchPlayers(currentMatch: Match, selectedIndex: Int)
+    func sendEditMatchFromPlayers(currentMatch: Match, selectedIndex: Int)
 }
 
 class PlayersOnCourtViewController: UIViewController, AddMatchViewControllerDelegate {
@@ -44,7 +45,7 @@ class PlayersOnCourtViewController: UIViewController, AddMatchViewControllerDele
     }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: false)
-        delegate?.sendSelectedMatchPlayers(currentMatch: currentMatch, selectedIndex: selectedIndex)
+        delegate?.sendEditMatchFromPlayers(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func playersOnCourtButtonTapped(_ sender: UIButton) {
         currentMatch.matchStatistics.playersOnCourt = true

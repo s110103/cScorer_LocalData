@@ -81,7 +81,13 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: - Actions
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        if match.backToChairUmpireViewController == true || match.backToPlayersViewController == true || match.backToStartMatchViewController == true {
+            self.navigationController?.popViewController(animated: false)
+            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+        }
     }
     @IBAction func addMatchButtonTapped(_ sender: UIButton) {
         if match.backToChairUmpireViewController == true || match.backToPlayersViewController == true || match.backToStartMatchViewController == true {

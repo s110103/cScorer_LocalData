@@ -20,6 +20,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var backToChairUmpire: Bool = false
     var backToPlayers: Bool = false
     var backToStartMatch: Bool = false
+    
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Matches.plist")
 
     // MARK: - Outelts
     @IBOutlet weak var matchesTableView: UITableView!
@@ -36,7 +38,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let match = Match(_firstTeamFirstPlayer: "Dominik", _firstTeamFirstPlayerSurname: "Thiem", _firstTeamSecondPlayer: "", _firstTeamSecondPlayerSurname: "", _secondTeamFirstPlayer: "Roger", _secondTeamFirstPlayerSurname: "Federer", _secondTeamSecondPlayer: "", _secondTeamSecondPlayerSurname: "", _firstTeamFirstPlayerDetails: Player(), _firstTeamSecondPlayerDetails: Player(), _secondTeamFirstPlayerDetails: Player(), _secondTeamSecondPlayerDetails: Player(), _court: "CC", _syncedWithCloud: false)
         
         savedMatches.append(match)
-        
+                
     }
 
     // MARK: - Actions
@@ -51,6 +53,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             editMatchesButton.tintColor = UIColor.white
         }
         
+    }
+    @IBAction func addMatchButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "addMatchSegueAnimated", sender: self)
     }
     
     // MARK: - Functions
@@ -96,7 +101,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         selectedMatch = savedMatches[selectedIndex]
         
         if selectedMatch.matchStatistics.chairUmpireOnCourt == false {
-            performSegue(withIdentifier: "chairUmpireOnCourtSegue", sender: self)
+            performSegue(withIdentifier: "chairUmpireOnCourtSegueAnimated", sender: self)
         } else {
             if selectedMatch.matchStatistics.playersOnCourt == false {
                 performSegue(withIdentifier: "playersOnCourtSegueAnimated", sender: self)
@@ -148,32 +153,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case "addMatchSegue":
             let destinationVC = segue.destination as! AddMatchViewController
             
+            destinationVC.match = selectedMatch
+            destinationVC.indexOfMatch = selectedIndex
+            
             if editDistinctMatch == true {
-                destinationVC.match = selectedMatch
                 destinationVC.editingDistinctMatch = true
-                destinationVC.indexOfMatch = selectedIndex
             } else {
-                destinationVC.match = selectedMatch
                 destinationVC.editingDistinctMatch = false
-                destinationVC.indexOfMatch = selectedIndex
             }
             
             destinationVC.delegate = self
         case "addMatchSegueAnimated":
             let destinationVC = segue.destination as! AddMatchViewController
             
+            destinationVC.match = selectedMatch
+            destinationVC.indexOfMatch = selectedIndex
+            
             if editDistinctMatch == true {
-                destinationVC.match = selectedMatch
                 destinationVC.editingDistinctMatch = true
-                destinationVC.indexOfMatch = selectedIndex
             } else {
-                destinationVC.match = selectedMatch
                 destinationVC.editingDistinctMatch = false
-                destinationVC.indexOfMatch = selectedIndex
             }
             
             destinationVC.delegate = self
         case "chairUmpireOnCourtSegue":
+            let destinationVC = segue.destination as! ChairUmpireOnCourtViewController
+            
+            destinationVC.selectedIndex = selectedIndex
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
+        case "chairUmpireOnCourtSegueAnimated":
             let destinationVC = segue.destination as! ChairUmpireOnCourtViewController
             
             destinationVC.selectedIndex = selectedIndex
@@ -288,5 +298,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.performSegue(withIdentifier: "addMatchSegue", sender: self)
     }
     
+    func sendEditMatchFromPlayers(currentMatch: Match, selectedIndex: Int) {
+        currentMatch.backToPlayersViewController = true
+        self.editDistinctMatch = true
+        self.selectedIndex = selectedIndex
+        self.selectedMatch = self.savedMatches[self.selectedIndex]
+        self.performSegue(withIdentifier: "addMatchSegue", sender: self)
+    }
+    
+    func sendEditMatchFromStartMatch(currentMatch: Match, selectedIndex: Int) {
+        currentMatch.backToStartMatchViewController = true
+        self.editDistinctMatch = true
+        self.selectedIndex = selectedIndex
+        self.selectedMatch = self.savedMatches[self.selectedIndex]
+        self.performSegue(withIdentifier: "addMatchSegue", sender: self)
+    }
+    
+    /*
+            Store Matches
+     */
 }
 
