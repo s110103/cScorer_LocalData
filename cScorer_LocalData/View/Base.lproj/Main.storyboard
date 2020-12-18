@@ -1764,6 +1764,7 @@
                         <outlet property="addPlayerGenderSegmentControl" destination="FZj-95-fJZ" id="Abd-ka-zoG"/>
                         <outlet property="addPlayerNameTextField" destination="QTS-F1-abV" id="FZI-3w-d5d"/>
                         <outlet property="addPlayerOriginTextField" destination="5FG-7D-v0d" id="gVJ-w8-sc2"/>
+                        <outlet property="addPlayerStackView" destination="K3x-Ni-Dmh" id="DAM-i5-RTx"/>
                         <outlet property="addPlayerSurnameTextField" destination="WKJ-Xu-txx" id="SYi-e8-tXT"/>
                         <outlet property="saveButton" destination="OTN-yj-CLM" id="CFj-g1-Qrd"/>
                     </connections>

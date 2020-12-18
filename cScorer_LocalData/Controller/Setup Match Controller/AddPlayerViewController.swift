@@ -28,6 +28,7 @@ class AddPlayerViewController: UIViewController {
     @IBOutlet weak var addPlayerClubTextField: UITextField!
     @IBOutlet weak var addPlayerGenderSegmentControl: UISegmentedControl!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var addPlayerStackView: UIStackView!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -91,6 +92,7 @@ class AddPlayerViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+        addPlayerStackView.endEditing(true)
     }
 
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Player {
+class Player: Codable {
     
     var firstName: String = ""
     var surName: String = ""

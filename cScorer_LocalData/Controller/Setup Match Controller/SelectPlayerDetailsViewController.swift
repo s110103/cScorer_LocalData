@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 protocol SelectPlayerDetailsViewControllerDelegate {
     func sendPlayerDetailsData(selectedPlayer: Player, playerType: String)
@@ -14,13 +15,15 @@ protocol SelectPlayerDetailsViewControllerDelegate {
 class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddPlayerViewControlerDelegate {
     
     // MARK: - Variables
-    var savedPlayers: [Player] = [Player(_firstName: "Dominik", _surName: "Thiem", _abbreviation: "Dominik T.", _country: "Österreich", _tennisClub: "TCT", _gender: 0)]
+    var savedPlayers: [Player] = []
     var editPlayer: Bool = false
     var indexOfPlayer: Int = 0
     var editingEntries: Bool = false
     var selectedPlayer: Player = Player()
     var playerType: String = ""
     var delegate: SelectPlayerDetailsViewControllerDelegate?
+    
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Players.plist")
     
     // MARK: - Outlets
     @IBOutlet weak var searchPlayerTextField: UITextField!
@@ -37,6 +40,8 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
         searchPlayerTextField.layer.cornerRadius = 5
         searchPlayerTextField.layer.borderColor = UIColor(ciColor: .white).cgColor
         searchPlayerTextField.attributedPlaceholder = NSAttributedString(string: "Suche", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        loadPlayers()
         
         playersTableView.delegate = self
         playersTableView.dataSource = self
@@ -145,6 +150,32 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
         } else {
             savedPlayers.append(newPlayer)
         }
+        savePlayers()
         playersTableView.reloadData()
+    }
+    
+    func savePlayers() {
+        
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(savedPlayers)
+            try data.write(to: dataFilePath!)
+        } catch {
+            ProgressHUD.showFailed()
+        }
+    }
+    
+    func loadPlayers() {
+        
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            
+            do {
+                savedPlayers = try decoder.decode([Player].self, from: data)
+            } catch {
+                ProgressHUD.showFailed()
+            }
+        }
     }
 }
