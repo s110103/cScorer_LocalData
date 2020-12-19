@@ -25,9 +25,13 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var finalLocation: CGPoint = CGPoint(x: 0, y: 0)
     var xOffset: CGFloat = 0
     var yOffset: CGFloat = 0
+    var xGlobalOffset: CGFloat = 0
+    var yGlobalOffset: CGFloat = 0
     var playerViewWidth: CGFloat = 0
     var playerViewHeight: CGFloat = 0
     var currentView: UIView?
+    var currentBottomView: UIView?
+    var currentTargetView: UIView?
     
     var firstTeamFirstInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
     var firstTeamSecondInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
@@ -81,15 +85,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var restartButton: UIButton!
     @IBOutlet weak var warmupButton: UIButton!
     @IBOutlet weak var startMatchButton: UIButton!
-    
-    // MARK: - Constraint Outlets
-    
-    @IBOutlet weak var firstTeamFirstTopViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var firstTeamFirstTopViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var firstTeamSecondTopViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var firstTeamSecondTopViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var secondTeamFirstTopViewTopConstraint: NSLayoutConstraint!
-    
+        
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -342,243 +338,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
 extension StartMatchViewController {
     
-    /*
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-        
-        guard let touch = touches.first else {
-            return
-        }
-                
-        let touchedLocation = touch.location(in: view)
-        
-        if touchedLocation.x >= firstTeamFirstTopView.frame.minX && touchedLocation.x <= firstTeamFirstTopView.frame.maxX && touchedLocation.y >= firstTeamFirstTopView.frame.minY && touchedLocation.y <= firstTeamFirstTopView.frame.maxY {
-            
-            let location = touch.location(in: firstTeamFirstTopView)
-            xOffset = location.x
-            yOffset = location.y
-                    
-            if firstTeamFirstTopView.bounds.contains(location) {
-                isDragging = true
-                finalLocation = touchedLocation
-                currentView = firstTeamFirstTopView
-            }
-        }else if touchedLocation.x >= firstTeamSecondTopView.frame.minX && touchedLocation.x <= firstTeamSecondTopView.frame.maxX && touchedLocation.y >= firstTeamSecondTopView.frame.minY && touchedLocation.y <= firstTeamSecondTopView.frame.maxY {
-            
-            let location = touch.location(in: firstTeamSecondTopView)
-            xOffset = location.x
-            yOffset = location.y
-            finalLocation = touchedLocation
-            
-            if firstTeamFirstTopView.bounds.contains(location) {
-                isDragging = true
-                finalLocation = touchedLocation
-                currentView = firstTeamSecondTopView
-            }
-            
-        } else if touchedLocation.x >= secondTeamFirstTopView.frame.minX && touchedLocation.x <= secondTeamFirstTopView.frame.maxX && touchedLocation.y >= secondTeamFirstTopView.frame.minY && touchedLocation.y <= secondTeamFirstTopView.frame.maxY {
-            
-            let location = touch.location(in: secondTeamFirstTopView)
-            xOffset = location.x
-            yOffset = location.y
-            finalLocation = touchedLocation
-            
-            if secondTeamFirstTopView.bounds.contains(location) {
-                isDragging = true
-                finalLocation = touchedLocation
-                currentView = secondTeamFirstTopView
-            }
-        } else if touchedLocation.x >= secondTeamSecondTopView.frame.minX && touchedLocation.x <= secondTeamSecondTopView.frame.maxX && touchedLocation.y >= secondTeamSecondTopView.frame.minY && touchedLocation.y <= secondTeamSecondTopView.frame.maxY {
-            
-            let location = touch.location(in: secondTeamSecondTopView)
-            xOffset = location.x
-            yOffset = location.y
-            finalLocation = touchedLocation
-            
-            if secondTeamSecondTopView.bounds.contains(location) {
-                isDragging = true
-                finalLocation = touchedLocation
-                currentView = secondTeamSecondTopView
-            }
-        } else if touchedLocation.x >= serverView.frame.minX && touchedLocation.x <= serverView.frame.maxX && touchedLocation.y >= serverView.frame.minY && touchedLocation.y <= serverView.frame.maxY {
-            
-            let location = touch.location(in: serverView)
-            xOffset = location.x
-            yOffset = location.y
-            finalLocation = touchedLocation
-            
-            if serverView.bounds.contains(location) {
-                isDragging = true
-                finalLocation = touchedLocation
-                currentView = serverView
-            }
-        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard isDragging, let touch = touches.first, currentView != nil else {
-            return
-        }
-                
-        let location = touch.location(in: view)
-        currentView!.frame.origin.x = location.x - xOffset
-        currentView!.frame.origin.y = location.y - yOffset
-        
-        finalLocation = location
-        
-        if firstTeamFirstTargetView.frame.contains(finalLocation) {
-            firstTeamFirstTargetView.layer.borderWidth = 1
-            firstTeamSecondTargetView.layer.borderWidth = 0
-            secondTeamFirstTargetView.layer.borderWidth = 0
-            secondTeamSecondTargetView.layer.borderWidth = 0
-        } else if firstTeamSecondTargetView.frame.contains(finalLocation) {
-            firstTeamFirstTargetView.layer.borderWidth = 0
-            firstTeamSecondTargetView.layer.borderWidth = 1
-            secondTeamFirstTargetView.layer.borderWidth = 0
-            secondTeamSecondTargetView.layer.borderWidth = 0
-        } else if secondTeamFirstTargetView.frame.contains(finalLocation) {
-            firstTeamFirstTargetView.layer.borderWidth = 0
-            firstTeamSecondTargetView.layer.borderWidth = 0
-            secondTeamFirstTargetView.layer.borderWidth = 1
-            secondTeamSecondTargetView.layer.borderWidth = 0
-        } else if secondTeamSecondTargetView.frame.contains(finalLocation) {
-            firstTeamFirstTargetView.layer.borderWidth = 0
-            firstTeamSecondTargetView.layer.borderWidth = 0
-            secondTeamFirstTargetView.layer.borderWidth = 0
-            secondTeamSecondTargetView.layer.borderWidth = 1
-        } else {
-            firstTeamFirstTargetView.layer.borderWidth = 0
-            firstTeamSecondTargetView.layer.borderWidth = 0
-            secondTeamFirstTargetView.layer.borderWidth = 0
-            secondTeamSecondTargetView.layer.borderWidth = 0
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if isDragging == true && currentView != nil {
-            isDragging = false
-            
-            firstTeamFirstTargetView.layer.borderWidth = 0
-            firstTeamSecondTargetView.layer.borderWidth = 0
-            secondTeamFirstTargetView.layer.borderWidth = 0
-            secondTeamSecondTargetView.layer.borderWidth = 0
-            
-            if firstTeamFirstTargetView.frame.contains(finalLocation) {
-                switch currentView {
-                case firstTeamFirstTopView:
-                    firstTeamFirstTopView!.frame.origin.x = firstTeamFirstTargetView.frame.origin.x
-                    firstTeamFirstTopView!.frame.origin.y = firstTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamFirstPlayerPosition = 1
-                case firstTeamSecondTopView:
-                    firstTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetView.frame.origin.x
-                    firstTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamSecondPlayerPosition = 1
-                case secondTeamFirstTopView:
-                    secondTeamFirstTopView!.frame.origin.x = firstTeamFirstTargetView.frame.origin.x
-                    secondTeamFirstTopView!.frame.origin.y = firstTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamFirstPlayerPosition = 1
-                case secondTeamSecondTopView:
-                    secondTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetView.frame.origin.x
-                    secondTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamSecondPlayerPosition = 1
-                default:
-                    break
-                }
-            } else if firstTeamSecondTargetView.frame.contains(finalLocation) {
-                switch currentView {
-                case firstTeamFirstTopView:
-                    firstTeamFirstTopView!.frame.origin.x = firstTeamSecondTargetView.frame.origin.x
-                    firstTeamFirstTopView!.frame.origin.y = firstTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamFirstPlayerPosition = 2
-                case firstTeamSecondTopView:
-                    firstTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetView.frame.origin.x
-                    firstTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamSecondPlayerPosition = 2
-                case secondTeamFirstTopView:
-                    secondTeamFirstTopView!.frame.origin.x = firstTeamSecondTargetView.frame.origin.x
-                    secondTeamFirstTopView!.frame.origin.y = firstTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamFirstPlayerPosition = 2
-                case secondTeamSecondTopView:
-                    secondTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetView.frame.origin.x
-                    secondTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamSecondPlayerPosition = 2
-                default:
-                    break
-                }
-            } else if secondTeamFirstTargetView.frame.contains(finalLocation) {
-                switch currentView {
-                case firstTeamFirstTopView:
-                    firstTeamFirstTopView!.frame.origin.x = secondTeamFirstTargetView.frame.origin.x
-                    firstTeamFirstTopView!.frame.origin.y = secondTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamFirstPlayerPosition = 3
-                case firstTeamSecondTopView:
-                    firstTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetView.frame.origin.x
-                    firstTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamSecondPlayerPosition = 3
-                case secondTeamFirstTopView:
-                    secondTeamFirstTopView!.frame.origin.x = secondTeamFirstTargetView.frame.origin.x
-                    secondTeamFirstTopView!.frame.origin.y = secondTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamFirstPlayerPosition = 3
-                case secondTeamSecondTopView:
-                    secondTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetView.frame.origin.x
-                    secondTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamSecondPlayerPosition = 3
-                default:
-                    break
-                }
-            } else if secondTeamSecondTargetView.frame.contains(finalLocation) {
-                switch currentView {
-                case firstTeamFirstTopView:
-                    firstTeamFirstTopView!.frame.origin.x = secondTeamSecondTargetView.frame.origin.x
-                    firstTeamFirstTopView!.frame.origin.y = secondTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamFirstPlayerPosition = 4
-                case firstTeamSecondTopView:
-                    firstTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetView.frame.origin.x
-                    firstTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.firstTeamSecondPlayerPosition = 4
-                case secondTeamFirstTopView:
-                    secondTeamFirstTopView!.frame.origin.x = secondTeamSecondTargetView.frame.origin.x
-                    secondTeamFirstTopView!.frame.origin.y = secondTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamFirstPlayerPosition = 4
-                case secondTeamSecondTopView:
-                    secondTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetView.frame.origin.x
-                    secondTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetView.frame.origin.y
-                    currentMatch.matchStatistics.secondTeamSecondPlayerPosition = 4
-                default:
-                    break
-                }
-            } else {
-                
-                switch currentView {
-                    case firstTeamFirstTopView:
-                        firstTeamFirstTopView.frame.origin.x = firstTeamFirstInitialLocation.x
-                        firstTeamFirstTopView.frame.origin.y = firstTeamFirstInitialLocation.y
-                        currentMatch.matchStatistics.firstTeamFirstPlayerPosition = 0
-                    case firstTeamSecondTopView:
-                        firstTeamSecondTopView.frame.origin.x = firstTeamSecondInitialLocation.x
-                        firstTeamSecondTopView.frame.origin.y = firstTeamSecondInitialLocation.y
-                        currentMatch.matchStatistics.firstTeamSecondPlayerPosition = 0
-                    case secondTeamFirstTopView:
-                        secondTeamFirstTopView.frame.origin.x = secondTeamFirstInitialLocation.x
-                        secondTeamFirstTopView.frame.origin.y = secondTeamFirstInitialLocation.y
-                        currentMatch.matchStatistics.secondTeamFirstPlayerPosition = 0
-                    case secondTeamSecondTopView:
-                        secondTeamSecondTopView.frame.origin.x = secondTeamSecondInitialLocation.x
-                        secondTeamSecondTopView.frame.origin.y = secondTeamSecondInitialLocation.y
-                        currentMatch.matchStatistics.secondTeamSecondPlayerPosition = 0
-                    case serverView:
-                        serverView.frame.origin.x = serverInitialLocation.x
-                        serverView.frame.origin.y = serverInitialLocation.y
-                    default:
-                        break
-                }
-            }
-            currentView = nil
-        }
-    }
- */
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         
@@ -590,20 +349,21 @@ extension StartMatchViewController {
 
         let touchedLocation: CGPoint = touch.location(in: view)
         
-        if receiveViewTouchedIn(touchedLocation: touchedLocation) != nil {
+        if receiveViewTouchedIn(touchedLocation: touchedLocation) != nil{
+            
             let touchedView: UIView = receiveViewTouchedIn(touchedLocation: touchedLocation)!
             xOffset = touch.location(in: touchedView).x
             yOffset = touch.location(in: touchedView).y
-            
+                        
             if touchedView == firstTeamFirstTopView || touchedView == firstTeamSecondTopView || touchedView == secondTeamFirstTopView || touchedView == secondTeamSecondTopView {
                 isDragging = true
                 currentView = touchedView
-                //view.bringSubviewToFront(currentView!)
+                
             } else if touchedView == serverView {
                 isDragging = true
                 isDraggingServer = true
                 currentView = touchedView
-                //view.bringSubviewToFront(currentView!)
+                view.bringSubviewToFront(currentView!)
             }
         }
     }
@@ -615,17 +375,12 @@ extension StartMatchViewController {
         
         let currentLocation: CGPoint = touch.location(in: view)
         
-        if isDragging == true {
-            currentView?.frame.origin.x = currentLocation.x - xOffset
-            currentView?.frame.origin.y = currentLocation.y - yOffset
-            
-            if currentView == firstTeamFirstTopView {
-                firstTeamFirstTopViewTopConstraint.constant = currentLocation.y - yOffset - firstTeamFirstInitialLocation.y
-                firstTeamFirstTopViewLeadingConstraint.constant = currentLocation.x - xOffset - firstTeamFirstInitialLocation.x
-                firstTeamFirstTopView.updateConstraints()
-            }
+        if isDragging == true && currentView != nil {
             
             if isDraggingServer == true {
+                
+                currentView?.frame.origin.x = currentLocation.x - xOffset
+                currentView?.frame.origin.y = currentLocation.y - yOffset
                 
                 if receiveViewTouchedIn(touchedLocation: currentLocation) != nil {
                     switch receiveViewTouchedIn(touchedLocation: currentLocation) {
@@ -644,28 +399,84 @@ extension StartMatchViewController {
                     }
                 }
             } else {
+                currentView?.frame.origin.x = currentLocation.x - xGlobalOffset - xOffset
+                currentView?.frame.origin.y = currentLocation.y - yGlobalOffset - yOffset
                 
+                if receiveViewTouchedIn(touchedLocation: currentLocation) != nil {
+                    switch receiveViewTouchedIn(touchedLocation: currentLocation) {
+                    case firstTeamFirstTargetView:
+                        currentTargetView = firstTeamFirstTargetView
+                    case firstTeamSecondTargetView:
+                        currentTargetView = firstTeamSecondTargetView
+                    case secondTeamFirstTargetView:
+                        currentTargetView = secondTeamFirstTargetView
+                    case secondTeamSecondTargetView:
+                        currentTargetView = secondTeamSecondTargetView
+                    default:
+                        currentTargetView = nil
+                    }
+                }
             }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         serverView.isHidden = false
+        isDraggingServer = false
+        
+        if currentBottomView != nil {
+            
+            if currentTargetView != nil {
+                currentView?.removeFromSuperview()
+                currentTargetView?.addSubview(currentView!)
+            } else {
+                currentView?.removeFromSuperview()
+                currentBottomView?.addSubview(currentView!)
+            }
+            
+            currentView?.backgroundColor = UIColor(red:0/255, green:66/255, blue:60/255, alpha: 1)
+        }
+        
+        if currentView == firstTeamFirstTopView {
+            currentView?.frame.origin.x = 0
+            currentView?.frame.origin.y = 0
+        } else if currentView == firstTeamSecondTopView {
+            currentView?.frame.origin.x = 0
+            currentView?.frame.origin.y = 0
+        } else if currentView == secondTeamFirstTopView {
+            currentView?.frame.origin.x = 0
+            currentView?.frame.origin.y = 0
+        } else if currentView == secondTeamSecondTopView {
+            currentView?.frame.origin.x = 0
+            currentView?.frame.origin.y = 0
+        } else if currentView == serverView {
+            serverView.frame.origin.x = serverInitialLocation.x
+            serverView.frame.origin.y = serverInitialLocation.y
+        }
+        
+        currentView = nil
+        currentBottomView = nil
     }
     
     func receiveViewTouchedIn(touchedLocation: CGPoint) -> UIView? {
         var touchedView: UIView? = nil
         
-        if touchedLocation.x >= firstTeamFirstTopView.frame.minX && touchedLocation.x <= firstTeamFirstTopView.frame.maxX && touchedLocation.y >= firstTeamFirstTopView.frame.minY && touchedLocation.y <= firstTeamFirstTopView.frame.maxY {
+        if touchedLocation.x >= firstTeamFirstBottomView.frame.minX && touchedLocation.x <= firstTeamFirstBottomView.frame.maxX && touchedLocation.y >= firstTeamFirstBottomView.frame.minY && touchedLocation.y <= firstTeamFirstBottomView.frame.maxY {
             touchedView = firstTeamFirstTopView
-        } else if touchedLocation.x >= firstTeamSecondTopView.frame.minX && touchedLocation.x <= firstTeamSecondTopView.frame.maxX && touchedLocation.y >= firstTeamSecondTopView.frame.minY && touchedLocation.y <= firstTeamSecondTopView.frame.maxY {
+            currentBottomView = firstTeamFirstBottomView
+        } else if touchedLocation.x >= firstTeamSecondBottomView.frame.minX && touchedLocation.x <= firstTeamSecondBottomView.frame.maxX && touchedLocation.y >= firstTeamSecondBottomView.frame.minY && touchedLocation.y <= firstTeamSecondBottomView.frame.maxY {
             touchedView = firstTeamSecondTopView
-        } else if touchedLocation.x >= secondTeamFirstTopView.frame.minX && touchedLocation.x <= secondTeamFirstTopView.frame.maxX && touchedLocation.y >= secondTeamFirstTopView.frame.minY && touchedLocation.y <= secondTeamFirstTopView.frame.maxY {
+            currentBottomView = firstTeamSecondBottomView
+        } else if touchedLocation.x >= secondTeamFirstBottomView.frame.minX && touchedLocation.x <= secondTeamFirstBottomView.frame.maxX && touchedLocation.y >= secondTeamFirstBottomView.frame.minY && touchedLocation.y <= secondTeamFirstBottomView.frame.maxY {
             touchedView = secondTeamFirstTopView
-        } else if touchedLocation.x >= secondTeamSecondTopView.frame.minX && touchedLocation.x <= secondTeamSecondTopView.frame.maxX && touchedLocation.y >= secondTeamSecondTopView.frame.minY && touchedLocation.y <= secondTeamSecondTopView.frame.maxY {
+            currentBottomView = secondTeamFirstBottomView
+        } else if touchedLocation.x >= secondTeamSecondBottomView.frame.minX && touchedLocation.x <= secondTeamSecondBottomView.frame.maxX && touchedLocation.y >= secondTeamSecondBottomView.frame.minY && touchedLocation.y <= secondTeamSecondBottomView.frame.maxY {
             touchedView = secondTeamSecondTopView
+            currentBottomView = secondTeamSecondBottomView
         } else if touchedLocation.x >= serverView.frame.minX && touchedLocation.x <= serverView.frame.maxX && touchedLocation.y >= serverView.frame.minY && touchedLocation.y <= serverView.frame.maxY {
             touchedView = serverView
+            xGlobalOffset = serverView.frame.origin.x
+            yGlobalOffset = serverView.frame.origin.y
         } else if touchedLocation.x >= firstTeamFirstTargetView.frame.minX && touchedLocation.x <= firstTeamFirstTargetView.frame.maxX && touchedLocation.y >= firstTeamFirstTargetView.frame.minY && touchedLocation.y <= firstTeamFirstTargetView.frame.maxY {
             touchedView = firstTeamFirstTargetView
         } else if touchedLocation.x >= firstTeamSecondTargetView.frame.minX && touchedLocation.x <= firstTeamSecondTargetView.frame.maxX && touchedLocation.y >= firstTeamSecondTargetView.frame.minY && touchedLocation.y <= firstTeamSecondTargetView.frame.maxY {
@@ -674,6 +485,11 @@ extension StartMatchViewController {
             touchedView = secondTeamFirstTargetView
         } else if touchedLocation.x >= secondTeamSecondTargetView.frame.minX && touchedLocation.x <= secondTeamSecondTopView.frame.maxX && touchedLocation.y >= secondTeamSecondTargetView.frame.minY && touchedLocation.y <= secondTeamSecondTargetView.frame.maxY {
             touchedView = secondTeamSecondTargetView
+        }
+        
+        if currentBottomView != nil {
+            xGlobalOffset = currentBottomView!.frame.origin.x
+            yGlobalOffset = currentBottomView!.frame.origin.y
         }
         
         return touchedView
