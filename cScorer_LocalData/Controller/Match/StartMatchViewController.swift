@@ -49,6 +49,12 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     var teamNames: [String] = []
     
+    /*
+        Timer
+     */
+    
+    var timer: Timer?
+    
     // MARK: - Outlets
     @IBOutlet weak var firstTeamFirstTopView: UIView!
     @IBOutlet weak var firstTeamFirstBottomView: UIView!
@@ -113,11 +119,48 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBAction func startButtonTapped(_ sender: UIButton) {
     }
     @IBAction func warmupButtonTapped(_ sender: UIButton) {
+        
+        restartButton.isHidden = false
+        
+        if warmupButton.title(for: .normal) == "Warmup"{
+            currentMatch.matchStatistics.warmupStartedTimeStamp = NSDate()
+            currentMatch.matchStatistics.warmupTimerRunning = true
+            
+            warmupButton.setTitle("Stop", for: .normal)
+            
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startWarmupTimer), userInfo: nil, repeats: true)
+        } else if warmupButton.title(for: .normal) == "Stop"{
+            currentMatch.matchStatistics.warmupFinishedTimeStamp = NSDate()
+            currentMatch.matchStatistics.warmupTimerRunning = false
+            
+            timer?.invalidate()
+            
+            warmupButton.setTitle("Neustart", for: .normal)
+        } else if warmupButton.title(for: .normal) == "Neustart"{
+            currentMatch.matchStatistics.warmupFinishedTimeStamp = NSDate()
+            currentMatch.matchStatistics.warmupTimerRunning = true
+                        
+            warmupButton.setTitle("Stop", for: .normal)
+        }
     }
     @IBAction func restartButtonTapped(_ sender: UIButton) {
+        
+        if currentMatch.matchStatistics.warmupTimerRunning == false {
+            restartButton.isHidden = true
+            timerLabel.text = "00:00:00"
+            warmupButton.setTitle("Warmup", for: .normal)
+        }
+        currentMatch.matchStatistics.warmupStartedTimeStamp = NSDate()
     }
     
     // MARK: - Functions
+    @objc func startWarmupTimer() {
+        let now = NSDate()
+        let remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch.matchStatistics.warmupStartedTimeStamp as Date)
+                
+        timerLabel.text = "\(remainingTimeInterval.format(using: [.hour, .minute, .second])!)"
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "editMatchSetupSegue":
@@ -424,17 +467,22 @@ extension StartMatchViewController {
         serverView.isHidden = false
         isDraggingServer = false
         
-        if currentBottomView != nil {
-            
-            if currentTargetView != nil {
-                currentView?.removeFromSuperview()
-                currentTargetView?.addSubview(currentView!)
-            } else {
-                currentView?.removeFromSuperview()
-                currentBottomView?.addSubview(currentView!)
+        if currentView != serverView {
+            if currentBottomView != nil {
+                
+                if currentTargetView != nil {
+                    currentView?.removeFromSuperview()
+                    currentTargetView?.addSubview(currentView!)
+                    currentTargetView?.bringSubviewToFront(currentView!)
+
+                } else {
+                    currentView?.removeFromSuperview()
+                    currentBottomView?.addSubview(currentView!)
+                    currentBottomView?.bringSubviewToFront(currentView!)
+                }
+                
+                currentView?.backgroundColor = UIColor(red:0/255, green:66/255, blue:60/255, alpha: 1)
             }
-            
-            currentView?.backgroundColor = UIColor(red:0/255, green:66/255, blue:60/255, alpha: 1)
         }
         
         if currentView == firstTeamFirstTopView {
