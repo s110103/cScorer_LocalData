@@ -21,7 +21,6 @@ class AddPlayerViewController: UIViewController {
     var delegate: AddPlayerViewControlerDelegate?
     
     var activeTextField: UITextField? = nil
-    var viewOriginY: CGFloat = 0
     
     // MARK: - Outlets
     @IBOutlet weak var addPlayerNameTextField: UITextField!
@@ -89,11 +88,12 @@ class AddPlayerViewController: UIViewController {
 
       if(shouldMoveViewUp) {
         self.view.frame.origin.y = 0 - keyboardSize.height
+        
       }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-      self.view.frame.origin.y = 0
+        self.view.frame.origin.y = 0
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -101,8 +101,6 @@ class AddPlayerViewController: UIViewController {
     }
     
     func initObjects() {
-        viewOriginY = self.view.frame.origin.y
-        print(viewOriginY)
         
         addPlayerStackView.isUserInteractionEnabled = true
         let tapInStackView = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))

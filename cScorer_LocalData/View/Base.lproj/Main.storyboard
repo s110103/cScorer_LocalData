@@ -1754,6 +1754,7 @@
                             <constraint firstItem="OTN-yj-CLM" firstAttribute="top" secondItem="seO-p6-g0v" secondAttribute="bottom" constant="8" id="DZD-Hd-SoD"/>
                             <constraint firstItem="okP-nd-wZR" firstAttribute="trailing" secondItem="Gnf-AS-XsI" secondAttribute="trailing" constant="56" id="DdJ-ES-J1p"/>
                             <constraint firstItem="Gnf-AS-XsI" firstAttribute="leading" secondItem="okP-nd-wZR" secondAttribute="leading" constant="56" id="DhF-9n-19V"/>
+                            <constraint firstAttribute="bottom" secondItem="OTN-yj-CLM" secondAttribute="bottom" constant="34" id="GCH-DO-raI"/>
                             <constraint firstItem="omq-Eu-JuT" firstAttribute="top" secondItem="okP-nd-wZR" secondAttribute="top" constant="10" id="HOO-7V-FT6"/>
                             <constraint firstItem="omq-Eu-JuT" firstAttribute="centerX" secondItem="bKW-7e-M3q" secondAttribute="centerX" id="JKZ-LI-MYN"/>
                             <constraint firstItem="seO-p6-g0v" firstAttribute="leading" secondItem="okP-nd-wZR" secondAttribute="leading" id="MZb-Gm-MuZ"/>
@@ -1762,7 +1763,6 @@
                             <constraint firstItem="OTN-yj-CLM" firstAttribute="leading" secondItem="okP-nd-wZR" secondAttribute="leading" constant="20" id="iQ8-Y8-cTs"/>
                             <constraint firstItem="okP-nd-wZR" firstAttribute="trailing" secondItem="OTN-yj-CLM" secondAttribute="trailing" constant="20" id="wYH-Ml-Gok"/>
                             <constraint firstItem="seO-p6-g0v" firstAttribute="top" secondItem="Gnf-AS-XsI" secondAttribute="bottom" constant="20" id="xK3-xo-2H9"/>
-                            <constraint firstItem="OTN-yj-CLM" firstAttribute="bottom" secondItem="okP-nd-wZR" secondAttribute="bottom" id="xwE-Kq-ao0"/>
                         </constraints>
                     </view>
                     <connections>
