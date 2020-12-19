@@ -104,6 +104,7 @@ class SelectPlayerDetailsViewController: UIViewController, UITableViewDelegate, 
                 let i = indexPath.row
                     
                 self.savedPlayers.remove(at: i)
+                self.savePlayers()
                 self.playersTableView.reloadData()
                 
                 if self.savedPlayers.count == 0 {

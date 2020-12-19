@@ -21,6 +21,7 @@ class AddPlayerViewController: UIViewController {
     var delegate: AddPlayerViewControlerDelegate?
     
     var activeTextField: UITextField? = nil
+    var viewOriginY: CGFloat = 0
     
     // MARK: - Outlets
     @IBOutlet weak var addPlayerNameTextField: UITextField!
@@ -100,6 +101,9 @@ class AddPlayerViewController: UIViewController {
     }
     
     func initObjects() {
+        viewOriginY = self.view.frame.origin.y
+        print(viewOriginY)
+        
         addPlayerStackView.isUserInteractionEnabled = true
         let tapInStackView = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         addPlayerStackView.addGestureRecognizer(tapInStackView)
