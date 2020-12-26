@@ -78,10 +78,23 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     @IBOutlet weak var serverView: UIView!
     
-    @IBOutlet weak var firstTeamFirstTargetView: UIView!
-    @IBOutlet weak var firstTeamSecondTargetView: UIView!
-    @IBOutlet weak var secondTeamFirstTargetView: UIView!
-    @IBOutlet weak var secondTeamSecondTargetView: UIView!
+    @IBOutlet weak var firstTeamFirstTargetBottomView: UIView!
+    @IBOutlet weak var firstTeamSecondTargetBottomView: UIView!
+    @IBOutlet weak var secondTeamFirstTargetBottomView: UIView!
+    @IBOutlet weak var secondTeamSecondTargetBottomView: UIView!
+    
+    @IBOutlet weak var firstTeamFirstTargetTopView: UIView!
+    @IBOutlet weak var firstTeamSecondTargetTopView: UIView!
+    @IBOutlet weak var secondTeamFirstTargetTopView: UIView!
+    @IBOutlet weak var secondTeamSecondTargetTopView: UIView!
+    
+    @IBOutlet weak var firstTeamFirstTargetTopLabel: UILabel!
+    @IBOutlet weak var firstTeamSecondTargetTopLabel: UILabel!
+    @IBOutlet weak var secondTeamFirstTargetTopLabel: UILabel!
+    @IBOutlet weak var secondTeamSecondTargetTopLabel: UILabel!
+    
+    
+    @IBOutlet weak var dummyView: UIView!
     
     @IBOutlet weak var tossWinnerTextField: UITextField!
     @IBOutlet weak var choiceMakerTextField: UITextField!
@@ -199,17 +212,17 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 firstTeamSecondTopView!.frame.origin.x = firstTeamSecondBottomView.frame.origin.x
                 firstTeamSecondTopView!.frame.origin.y = firstTeamSecondBottomView.frame.origin.y
             case 1:
-                firstTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetView.frame.origin.y
+                firstTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetBottomView.frame.origin.x
+                firstTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetBottomView.frame.origin.y
             case 2:
-                firstTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetView.frame.origin.y
+                firstTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetBottomView.frame.origin.x
+                firstTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetBottomView.frame.origin.y
             case 3:
-                firstTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetView.frame.origin.y
+                firstTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetBottomView.frame.origin.x
+                firstTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetBottomView.frame.origin.y
             case 4:
-                firstTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetView.frame.origin.y
+                firstTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetBottomView.frame.origin.x
+                firstTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetBottomView.frame.origin.y
             default:
                 break
             }
@@ -219,17 +232,17 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 secondTeamSecondTopView!.frame.origin.x = secondTeamSecondBottomView.frame.origin.x
                 secondTeamSecondTopView!.frame.origin.y = secondTeamSecondBottomView.frame.origin.y
             case 1:
-                secondTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetView.frame.origin.y
+                secondTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetBottomView.frame.origin.x
+                secondTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetBottomView.frame.origin.y
             case 2:
-                secondTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetView.frame.origin.y
+                secondTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetBottomView.frame.origin.x
+                secondTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetBottomView.frame.origin.y
             case 3:
-                secondTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetView.frame.origin.y
+                secondTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetBottomView.frame.origin.x
+                secondTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetBottomView.frame.origin.y
             case 4:
-                secondTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetView.frame.origin.y
+                secondTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetBottomView.frame.origin.x
+                secondTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetBottomView.frame.origin.y
             default:
                 break
             }
@@ -258,15 +271,16 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         serverInitialLocation.x = serverView.frame.origin.x
         serverInitialLocation.y = serverView.frame.origin.y
         
-        firstTeamFirstTargetView.layer.borderWidth = 0
-        firstTeamSecondTargetView.layer.borderWidth = 0
-        secondTeamFirstTargetView.layer.borderWidth = 0
-        secondTeamSecondTargetView.layer.borderWidth = 0
+        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+        secondTeamSecondTargetBottomView.layer.borderWidth = 0
         
-        firstTeamFirstTargetView.layer.borderColor = UIColor(ciColor: .green).cgColor
-        firstTeamSecondTargetView.layer.borderColor = UIColor(ciColor: .green).cgColor
-        secondTeamFirstTargetView.layer.borderColor = UIColor(ciColor: .green).cgColor
-        secondTeamSecondTargetView.layer.borderColor = UIColor(ciColor: .green).cgColor
+        firstTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+        firstTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+        secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+        secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+        
         
         tossWinnerTextField.layer.borderWidth = 1
         tossWinnerTextField.layer.cornerRadius = 5
@@ -286,19 +300,19 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
         firstTeamFirstTopView.layer.cornerRadius = 5
         firstTeamFirstBottomView.layer.cornerRadius = 5
-        firstTeamFirstTargetView.layer.cornerRadius = 5
+        firstTeamFirstTargetBottomView.layer.cornerRadius = 5
         
         firstTeamSecondTopView.layer.cornerRadius = 5
         firstTeamSecondBottomView.layer.cornerRadius = 5
-        firstTeamSecondTargetView.layer.cornerRadius = 5
+        firstTeamSecondTargetBottomView.layer.cornerRadius = 5
         
         secondTeamFirstTopView.layer.cornerRadius = 5
         secondTeamFirstBottomView.layer.cornerRadius = 5
-        secondTeamFirstTargetView.layer.cornerRadius = 5
+        secondTeamFirstTargetBottomView.layer.cornerRadius = 5
         
         secondTeamSecondTopView.layer.cornerRadius = 5
         secondTeamSecondBottomView.layer.cornerRadius = 5
-        secondTeamSecondTargetView.layer.cornerRadius = 5
+        secondTeamSecondTargetBottomView.layer.cornerRadius = 5
         
         let wonTossRow: Int = currentMatch.matchStatistics.wonToss
         let madeChoiceRow: Int = currentMatch.matchStatistics.madeChoice
@@ -388,6 +402,51 @@ extension StartMatchViewController {
             return
         }
         
+        let touchedPoint: CGPoint = touch.location(in: view)
+        
+        if touchedPoint.x >= firstTeamSecondBottomView.frame.minX && touchedPoint.x <= firstTeamSecondBottomView.frame.maxX && touchedPoint.y >= firstTeamSecondBottomView.frame.minY && touchedPoint.y <= firstTeamSecondBottomView.frame.maxY {
+            
+            let touchInView: CGPoint = touch.location(in: firstTeamSecondBottomView)
+            
+            isDragging = true
+            firstTeamSecondTopView.isHidden = true
+            dummyView.isHidden = false
+            
+            firstTeamSecondTargetTopView.isHidden = false
+            
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let touchedPoint: CGPoint = touch.location(in: view)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        
+        firstTeamSecondTopView.isHidden = false
+        dummyView.isHidden = true
+    }
+    
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
+        currentMatch = match
+        selectedIndex = indexOfMatch
+    }
+    
+    /*
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
         containsPlayerFirstTeamFirstTarget = true
 
         let touchedLocation: CGPoint = touch.location(in: view)
@@ -401,6 +460,7 @@ extension StartMatchViewController {
             if touchedView == firstTeamFirstTopView || touchedView == firstTeamSecondTopView || touchedView == secondTeamFirstTopView || touchedView == secondTeamSecondTopView {
                 isDragging = true
                 currentView = touchedView
+                view.bringSubviewToFront(touchedView)
                 
             } else if touchedView == serverView {
                 isDragging = true
@@ -473,12 +533,12 @@ extension StartMatchViewController {
                 if currentTargetView != nil {
                     currentView?.removeFromSuperview()
                     currentTargetView?.addSubview(currentView!)
-                    currentTargetView?.bringSubviewToFront(currentView!)
+                    view.bringSubviewToFront(currentView!)
 
                 } else {
                     currentView?.removeFromSuperview()
                     currentBottomView?.addSubview(currentView!)
-                    currentBottomView?.bringSubviewToFront(currentView!)
+                    view.bringSubviewToFront(currentView!)
                 }
                 
                 currentView?.backgroundColor = UIColor(red:0/255, green:66/255, blue:60/255, alpha: 1)
@@ -547,4 +607,6 @@ extension StartMatchViewController {
         currentMatch = match
         selectedIndex = indexOfMatch
     }
+ 
+ */
 }
