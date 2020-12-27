@@ -30,6 +30,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var currentView: String?
     var currentPlayerName: String?
     var usingDummyView: Bool = false
+    var isDummyServer: Bool = false
     
     var firstTeamFirstInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
     var firstTeamSecondInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
@@ -290,6 +291,10 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         secondTeamSecondTargetTopView.layer.cornerRadius = 5
         secondTeamSecondTargetBottomView.layer.cornerRadius = 5
         
+        dummyView.layer.cornerRadius = 5
+        dummyView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+        dummyView.layer.borderWidth = 0
+        
         let wonTossRow: Int = currentMatch.matchStatistics.wonToss
         let madeChoiceRow: Int = currentMatch.matchStatistics.madeChoice
         
@@ -381,6 +386,22 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 if secondTeamSecondTopView.isHidden == false {
                     currentView = touchedView
                 }
+            case "firstTeamFirstTargetBottomView":
+                if firstTeamFirstTargetTopView.isHidden == false {
+                    currentView = touchedView
+                }
+            case "firstTeamSecondTargetBottomView":
+                if firstTeamSecondTargetTopView.isHidden == false {
+                    currentView = touchedView
+                }
+            case "secondTeamFirstTargetBottomView":
+                if secondTeamFirstTargetTopView.isHidden == false {
+                    currentView = touchedView
+                }
+            case "secondTeamSecondTargetBottomView":
+                if secondTeamSecondTargetTopView.isHidden == false {
+                    currentView = touchedView
+                }
             case "serverView":
                 currentView = touchedView
             default:
@@ -456,6 +477,12 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 dummyView.frame.origin.x = touchedPoint.x - xOffset
                 dummyView.frame.origin.y = touchedPoint.y - yOffset
                 
+                if containsServerFirstTeamFirst == true {
+                    dummyView.layer.borderWidth = 2
+                    isDummyServer = true
+                    containsServerFirstTeamFirst = false
+                }
+                
                 dummyView.isHidden = false
                 usingDummyView = true
             case "firstTeamSecondBottomView":
@@ -470,6 +497,12 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 dummyLabel.text = "\(firstTeamSecondTopLabel!.text ?? "nA")"
                 dummyView.frame.origin.x = touchedPoint.x - xOffset
                 dummyView.frame.origin.y = touchedPoint.y - yOffset
+                
+                if containsServerFirstTeamSecond == true {
+                    dummyView.layer.borderWidth = 2
+                    isDummyServer = true
+                    containsServerFirstTeamSecond = false
+                }
                 
                 dummyView.isHidden = false
                 usingDummyView = true
@@ -486,6 +519,12 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 dummyView.frame.origin.x = touchedPoint.x - xOffset
                 dummyView.frame.origin.y = touchedPoint.y - yOffset
                 
+                if containsServerSecondTeamFirst == true {
+                    dummyView.layer.borderWidth = 2
+                    isDummyServer = true
+                    containsServerSecondTeamFirst = false
+                }
+                
                 dummyView.isHidden = false
                 usingDummyView = true
             case "secondTeamSecondBottomView":
@@ -501,11 +540,123 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 dummyView.frame.origin.x = touchedPoint.x - xOffset
                 dummyView.frame.origin.y = touchedPoint.y - yOffset
                 
+                if containsServerSecondTeamSecond == true {
+                    dummyView.layer.borderWidth = 2
+                    isDummyServer = true
+                    containsServerSecondTeamSecond = false
+                }
+                
                 dummyView.isHidden = false
                 usingDummyView = true
+            case "firstTeamFirstTargetBottomView":
+                if containsPlayerFirstTeamFirstTarget != "" {
+                    let touchInView: CGPoint = touch.location(in: firstTeamFirstTargetBottomView)
+                    
+                    isDragging = true
+                    firstTeamFirstTargetTopView.isHidden = true
+                    
+                    xOffset = touchInView.x
+                    yOffset = touchInView.y
+                    
+                    dummyLabel.text = "\(firstTeamFirstTargetTopLabel!.text ?? "nA")"
+                    dummyView.frame.origin.x = touchedPoint.x - xOffset
+                    dummyView.frame.origin.y = touchedPoint.y - yOffset
+                    
+                    if containsServerFirstTeamFirst == true {
+                        dummyView.layer.borderWidth = 2
+                        isDummyServer = true
+                        containsServerFirstTeamFirst = false
+                    }
+                    
+                    dummyView.isHidden = false
+                    usingDummyView = true
+                    
+                    currentView = containsPlayerFirstTeamFirstTarget
+                    containsPlayerFirstTeamFirstTarget = ""
+                }
+            case "firstTeamSecondTargetBottomView":
+                if containsPlayerFirstTeamSecondTarget != "" {
+                    let touchInView: CGPoint = touch.location(in: firstTeamSecondTargetBottomView)
+                    
+                    isDragging = true
+                    firstTeamSecondTargetTopView.isHidden = true
+                    
+                    xOffset = touchInView.x
+                    yOffset = touchInView.y
+                    
+                    dummyLabel.text = "\(firstTeamSecondTargetTopLabel!.text ?? "nA")"
+                    dummyView.frame.origin.x = touchedPoint.x - xOffset
+                    dummyView.frame.origin.y = touchedPoint.y - yOffset
+                    
+                    if containsServerFirstTeamSecond == true {
+                        dummyView.layer.borderWidth = 2
+                        isDummyServer = true
+                        containsServerFirstTeamSecond = false
+                    }
+                    
+                    dummyView.isHidden = false
+                    usingDummyView = true
+                    
+                    currentView = containsPlayerFirstTeamSecondTarget
+                    containsPlayerFirstTeamSecondTarget = ""
+                }
+            case "secondTeamFirstTargetBottomView":
+                if containsPlayerSecondTeamFirstTarget != "" {
+                    let touchInView: CGPoint = touch.location(in: secondTeamFirstTargetBottomView)
+                    
+                    isDragging = true
+                    secondTeamFirstTargetTopView.isHidden = true
+                    
+                    xOffset = touchInView.x
+                    yOffset = touchInView.y
+                    
+                    dummyLabel.text = "\(secondTeamFirstTargetTopLabel!.text ?? "nA")"
+                    dummyView.frame.origin.x = touchedPoint.x - xOffset
+                    dummyView.frame.origin.y = touchedPoint.y - yOffset
+                    
+                    if containsServerSecondTeamFirst == true {
+                        dummyView.layer.borderWidth = 2
+                        isDummyServer = true
+                        containsServerSecondTeamFirst = false
+                    }
+                    
+                    dummyView.isHidden = false
+                    usingDummyView = true
+                    
+                    currentView = containsPlayerSecondTeamFirstTarget
+                    containsPlayerSecondTeamFirstTarget = ""
+                }
+            case "secondTeamSecondTargetBottomView":
+                if containsPlayerSecondTeamSecondTarget != "" {
+                    let touchInView: CGPoint = touch.location(in: secondTeamSecondTargetBottomView)
+                    
+                    isDragging = true
+                    secondTeamSecondTargetTopView.isHidden = true
+                    
+                    xOffset = touchInView.x
+                    yOffset = touchInView.y
+                    
+                    dummyLabel.text = "\(secondTeamSecondTargetTopLabel!.text ?? "nA")"
+                    dummyView.frame.origin.x = touchedPoint.x - xOffset
+                    dummyView.frame.origin.y = touchedPoint.y - yOffset
+                    
+                    if containsServerSecondTeamSecond == true {
+                        dummyView.layer.borderWidth = 2
+                        isDummyServer = true
+                        containsServerSecondTeamSecond = false
+                    }
+                    
+                    dummyView.isHidden = false
+                    usingDummyView = true
+                    
+                    currentView = containsPlayerSecondTeamSecondTarget
+                    containsPlayerSecondTeamSecondTarget = ""
+                }
             default:
                 break
             }
+            
+            view.bringSubviewToFront(dummyView)
         } else if currentView != "" && currentView == "serverView" {
             
             firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
@@ -524,6 +675,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             yOffset = touchInView.y
             
             isDraggingServer = true
+            view.bringSubviewToFront(serverView)
         }
     }
     
@@ -838,55 +990,105 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             
             switch touchedView {
             case "firstTeamFirstTargetBottomView":
-                firstTeamFirstTargetTopView.layer.borderWidth = 2
-                firstTeamSecondTargetTopView.layer.borderWidth = 0
-                secondTeamFirstTargetTopView.layer.borderWidth = 0
-                secondTeamSecondTargetTopView.layer.borderWidth = 0
-                
-                firstTeamFirstTargetBottomView.layer.borderWidth = 2
-                firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                if containsPlayerFirstTeamFirstTarget != "" {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 2
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 2
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                }
             case "firstTeamSecondTargetBottomView":
-                firstTeamFirstTargetTopView.layer.borderWidth = 0
-                firstTeamSecondTargetTopView.layer.borderWidth = 2
-                secondTeamFirstTargetTopView.layer.borderWidth = 0
-                secondTeamSecondTargetTopView.layer.borderWidth = 0
-                
-                firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                firstTeamSecondTargetBottomView.layer.borderWidth = 2
-                secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                if containsPlayerFirstTeamSecondTarget != "" {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 2
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 2
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                }
             case "secondTeamFirstTargetBottomView":
-                firstTeamFirstTargetTopView.layer.borderWidth = 0
-                firstTeamSecondTargetTopView.layer.borderWidth = 0
-                secondTeamFirstTargetTopView.layer.borderWidth = 2
-                secondTeamSecondTargetTopView.layer.borderWidth = 0
-                
-                firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                secondTeamFirstTargetBottomView.layer.borderWidth = 2
-                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                if containsPlayerSecondTeamFirstTarget != "" {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 2
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 2
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                }
             case "secondTeamSecondTargetBottomView":
-                firstTeamFirstTargetTopView.layer.borderWidth = 0
-                firstTeamSecondTargetTopView.layer.borderWidth = 0
-                secondTeamFirstTargetTopView.layer.borderWidth = 0
-                secondTeamSecondTargetTopView.layer.borderWidth = 2
-                
-                firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                secondTeamSecondTargetBottomView.layer.borderWidth = 2
+                if containsPlayerSecondTeamSecondTarget != "" {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 2
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 2
+                }
             default:
-                firstTeamFirstTargetTopView.layer.borderWidth = 0
-                firstTeamSecondTargetTopView.layer.borderWidth = 0
-                secondTeamFirstTargetTopView.layer.borderWidth = 0
-                secondTeamSecondTargetTopView.layer.borderWidth = 0
-                
-                firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                if containsServerFirstTeamFirst == true {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 2
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 2
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                } else if containsServerFirstTeamSecond == true {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 2
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 2
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                } else if containsServerSecondTeamFirst == true {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 2
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 2
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                } else if containsServerSecondTeamSecond == true {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 2
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 2
+                } else {
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                }
             }
             
             serverView.frame.origin.x = touchedPoint.x - xOffset
@@ -975,6 +1177,13 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         firstTeamFirstTargetBottomView.layer.borderWidth = 0
                     }
                     
+                    if isDummyServer == true {
+                        containsServerFirstTeamFirst = true
+                        currentMatch.matchStatistics.isServer = "firstTeamFirst"
+                        firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamFirstTargetTopView.layer.borderWidth = 2
+                    }
+                    
                     switch containsPlayerFirstTeamFirstTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1039,6 +1248,13 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         
                         firstTeamSecondTargetTopView.layer.borderWidth = 0
                         firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    
+                    if isDummyServer == true {
+                        containsServerFirstTeamSecond = true
+                        currentMatch.matchStatistics.isServer = "firstTeamSecond"
+                        firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamSecondTargetTopView.layer.borderWidth = 2
                     }
                     
                     switch containsPlayerFirstTeamSecondTarget {
@@ -1107,6 +1323,13 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         secondTeamFirstTargetBottomView.layer.borderWidth = 0
                     }
                     
+                    if isDummyServer == true {
+                        containsServerSecondTeamFirst = true
+                        currentMatch.matchStatistics.isServer = "secondTeamFirst"
+                        secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamFirstTargetTopView.layer.borderWidth = 2
+                    }
+                    
                     switch containsPlayerSecondTeamFirstTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1171,6 +1394,13 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         
                         secondTeamSecondTargetTopView.layer.borderWidth = 0
                         secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    
+                    if isDummyServer == true {
+                        containsServerSecondTeamSecond = true
+                        currentMatch.matchStatistics.isServer = "secondTeamSecond"
+                        secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamSecondTargetTopView.layer.borderWidth = 2
                     }
                     
                     switch containsPlayerSecondTeamSecondTarget {
@@ -1248,10 +1478,12 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 dummyView.isHidden = true
                 dummyView.frame.origin.x = dummyViewInitialLocation.x
                 dummyView.frame.origin.y = dummyViewInitialLocation.y
+                dummyView.layer.borderWidth = 0
                 dummyLabel.text = ""
                 
                 isDragging = false
                 usingDummyView = false
+                isDummyServer = false
                 currentView = ""
             }
         }
@@ -1270,6 +1502,14 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     
                     firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                     firstTeamFirstTargetTopView.layer.borderWidth = 2
+                    
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
                                         
                     let trimmedPlayerIndex = containsPlayerFirstTeamFirstTarget.dropLast(10)
                     currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
@@ -1284,6 +1524,14 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                     firstTeamSecondTargetTopView.layer.borderWidth = 2
                     
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    
                     let trimmedPlayerIndex = containsPlayerFirstTeamSecondTarget.dropLast(10)
                     currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
                 }
@@ -1297,6 +1545,14 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                     secondTeamFirstTargetTopView.layer.borderWidth = 2
                     
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    
                     let trimmedPlayerIndex = containsPlayerSecondTeamFirstTarget.dropLast(10)
                     currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
                 }
@@ -1309,6 +1565,14 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     
                     secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                     secondTeamSecondTargetTopView.layer.borderWidth = 2
+                    
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
                     
                     let trimmedPlayerIndex = containsPlayerSecondTeamSecondTarget.dropLast(10)
                     currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
