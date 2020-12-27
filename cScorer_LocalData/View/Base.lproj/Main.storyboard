@@ -856,7 +856,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nNh-RN-NRs">
-                                <rect key="frame" x="158" y="440" width="236" height="34"/>
+                                <rect key="frame" x="158" y="452" width="236" height="34"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="bVf-Vq-aXr"/>
@@ -866,7 +866,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Entscheidung" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1k6-oB-eUq">
-                                <rect key="frame" x="20" y="440" width="130" height="34"/>
+                                <rect key="frame" x="20" y="452" width="130" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="iI5-PL-Ydc"/>
                                     <constraint firstAttribute="height" constant="34" id="k5x-ph-gBb"/>
@@ -918,7 +918,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cy-JA-2Cd">
-                                <rect key="frame" x="20" y="482" width="374" height="210"/>
+                                <rect key="frame" x="20" y="494" width="374" height="198"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="39"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -952,7 +952,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wahlgewinner" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-s8-xXW">
-                                <rect key="frame" x="20" y="398" width="130" height="34"/>
+                                <rect key="frame" x="20" y="410" width="130" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="0Si-5X-Jvj"/>
                                     <constraint firstAttribute="width" constant="130" id="G0C-h6-4PO"/>
@@ -993,7 +993,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0w1-4h-XbC">
-                                <rect key="frame" x="158" y="398" width="236" height="34"/>
+                                <rect key="frame" x="158" y="410" width="236" height="34"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="lLN-th-Cyl"/>
@@ -1007,13 +1007,13 @@
                         <color key="backgroundColor" red="0.00048875773790000004" green="0.1215891913" blue="0.1176489964" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="0w1-4h-XbC" firstAttribute="top" secondItem="gMN-R9-4QI" secondAttribute="bottom" constant="8" symbolic="YES" id="174-Zd-8zf"/>
+                            <constraint firstItem="0w1-4h-XbC" firstAttribute="top" secondItem="gMN-R9-4QI" secondAttribute="bottom" constant="20" id="174-Zd-8zf"/>
                             <constraint firstItem="9hw-OQ-6he" firstAttribute="top" secondItem="goX-0k-TmN" secondAttribute="top" constant="8" id="1WT-0p-NHf"/>
                             <constraint firstItem="UPe-8K-0Fl" firstAttribute="top" secondItem="goX-0k-TmN" secondAttribute="top" constant="8" id="2Rx-V0-FsP"/>
                             <constraint firstItem="M9u-s8-xXW" firstAttribute="leading" secondItem="goX-0k-TmN" secondAttribute="leading" constant="20" id="2fb-vO-7ZQ"/>
                             <constraint firstItem="SPv-GI-Kzq" firstAttribute="top" secondItem="jN8-j3-2gX" secondAttribute="bottom" constant="8" symbolic="YES" id="4Ca-jA-tzT"/>
                             <constraint firstItem="pmk-xw-fRa" firstAttribute="top" secondItem="9cy-JA-2Cd" secondAttribute="bottom" constant="8" id="4Fz-ax-ldB"/>
-                            <constraint firstItem="M9u-s8-xXW" firstAttribute="top" secondItem="SPv-GI-Kzq" secondAttribute="bottom" constant="8" symbolic="YES" id="54K-sf-nG5"/>
+                            <constraint firstItem="M9u-s8-xXW" firstAttribute="top" secondItem="SPv-GI-Kzq" secondAttribute="bottom" constant="20" id="54K-sf-nG5"/>
                             <constraint firstItem="eWn-4K-aBq" firstAttribute="top" secondItem="UPe-8K-0Fl" secondAttribute="bottom" constant="8" id="5QB-ZM-n6w"/>
                             <constraint firstItem="nNh-RN-NRs" firstAttribute="top" secondItem="0w1-4h-XbC" secondAttribute="bottom" constant="8" symbolic="YES" id="5kv-rN-Huy"/>
                             <constraint firstItem="9cy-JA-2Cd" firstAttribute="top" secondItem="nNh-RN-NRs" secondAttribute="bottom" constant="8" id="83E-H0-k9A"/>
@@ -1068,6 +1068,7 @@
                     <navigationItem key="navigationItem" id="8Ub-D4-Oxb"/>
                     <connections>
                         <outlet property="choiceMakerTextField" destination="nNh-RN-NRs" id="xbM-lf-DQe"/>
+                        <outlet property="dummyLabel" destination="RXc-nM-cHW" id="ctA-Kc-do8"/>
                         <outlet property="dummyView" destination="HlB-7I-BVA" id="sgD-rR-Z8e"/>
                         <outlet property="firstTeamFirstBottomLabel" destination="Gov-M0-BoU" id="2Ch-Am-Lot"/>
                         <outlet property="firstTeamFirstBottomView" destination="Y6G-Du-P3Y" id="bQH-iK-lBy"/>

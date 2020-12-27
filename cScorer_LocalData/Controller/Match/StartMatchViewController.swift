@@ -25,13 +25,11 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var finalLocation: CGPoint = CGPoint(x: 0, y: 0)
     var xOffset: CGFloat = 0
     var yOffset: CGFloat = 0
-    var xGlobalOffset: CGFloat = 0
-    var yGlobalOffset: CGFloat = 0
     var playerViewWidth: CGFloat = 0
     var playerViewHeight: CGFloat = 0
-    var currentView: UIView?
-    var currentBottomView: UIView?
-    var currentTargetView: UIView?
+    var currentView: String?
+    var currentPlayerName: String?
+    var usingDummyView: Bool = false
     
     var firstTeamFirstInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
     var firstTeamSecondInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
@@ -95,6 +93,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     
     @IBOutlet weak var dummyView: UIView!
+    @IBOutlet weak var dummyLabel: UILabel!
     
     @IBOutlet weak var tossWinnerTextField: UITextField!
     @IBOutlet weak var choiceMakerTextField: UITextField!
@@ -206,46 +205,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             
             secondTeamSecondTopLabel.text = teamNames[1]
             secondTeamSecondBottomLabel.text = teamNames[1]
-                                    
-            switch currentMatch.matchStatistics.firstTeamSecondPlayerPosition {
-            case 0:
-                firstTeamSecondTopView!.frame.origin.x = firstTeamSecondBottomView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = firstTeamSecondBottomView.frame.origin.y
-            case 1:
-                firstTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetBottomView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetBottomView.frame.origin.y
-            case 2:
-                firstTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetBottomView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetBottomView.frame.origin.y
-            case 3:
-                firstTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetBottomView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetBottomView.frame.origin.y
-            case 4:
-                firstTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetBottomView.frame.origin.x
-                firstTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetBottomView.frame.origin.y
-            default:
-                break
-            }
             
-            switch currentMatch.matchStatistics.secondTeamSecondPlayerPosition {
-            case 0:
-                secondTeamSecondTopView!.frame.origin.x = secondTeamSecondBottomView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = secondTeamSecondBottomView.frame.origin.y
-            case 1:
-                secondTeamSecondTopView!.frame.origin.x = firstTeamFirstTargetBottomView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = firstTeamFirstTargetBottomView.frame.origin.y
-            case 2:
-                secondTeamSecondTopView!.frame.origin.x = firstTeamSecondTargetBottomView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = firstTeamSecondTargetBottomView.frame.origin.y
-            case 3:
-                secondTeamSecondTopView!.frame.origin.x = secondTeamFirstTargetBottomView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = secondTeamFirstTargetBottomView.frame.origin.y
-            case 4:
-                secondTeamSecondTopView!.frame.origin.x = secondTeamSecondTargetBottomView.frame.origin.x
-                secondTeamSecondTopView!.frame.origin.y = secondTeamSecondTargetBottomView.frame.origin.y
-            default:
-                break
-            }
         } else {
             teamNames.removeAll()
             teamNames.append("\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1)) & \(currentMatch.firstTeamSecondPlayerSurname) \(currentMatch.firstTeamSecondPlayer.prefix(1))")
@@ -281,6 +241,10 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
         secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
         
+        firstTeamFirstTargetTopView.isHidden = true
+        firstTeamSecondTargetTopView.isHidden = true
+        secondTeamFirstTargetTopView.isHidden = true
+        secondTeamSecondTargetTopView.isHidden = true
         
         tossWinnerTextField.layer.borderWidth = 1
         tossWinnerTextField.layer.cornerRadius = 5
@@ -404,16 +368,115 @@ extension StartMatchViewController {
         
         let touchedPoint: CGPoint = touch.location(in: view)
         
+        let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
+        
+        if touchedView != "" {
+            switch touchedView {
+            case "firstTeamFirstBottomView":
+                currentView = touchedView
+            case "firstTeamSecondBottomView":
+                currentView = touchedView
+            case "secondTeamFirstBottomView":
+                currentView = touchedView
+            case "secondTeamSecondBottomView":
+                currentView = touchedView
+            case "serverView":
+                currentView = touchedView
+            default:
+                break
+            }
+        }
+        
+        if currentView != "" && currentView != "serverView" {
+            switch currentView {
+            case "firstTeamFirstBottomView":
+                let touchInView: CGPoint = touch.location(in: firstTeamFirstBottomView)
+                
+                isDragging = true
+                firstTeamFirstTopView.isHidden = true
+                
+                xOffset = touchInView.x
+                yOffset = touchInView.y
+                
+                dummyLabel.text = "\(firstTeamFirstTopLabel!.text ?? "nA")"
+                dummyView.frame.origin.x = touchedPoint.x - xOffset
+                dummyView.frame.origin.y = touchedPoint.y - yOffset
+                
+                dummyView.isHidden = false
+                usingDummyView = true
+            case "firstTeamSecondBottomView":
+                let touchInView: CGPoint = touch.location(in: firstTeamSecondBottomView)
+                
+                isDragging = true
+                firstTeamSecondTopView.isHidden = true
+                
+                xOffset = touchInView.x
+                yOffset = touchInView.y
+                
+                dummyLabel.text = "\(firstTeamSecondTopLabel!.text ?? "nA")"
+                dummyView.frame.origin.x = touchedPoint.x - xOffset
+                dummyView.frame.origin.y = touchedPoint.y - yOffset
+                
+                dummyView.isHidden = false
+                usingDummyView = true
+            case "secondTeamFirstBottomView":
+                let touchInView: CGPoint = touch.location(in: secondTeamFirstBottomView)
+                
+                isDragging = true
+                secondTeamFirstTopView.isHidden = true
+                
+                xOffset = touchInView.x
+                yOffset = touchInView.y
+                
+                dummyLabel.text = "\(secondTeamFirstTopLabel!.text ?? "nA")"
+                dummyView.frame.origin.x = touchedPoint.x - xOffset
+                dummyView.frame.origin.y = touchedPoint.y - yOffset
+                
+                dummyView.isHidden = false
+                usingDummyView = true
+            case "secondTeamSecondBottomView":
+                let touchInView: CGPoint = touch.location(in: secondTeamSecondBottomView)
+                
+                isDragging = true
+                secondTeamSecondTopView.isHidden = true
+                
+                xOffset = touchInView.x
+                yOffset = touchInView.y
+                
+                dummyLabel.text = "\(secondTeamSecondTopLabel!.text ?? "nA")"
+                dummyView.frame.origin.x = touchedPoint.x - xOffset
+                dummyView.frame.origin.y = touchedPoint.y - yOffset
+                
+                dummyView.isHidden = false
+                usingDummyView = true
+            default:
+                break
+            }
+        } else if currentView != "" && currentView == "serverView" {
+            let touchInView: CGPoint = touch.location(in: serverView)
+            
+            xOffset = touchInView.x
+            yOffset = touchInView.y
+            
+            isDraggingServer = true
+        }
+        
         if touchedPoint.x >= firstTeamSecondBottomView.frame.minX && touchedPoint.x <= firstTeamSecondBottomView.frame.maxX && touchedPoint.y >= firstTeamSecondBottomView.frame.minY && touchedPoint.y <= firstTeamSecondBottomView.frame.maxY {
             
             let touchInView: CGPoint = touch.location(in: firstTeamSecondBottomView)
             
             isDragging = true
             firstTeamSecondTopView.isHidden = true
+            
+            xOffset = touchInView.x
+            yOffset = touchInView.y
+            
+            dummyLabel.text = "\(firstTeamSecondTopLabel!.text ?? "nA")"
+            dummyView.frame.origin.x = touchedPoint.x - xOffset
+            dummyView.frame.origin.y = touchedPoint.y - yOffset
+            
             dummyView.isHidden = false
-            
-            firstTeamSecondTargetTopView.isHidden = false
-            
+            usingDummyView = true
         }
     }
     
@@ -423,6 +486,12 @@ extension StartMatchViewController {
         }
         
         let touchedPoint: CGPoint = touch.location(in: view)
+        
+        if usingDummyView == true {
+            dummyView.frame.origin.x = touchedPoint.x - xOffset
+            dummyView.frame.origin.y = touchedPoint.y - yOffset
+        }
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -432,6 +501,33 @@ extension StartMatchViewController {
         
         firstTeamSecondTopView.isHidden = false
         dummyView.isHidden = true
+        usingDummyView = false
+    }
+    
+    func receiveViewTouchedIn(touchedPoint: CGPoint) -> String {
+        var touchedView: String = ""
+        
+        if touchedPoint.x >= firstTeamFirstBottomView.frame.minX && touchedPoint.x <= firstTeamFirstBottomView.frame.maxX && touchedPoint.y >= firstTeamFirstBottomView.frame.minY && touchedPoint.y <= firstTeamFirstBottomView.frame.maxY {
+            touchedView = "firstTeamFirstBottomView"
+        } else if touchedPoint.x >= firstTeamSecondBottomView.frame.minX && touchedPoint.x <= firstTeamSecondBottomView.frame.maxX && touchedPoint.y >= firstTeamSecondBottomView.frame.minY && touchedPoint.y <= firstTeamSecondBottomView.frame.maxY {
+            touchedView = "firstTeamSecondBottomView"
+        } else if touchedPoint.x >= secondTeamFirstBottomView.frame.minX && touchedPoint.x <= secondTeamFirstBottomView.frame.maxX && touchedPoint.y >= secondTeamFirstBottomView.frame.minY && touchedPoint.y <= secondTeamFirstBottomView.frame.maxY {
+            touchedView = "secondTeamFirstBottomView"
+        } else if touchedPoint.x >= secondTeamSecondBottomView.frame.minX && touchedPoint.x <= secondTeamSecondBottomView.frame.maxX && touchedPoint.y >= secondTeamSecondBottomView.frame.minY && touchedPoint.y <= secondTeamSecondBottomView.frame.maxY {
+            touchedView = "secondTeamSecondBottomView"
+        } else if touchedPoint.x >= firstTeamFirstTargetBottomView.frame.minX && touchedPoint.x <= firstTeamFirstTargetBottomView.frame.maxX && touchedPoint.y >= firstTeamFirstTargetBottomView.frame.minY && touchedPoint.y <= firstTeamFirstTargetBottomView.frame.maxY {
+            touchedView = "firstTeamFirstTargetBottomView"
+        } else if touchedPoint.x >= firstTeamSecondTargetBottomView.frame.minX && touchedPoint.x <= firstTeamSecondTargetBottomView.frame.maxX && touchedPoint.y >= firstTeamSecondTargetBottomView.frame.minY && touchedPoint.y <= firstTeamSecondTargetBottomView.frame.maxY {
+            touchedView = "firstTeamSecondTargetBottomView"
+        } else if touchedPoint.x >= secondTeamFirstTargetBottomView.frame.minX && touchedPoint.x <= secondTeamFirstTargetBottomView.frame.maxX && touchedPoint.y >= secondTeamFirstTargetBottomView.frame.minY && touchedPoint.y <= secondTeamFirstTargetBottomView.frame.maxY {
+            touchedView = "secondTeamFirstTargetBottomView"
+        } else if touchedPoint.x >= secondTeamSecondTargetBottomView.frame.minX && touchedPoint.x <= secondTeamSecondTargetBottomView.frame.maxX && touchedPoint.y >= secondTeamSecondTargetBottomView.frame.minY && touchedPoint.y <= secondTeamSecondTargetBottomView.frame.maxY {
+            touchedView = "secondTeamSecondTargetBottomView"
+        } else if touchedPoint.x >= serverView.frame.minX && touchedPoint.x <= serverView.frame.maxX && touchedPoint.y >= serverView.frame.minY && touchedPoint.y <= serverView.frame.maxY {
+            touchedView = "serverView"
+        }
+        
+        return touchedView
     }
     
     func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
