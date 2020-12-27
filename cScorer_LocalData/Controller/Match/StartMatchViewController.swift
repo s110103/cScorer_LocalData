@@ -349,10 +349,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             choiceMakerTextField.resignFirstResponder()
         }
     }
-    
-    /*
-        touches
-     */
+        
+    // MARK: - touches BEGAN
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -392,15 +390,57 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
         if currentView != "" && currentView != "serverView" {
             
-            firstTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
-            firstTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
-            secondTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
-            secondTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
-            
-            firstTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
-            firstTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
-            secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
-            secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            if containsServerFirstTeamFirst == true {
+                firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                firstTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                
+                firstTeamFirstTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                firstTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            } else if containsServerFirstTeamSecond == true {
+                firstTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                secondTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                
+                firstTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            } else if containsServerSecondTeamFirst == true {
+                firstTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                secondTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                
+                firstTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            } else if containsServerSecondTeamSecond == true {
+                firstTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                
+                firstTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            } else {
+                firstTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                
+                firstTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                firstTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+                secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            }
             
             switch currentView {
             case "firstTeamFirstBottomView":
@@ -486,6 +526,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             isDraggingServer = true
         }
     }
+    
+    // MARK: - touches MOVED
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
@@ -852,6 +894,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         }
     }
     
+    // MARK: - touches ENDED
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -863,16 +907,14 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
             firstTeamFirstTargetTopView.layer.borderWidth = 2
 
-            firstTeamFirstTargetTopView.layer.borderWidth = 0
             firstTeamSecondTargetTopView.layer.borderWidth = 0
             secondTeamFirstTargetTopView.layer.borderWidth = 0
             secondTeamSecondTargetTopView.layer.borderWidth = 0
             
-            firstTeamFirstTargetBottomView.layer.borderWidth = 0
             firstTeamSecondTargetBottomView.layer.borderWidth = 0
             secondTeamFirstTargetBottomView.layer.borderWidth = 0
             secondTeamSecondTargetBottomView.layer.borderWidth = 0
-        } else if containsServerFirstTeamFirst == true {
+        } else if containsServerFirstTeamSecond == true {
             firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
             firstTeamSecondTargetTopView.layer.borderWidth = 2
 
@@ -883,7 +925,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             firstTeamFirstTargetBottomView.layer.borderWidth = 0
             secondTeamFirstTargetBottomView.layer.borderWidth = 0
             secondTeamSecondTargetBottomView.layer.borderWidth = 0
-        } else if containsServerFirstTeamFirst == true {
+        } else if containsServerSecondTeamFirst == true {
             secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
             secondTeamFirstTargetTopView.layer.borderWidth = 2
 
@@ -894,7 +936,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             firstTeamFirstTargetBottomView.layer.borderWidth = 0
             firstTeamSecondTargetBottomView.layer.borderWidth = 0
             secondTeamSecondTargetBottomView.layer.borderWidth = 0
-        } else if containsServerFirstTeamFirst == true {
+        } else if containsServerSecondTeamSecond == true {
             secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
             secondTeamSecondTargetTopView.layer.borderWidth = 2
 
@@ -926,22 +968,22 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 case "firstTeamFirstTargetBottomView":
                     switch containsPlayerFirstTeamFirstTarget {
                     case "firstTeamFirstBottomView":
-                        firstTeamFirstTopView.isHidden = true
+                        firstTeamFirstTopView.isHidden = false
                         containsPlayerFirstTeamFirstTarget = currentView!
                         firstTeamFirstTargetTopLabel.text = dummyLabel.text
                         firstTeamFirstTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
-                        firstTeamSecondTopView.isHidden = true
+                        firstTeamSecondTopView.isHidden = false
                         containsPlayerFirstTeamFirstTarget = currentView!
                         firstTeamFirstTargetTopLabel.text = dummyLabel.text
                         firstTeamFirstTargetTopView.isHidden = false
                     case "secondTeamFirstBottomView":
-                        secondTeamFirstTopView.isHidden = true
+                        secondTeamFirstTopView.isHidden = false
                         containsPlayerFirstTeamFirstTarget = currentView!
                         firstTeamFirstTargetTopLabel.text = dummyLabel.text
                         firstTeamFirstTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
-                        secondTeamSecondTopView.isHidden = true
+                        secondTeamSecondTopView.isHidden = false
                         containsPlayerFirstTeamFirstTarget = currentView!
                         firstTeamFirstTargetTopLabel.text = dummyLabel.text
                         firstTeamFirstTargetTopView.isHidden = false
@@ -983,22 +1025,22 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 case "firstTeamSecondTargetBottomView":
                     switch containsPlayerFirstTeamSecondTarget {
                     case "firstTeamFirstBottomView":
-                        firstTeamFirstTopView.isHidden = true
+                        firstTeamFirstTopView.isHidden = false
                         containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
-                        firstTeamSecondTopView.isHidden = true
+                        firstTeamSecondTopView.isHidden = false
                         containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "secondTeamFirstBottomView":
-                        secondTeamFirstTopView.isHidden = true
+                        secondTeamFirstTopView.isHidden = false
                         containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
-                        secondTeamSecondTopView.isHidden = true
+                        secondTeamSecondTopView.isHidden = false
                         containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
@@ -1040,22 +1082,22 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 case "secondTeamFirstTargetBottomView":
                     switch containsPlayerSecondTeamFirstTarget {
                     case "firstTeamFirstBottomView":
-                        firstTeamFirstTopView.isHidden = true
+                        firstTeamFirstTopView.isHidden = false
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
                         secondTeamFirstTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
-                        firstTeamSecondTopView.isHidden = true
+                        firstTeamSecondTopView.isHidden = false
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
                         secondTeamFirstTargetTopView.isHidden = false
                     case "secondTeamFirstBottomView":
-                        secondTeamFirstTopView.isHidden = true
+                        secondTeamFirstTopView.isHidden = false
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
                         secondTeamFirstTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
-                        secondTeamSecondTopView.isHidden = true
+                        secondTeamSecondTopView.isHidden = false
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
                         secondTeamFirstTargetTopView.isHidden = false
@@ -1097,22 +1139,22 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 case "secondTeamSecondTargetBottomView":
                     switch containsPlayerSecondTeamSecondTarget {
                     case "firstTeamFirstBottomView":
-                        firstTeamFirstTopView.isHidden = true
+                        firstTeamFirstTopView.isHidden = false
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
                         secondTeamSecondTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
-                        firstTeamSecondTopView.isHidden = true
+                        firstTeamSecondTopView.isHidden = false
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
                         secondTeamSecondTargetTopView.isHidden = false
                     case "secondTeamFirstBottomView":
-                        secondTeamFirstTopView.isHidden = true
+                        secondTeamFirstTopView.isHidden = false
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
                         secondTeamSecondTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
-                        secondTeamSecondTopView.isHidden = true
+                        secondTeamSecondTopView.isHidden = false
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
                         secondTeamSecondTargetTopView.isHidden = false
@@ -1187,7 +1229,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 containsServerFirstTeamFirst = true
                 containsServerFirstTeamSecond = false
                 containsServerSecondTeamFirst = false
-                containsServerFirstTeamSecond = false
+                containsServerSecondTeamSecond = false
                 
                 firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                 firstTeamFirstTargetTopView.layer.borderWidth = 2
@@ -1195,7 +1237,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 containsServerFirstTeamFirst = false
                 containsServerFirstTeamSecond = true
                 containsServerSecondTeamFirst = false
-                containsServerFirstTeamSecond = false
+                containsServerSecondTeamSecond = false
                 
                 firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                 firstTeamSecondTargetTopView.layer.borderWidth = 2
@@ -1203,7 +1245,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 containsServerFirstTeamFirst = false
                 containsServerFirstTeamSecond = false
                 containsServerSecondTeamFirst = true
-                containsServerFirstTeamSecond = false
+                containsServerSecondTeamSecond = false
                 
                 secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                 secondTeamFirstTargetTopView.layer.borderWidth = 2
@@ -1211,7 +1253,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 containsServerFirstTeamFirst = false
                 containsServerFirstTeamSecond = false
                 containsServerSecondTeamFirst = false
-                containsServerFirstTeamSecond = true
+                containsServerSecondTeamSecond = true
                 
                 secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                 secondTeamSecondTargetTopView.layer.borderWidth = 2
