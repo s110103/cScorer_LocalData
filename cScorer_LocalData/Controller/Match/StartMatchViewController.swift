@@ -388,6 +388,17 @@ extension StartMatchViewController {
         }
         
         if currentView != "" && currentView != "serverView" {
+            
+            firstTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            firstTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            secondTeamFirstTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            secondTeamSecondTargetTopView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            
+            firstTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            firstTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            secondTeamFirstTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            secondTeamSecondTargetBottomView.layer.borderColor = UIColor(ciColor: .green).cgColor
+            
             switch currentView {
             case "firstTeamFirstBottomView":
                 let touchInView: CGPoint = touch.location(in: firstTeamFirstBottomView)
@@ -453,30 +464,23 @@ extension StartMatchViewController {
                 break
             }
         } else if currentView != "" && currentView == "serverView" {
+            
+            firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            
+            firstTeamFirstTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            firstTeamSecondTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            secondTeamFirstTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            secondTeamSecondTargetBottomView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+            
             let touchInView: CGPoint = touch.location(in: serverView)
             
             xOffset = touchInView.x
             yOffset = touchInView.y
             
             isDraggingServer = true
-        }
-        
-        if touchedPoint.x >= firstTeamSecondBottomView.frame.minX && touchedPoint.x <= firstTeamSecondBottomView.frame.maxX && touchedPoint.y >= firstTeamSecondBottomView.frame.minY && touchedPoint.y <= firstTeamSecondBottomView.frame.maxY {
-            
-            let touchInView: CGPoint = touch.location(in: firstTeamSecondBottomView)
-            
-            isDragging = true
-            firstTeamSecondTopView.isHidden = true
-            
-            xOffset = touchInView.x
-            yOffset = touchInView.y
-            
-            dummyLabel.text = "\(firstTeamSecondTopLabel!.text ?? "nA")"
-            dummyView.frame.origin.x = touchedPoint.x - xOffset
-            dummyView.frame.origin.y = touchedPoint.y - yOffset
-            
-            dummyView.isHidden = false
-            usingDummyView = true
         }
     }
     
@@ -487,11 +491,132 @@ extension StartMatchViewController {
         
         let touchedPoint: CGPoint = touch.location(in: view)
         
-        if usingDummyView == true {
-            dummyView.frame.origin.x = touchedPoint.x - xOffset
-            dummyView.frame.origin.y = touchedPoint.y - yOffset
+        if isDragging == true {
+            if usingDummyView == true {
+                
+                let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
+                
+                switch touchedView {
+                case "firstTeamFirstTargetBottomView":
+                    firstTeamFirstTargetTopView.layer.borderWidth = 1
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 1
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                case "firstTeamSecondTargetBottomView":
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 1
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 1
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                case "secondTeamFirstTargetBottomView":
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 1
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 1
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                case "secondTeamSecondTargetBottomView":
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 1
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 1
+                default:
+                    firstTeamFirstTargetTopView.layer.borderWidth = 0
+                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                    secondTeamSecondTargetTopView.layer.borderWidth = 0
+                    
+                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                }
+                
+                dummyView.frame.origin.x = touchedPoint.x - xOffset
+                dummyView.frame.origin.y = touchedPoint.y - yOffset
+            } else {
+                isDragging = false
+                currentView = ""
+            }
         }
         
+        if isDraggingServer == true {
+            
+            let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
+            
+            switch touchedView {
+            case "firstTeamFirstTargetBottomView":
+                firstTeamFirstTargetTopView.layer.borderWidth = 2
+                firstTeamSecondTargetTopView.layer.borderWidth = 0
+                secondTeamFirstTargetTopView.layer.borderWidth = 0
+                secondTeamSecondTargetTopView.layer.borderWidth = 0
+                
+                firstTeamFirstTargetBottomView.layer.borderWidth = 2
+                firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+            case "firstTeamSecondTargetBottomView":
+                firstTeamFirstTargetTopView.layer.borderWidth = 0
+                firstTeamSecondTargetTopView.layer.borderWidth = 2
+                secondTeamFirstTargetTopView.layer.borderWidth = 0
+                secondTeamSecondTargetTopView.layer.borderWidth = 0
+                
+                firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                firstTeamSecondTargetBottomView.layer.borderWidth = 2
+                secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+            case "secondTeamFirstTargetBottomView":
+                firstTeamFirstTargetTopView.layer.borderWidth = 0
+                firstTeamSecondTargetTopView.layer.borderWidth = 0
+                secondTeamFirstTargetTopView.layer.borderWidth = 2
+                secondTeamSecondTargetTopView.layer.borderWidth = 0
+                
+                firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                secondTeamFirstTargetBottomView.layer.borderWidth = 2
+                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+            case "secondTeamSecondTargetBottomView":
+                firstTeamFirstTargetTopView.layer.borderWidth = 0
+                firstTeamSecondTargetTopView.layer.borderWidth = 0
+                secondTeamFirstTargetTopView.layer.borderWidth = 0
+                secondTeamSecondTargetTopView.layer.borderWidth = 2
+                
+                firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                secondTeamSecondTargetBottomView.layer.borderWidth = 2
+            default:
+                firstTeamFirstTargetTopView.layer.borderWidth = 0
+                firstTeamSecondTargetTopView.layer.borderWidth = 0
+                secondTeamFirstTargetTopView.layer.borderWidth = 0
+                secondTeamSecondTargetTopView.layer.borderWidth = 0
+                
+                firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                secondTeamSecondTargetBottomView.layer.borderWidth = 0
+            }
+            
+            serverView.frame.origin.x = touchedPoint.x - xOffset
+            serverView.frame.origin.y = touchedPoint.y - yOffset
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
