@@ -966,6 +966,15 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                                 
                 switch touchedView {
                 case "firstTeamFirstTargetBottomView":
+                    
+                    if containsServerFirstTeamFirst == true {
+                        containsServerFirstTeamFirst = false
+                        currentMatch.matchStatistics.isServer = ""
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                    }
+                    
                     switch containsPlayerFirstTeamFirstTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1023,6 +1032,15 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         }
                     }
                 case "firstTeamSecondTargetBottomView":
+                    
+                    if containsServerFirstTeamSecond == true {
+                        containsServerFirstTeamSecond = false
+                        currentMatch.matchStatistics.isServer = ""
+                        
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    
                     switch containsPlayerFirstTeamSecondTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1080,6 +1098,15 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         }
                     }
                 case "secondTeamFirstTargetBottomView":
+                    
+                    if containsServerSecondTeamFirst == true {
+                        containsServerSecondTeamFirst = false
+                        currentMatch.matchStatistics.isServer = ""
+                        
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    }
+                    
                     switch containsPlayerSecondTeamFirstTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1137,6 +1164,15 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         }
                     }
                 case "secondTeamSecondTargetBottomView":
+                    
+                    if containsServerSecondTeamSecond == true {
+                        containsServerSecondTeamSecond = false
+                        currentMatch.matchStatistics.isServer = ""
+                        
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    
                     switch containsPlayerSecondTeamSecondTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1226,37 +1262,57 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             
             switch touchedView {
             case "firstTeamFirstTargetBottomView":
-                containsServerFirstTeamFirst = true
-                containsServerFirstTeamSecond = false
-                containsServerSecondTeamFirst = false
-                containsServerSecondTeamSecond = false
-                
-                firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
-                firstTeamFirstTargetTopView.layer.borderWidth = 2
+                if containsPlayerFirstTeamFirstTarget != "" {
+                    containsServerFirstTeamFirst = true
+                    containsServerFirstTeamSecond = false
+                    containsServerSecondTeamFirst = false
+                    containsServerSecondTeamSecond = false
+                    
+                    firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                    firstTeamFirstTargetTopView.layer.borderWidth = 2
+                                        
+                    let trimmedPlayerIndex = containsPlayerFirstTeamFirstTarget.dropLast(10)
+                    currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
+                }
             case "firstTeamSecondTargetBottomView":
-                containsServerFirstTeamFirst = false
-                containsServerFirstTeamSecond = true
-                containsServerSecondTeamFirst = false
-                containsServerSecondTeamSecond = false
-                
-                firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
-                firstTeamSecondTargetTopView.layer.borderWidth = 2
+                if containsPlayerFirstTeamSecondTarget != "" {
+                    containsServerFirstTeamFirst = false
+                    containsServerFirstTeamSecond = true
+                    containsServerSecondTeamFirst = false
+                    containsServerSecondTeamSecond = false
+                    
+                    firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                    firstTeamSecondTargetTopView.layer.borderWidth = 2
+                    
+                    let trimmedPlayerIndex = containsPlayerFirstTeamSecondTarget.dropLast(10)
+                    currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
+                }
             case "secondTeamFirstTargetBottomView":
-                containsServerFirstTeamFirst = false
-                containsServerFirstTeamSecond = false
-                containsServerSecondTeamFirst = true
-                containsServerSecondTeamSecond = false
-                
-                secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
-                secondTeamFirstTargetTopView.layer.borderWidth = 2
+                if containsPlayerSecondTeamFirstTarget != "" {
+                    containsServerFirstTeamFirst = false
+                    containsServerFirstTeamSecond = false
+                    containsServerSecondTeamFirst = true
+                    containsServerSecondTeamSecond = false
+                    
+                    secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                    secondTeamFirstTargetTopView.layer.borderWidth = 2
+                    
+                    let trimmedPlayerIndex = containsPlayerSecondTeamFirstTarget.dropLast(10)
+                    currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
+                }
             case "secondTeamSecondTargetBottomView":
-                containsServerFirstTeamFirst = false
-                containsServerFirstTeamSecond = false
-                containsServerSecondTeamFirst = false
-                containsServerSecondTeamSecond = true
-                
-                secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
-                secondTeamSecondTargetTopView.layer.borderWidth = 2
+                if containsPlayerSecondTeamSecondTarget != "" {
+                    containsServerFirstTeamFirst = false
+                    containsServerFirstTeamSecond = false
+                    containsServerSecondTeamFirst = false
+                    containsServerSecondTeamSecond = true
+                    
+                    secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                    secondTeamSecondTargetTopView.layer.borderWidth = 2
+                    
+                    let trimmedPlayerIndex = containsPlayerSecondTeamSecondTarget.dropLast(10)
+                    currentMatch.matchStatistics.isServer = "\(trimmedPlayerIndex)"
+                }
             default:
                 break
             }
