@@ -39,7 +39,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var dummyViewInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
     
     var containsPlayerFirstTeamFirstTarget: String = ""
-    var containtsPlayerFirstTeamSecondTarget: String = ""
+    var containsPlayerFirstTeamSecondTarget: String = ""
     var containsPlayerSecondTeamFirstTarget: String = ""
     var containsPlayerSecondTeamSecondTarget: String = ""
     
@@ -638,9 +638,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             if usingDummyView == true {
                 
                 let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
-                
-                firstTeamSecondTopView.isHidden = true
-                
+                                
                 switch touchedView {
                 case "firstTeamFirstTargetBottomView":
                     switch containsPlayerFirstTeamFirstTarget {
@@ -700,29 +698,29 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         }
                     }
                 case "firstTeamSecondTargetBottomView":
-                    switch containtsPlayerFirstTeamSecondTarget {
+                    switch containsPlayerFirstTeamSecondTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = true
-                        containtsPlayerFirstTeamSecondTarget = currentView!
+                        containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
                         firstTeamSecondTopView.isHidden = true
-                        containtsPlayerFirstTeamSecondTarget = currentView!
+                        containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "secondTeamFirstBottomView":
                         secondTeamFirstTopView.isHidden = true
-                        containtsPlayerFirstTeamSecondTarget = currentView!
+                        containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
                         secondTeamSecondTopView.isHidden = true
-                        containtsPlayerFirstTeamSecondTarget = currentView!
+                        containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "":
-                        containtsPlayerFirstTeamSecondTarget = currentView!
+                        containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                         
@@ -739,7 +737,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             break
                         }
                     default:
-                        containtsPlayerFirstTeamSecondTarget = currentView!
+                        containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                         
@@ -762,26 +760,26 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         firstTeamFirstTopView.isHidden = true
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTopView.isHidden = false
+                        secondTeamFirstTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
                         firstTeamSecondTopView.isHidden = true
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTopView.isHidden = false
+                        secondTeamFirstTargetTopView.isHidden = false
                     case "secondTeamFirstBottomView":
                         secondTeamFirstTopView.isHidden = true
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTopView.isHidden = false
+                        secondTeamFirstTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
                         secondTeamSecondTopView.isHidden = true
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTopView.isHidden = false
+                        secondTeamFirstTargetTopView.isHidden = false
                     case "":
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTopView.isHidden = false
+                        secondTeamFirstTargetTopView.isHidden = false
                         
                         switch currentView {
                         case "firstTeamFirstBottomView":
@@ -798,7 +796,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     default:
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTopView.isHidden = false
+                        secondTeamFirstTargetTopView.isHidden = false
                         
                         switch currentView {
                         case "firstTeamFirstBottomView":
@@ -819,26 +817,26 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         firstTeamFirstTopView.isHidden = true
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
-                        secondTeamSecondTopView.isHidden = false
+                        secondTeamSecondTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
                         firstTeamSecondTopView.isHidden = true
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
-                        secondTeamSecondTopView.isHidden = false
+                        secondTeamSecondTargetTopView.isHidden = false
                     case "secondTeamFirstBottomView":
                         secondTeamFirstTopView.isHidden = true
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
-                        secondTeamSecondTopView.isHidden = false
+                        secondTeamSecondTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
                         secondTeamSecondTopView.isHidden = true
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
-                        secondTeamSecondTopView.isHidden = false
+                        secondTeamSecondTargetTopView.isHidden = false
                     case "":
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
-                        secondTeamSecondTopView.isHidden = false
+                        secondTeamSecondTargetTopView.isHidden = false
                         
                         switch currentView {
                         case "firstTeamFirstBottomView":
@@ -855,7 +853,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     default:
                         containsPlayerSecondTeamSecondTarget = currentView!
                         secondTeamSecondTargetTopLabel.text = dummyLabel.text
-                        secondTeamSecondTopView.isHidden = false
+                        secondTeamSecondTargetTopView.isHidden = false
                         
                         switch currentView {
                         case "firstTeamFirstBottomView":
