@@ -23,8 +23,13 @@ class MatchStatistics {
     var playersOnCourt: Bool = false
     var wonToss: Int = 0
     var madeChoice: Int = 0
-    var isServer: Int = 0
-    var onLeftSide: Int = 0
+    var isServer: String = ""
+    var onLeftSide: String = ""
+    var onRightSide: String = ""
+    var firstTeamNear: String = ""
+    var firstTeamFar: String = ""
+    var secondTeamNear: String = ""
+    var secondTeamFar: String = ""
     var matchInitiated: Bool = false
     var warmupTimerRunning: Bool = false
     
@@ -63,7 +68,7 @@ class MatchStatistics {
     var secondTeamFirstPlayerPosition: Int = 0
     var secondTeamSecondPlayerPosition: Int = 0
     
-    init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: Int, _onLeftSide: Int, _matchInitiated: Bool, _warmupTimerRunning: Bool, _firstTeamFirstPlayerPosition: Int) {
+    init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: String, _onLeftSide: String, _onRightSide: String, _firstTeamNear: String, _firstTeamFar: String, _secondTeamNear: String, _secondTeamFar: String, _matchInitiated: Bool, _warmupTimerRunning: Bool, _firstTeamFirstPlayerPosition: Int) {
         
         chairUmpireOnCourtTimeStamp = _chairUmpireOnCourtTimeStamp
         playersOnCourtTimeStamp = _playersOnCourtTimeStamp
@@ -81,6 +86,11 @@ class MatchStatistics {
         madeChoice = _madeChoice
         isServer = _isServer
         onLeftSide = _onLeftSide
+        onRightSide = _onRightSide
+        firstTeamNear = _firstTeamNear
+        firstTeamFar = _firstTeamNear
+        secondTeamNear = _secondTeamNear
+        secondTeamFar = _secondTeamFar
         matchInitiated = _matchInitiated
         warmupTimerRunning = _warmupTimerRunning
         

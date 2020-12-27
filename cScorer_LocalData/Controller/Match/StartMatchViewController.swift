@@ -43,6 +43,11 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var containsPlayerSecondTeamFirstTarget: String = ""
     var containsPlayerSecondTeamSecondTarget: String = ""
     
+    var containsServerFirstTeamFirst: Bool = false
+    var containsServerFirstTeamSecond: Bool = false
+    var containsServerSecondTeamFirst: Bool = false
+    var containsServerSecondTeamSecond: Bool = false
+    
     var pickerViewToss: UIPickerView = UIPickerView()
     var pickerViewChoice: UIPickerView = UIPickerView()
     
@@ -496,55 +501,250 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 
                 switch touchedView {
                 case "firstTeamFirstTargetBottomView":
-                    firstTeamFirstTargetTopView.layer.borderWidth = 1
-                    firstTeamSecondTargetTopView.layer.borderWidth = 0
-                    secondTeamFirstTargetTopView.layer.borderWidth = 0
-                    secondTeamSecondTargetTopView.layer.borderWidth = 0
-                    
-                    firstTeamFirstTargetBottomView.layer.borderWidth = 1
-                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    if containsServerFirstTeamFirst == true {
+                        firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerFirstTeamSecond == true {
+                        firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 1
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 1
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamFirst == true {
+                        secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 1
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 1
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamSecond == true {
+                        secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 1
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 1
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    }
                 case "firstTeamSecondTargetBottomView":
-                    firstTeamFirstTargetTopView.layer.borderWidth = 0
-                    firstTeamSecondTargetTopView.layer.borderWidth = 1
-                    secondTeamFirstTargetTopView.layer.borderWidth = 0
-                    secondTeamSecondTargetTopView.layer.borderWidth = 0
-                    
-                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                    firstTeamSecondTargetBottomView.layer.borderWidth = 1
-                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    if containsServerFirstTeamFirst == true {
+                        firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamSecondTargetTopView.layer.borderWidth = 1
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 1
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerFirstTeamSecond == true {
+                        firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamFirst == true {
+                        secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 1
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 1
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamSecond == true {
+                        secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 1
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 1
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    }
                 case "secondTeamFirstTargetBottomView":
-                    firstTeamFirstTargetTopView.layer.borderWidth = 0
-                    firstTeamSecondTargetTopView.layer.borderWidth = 0
-                    secondTeamFirstTargetTopView.layer.borderWidth = 1
-                    secondTeamSecondTargetTopView.layer.borderWidth = 0
-                    
-                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                    secondTeamFirstTargetBottomView.layer.borderWidth = 1
-                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    if containsServerFirstTeamFirst == true {
+                        firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 1
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 1
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerFirstTeamSecond == true {
+                        firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 1
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 1
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamFirst == true {
+                        secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamSecond == true {
+                        secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 1
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 1
+                    }
                 case "secondTeamSecondTargetBottomView":
-                    firstTeamFirstTargetTopView.layer.borderWidth = 0
-                    firstTeamSecondTargetTopView.layer.borderWidth = 0
-                    secondTeamFirstTargetTopView.layer.borderWidth = 0
-                    secondTeamSecondTargetTopView.layer.borderWidth = 1
-                    
-                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                    secondTeamSecondTargetBottomView.layer.borderWidth = 1
+                    if containsServerFirstTeamFirst == true {
+                        firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 1
+                        
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 1
+                    }
+                    if containsServerFirstTeamSecond == true {
+                        firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 1
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 1
+                    }
+                    if containsServerSecondTeamFirst == true {
+                        secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 1
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 1
+                    }
+                    if containsServerSecondTeamSecond == true {
+                        secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    }
                 default:
-                    firstTeamFirstTargetTopView.layer.borderWidth = 0
-                    firstTeamSecondTargetTopView.layer.borderWidth = 0
-                    secondTeamFirstTargetTopView.layer.borderWidth = 0
-                    secondTeamSecondTargetTopView.layer.borderWidth = 0
-                    
-                    firstTeamFirstTargetBottomView.layer.borderWidth = 0
-                    firstTeamSecondTargetBottomView.layer.borderWidth = 0
-                    secondTeamFirstTargetBottomView.layer.borderWidth = 0
-                    secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    if containsServerFirstTeamFirst == true {
+                        firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerFirstTeamSecond == true {
+                        firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        firstTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamFirst == true {
+                        secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamFirstTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamSecondTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    }
+                    if containsServerSecondTeamSecond == true {
+                        secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                        secondTeamSecondTargetTopView.layer.borderWidth = 2
+                        
+                        firstTeamFirstTargetTopView.layer.borderWidth = 0
+                        firstTeamSecondTargetTopView.layer.borderWidth = 0
+                        secondTeamFirstTargetTopView.layer.borderWidth = 0
+                        
+                        firstTeamFirstTargetBottomView.layer.borderWidth = 0
+                        firstTeamSecondTargetBottomView.layer.borderWidth = 0
+                        secondTeamFirstTargetBottomView.layer.borderWidth = 0
+                    }
                 }
                 
                 dummyView.frame.origin.x = touchedPoint.x - xOffset
@@ -893,6 +1093,52 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 usingDummyView = false
                 currentView = ""
             }
+        }
+        
+        if isDraggingServer == true {
+            
+            let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
+            
+            switch touchedView {
+            case "firstTeamFirstTargetBottomView":
+                containsServerFirstTeamFirst = true
+                containsServerFirstTeamSecond = false
+                containsServerSecondTeamFirst = false
+                containsServerFirstTeamSecond = false
+                
+                firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                firstTeamFirstTargetTopView.layer.borderWidth = 2
+            case "firstTeamSecondTargetBottomView":
+                containsServerFirstTeamFirst = false
+                containsServerFirstTeamSecond = true
+                containsServerSecondTeamFirst = false
+                containsServerFirstTeamSecond = false
+                
+                firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                firstTeamSecondTargetTopView.layer.borderWidth = 2
+            case "secondTeamFirstTargetBottomView":
+                containsServerFirstTeamFirst = false
+                containsServerFirstTeamSecond = false
+                containsServerSecondTeamFirst = true
+                containsServerFirstTeamSecond = false
+                
+                secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                secondTeamFirstTargetTopView.layer.borderWidth = 2
+            case "secondTeamSecondTargetBottomView":
+                containsServerFirstTeamFirst = false
+                containsServerFirstTeamSecond = false
+                containsServerSecondTeamFirst = false
+                containsServerFirstTeamSecond = true
+                
+                secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                secondTeamSecondTargetTopView.layer.borderWidth = 2
+            default:
+                break
+            }
+            
+            serverView.frame.origin.x = serverInitialLocation.x
+            serverView.frame.origin.y = serverInitialLocation.y
+            isDraggingServer = false
         }
     }
     
