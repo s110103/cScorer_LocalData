@@ -166,10 +166,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case "addMatchSegueAnimated":
             let destinationVC = segue.destination as! AddMatchViewController
             
-            destinationVC.match = selectedMatch
-            destinationVC.indexOfMatch = selectedIndex
-            
             if editDistinctMatch == true {
+                destinationVC.match = selectedMatch
+                destinationVC.indexOfMatch = selectedIndex
+                
                 destinationVC.editingDistinctMatch = true
             } else {
                 destinationVC.editingDistinctMatch = false

@@ -27,15 +27,18 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     [
         "Spieler", "Match Einstellungen", "Match"
     ]
+    
     let itemTitles: [[String]] =
     [
         ["Match Typ","Spieler 1","Spieler 1 Details","Spieler 1.1","Spieler 1.1 Details","Spieler 2","Spieler 2 Details","Spieler 2.1","Spieler 2.1 Details"],
         ["Court","Matchregel","Turnierinfos"],
         ["Start"]
     ]
+    
     var itemSubtitles: [[String]] =
     [
     ]
+    
     var selectableTemplates: [String] =
     [
         "Standard Match - 3 Sätze",
@@ -83,10 +86,14 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func backButtonTapped(_ sender: UIButton) {
         if match.backToChairUmpireViewController == true || match.backToPlayersViewController == true || match.backToStartMatchViewController == true {
             self.navigationController?.popViewController(animated: false)
-            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+            if editingDistinctMatch == true {
+                delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+            }
         } else {
             self.navigationController?.popViewController(animated: true)
-            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+            if editingDistinctMatch == true {
+                delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+            }
         }
     }
     @IBAction func addMatchButtonTapped(_ sender: UIButton) {

@@ -323,9 +323,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        print(row)
-        
+                
         if pickerView == pickerViewToss {
             
             var title: String = ""
@@ -643,10 +641,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 
                 firstTeamSecondTopView.isHidden = true
                 
-                print(touchedView)
                 switch touchedView {
                 case "firstTeamFirstTargetBottomView":
-                    print(containsPlayerFirstTeamFirstTarget)
                     switch containsPlayerFirstTeamFirstTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = true
@@ -673,7 +669,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         firstTeamFirstTargetTopLabel.text = dummyLabel.text
                         firstTeamFirstTargetTopView.isHidden = false
                         
-                        print(currentView!)
                         switch currentView {
                         case "firstTeamFirstBottomView":
                             firstTeamFirstTopView.isHidden = true
