@@ -208,16 +208,43 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             secondTeamFirstTopView.isHidden = true
             secondTeamFirstBottomView.isHidden = true
             
-            firstTeamSecondTopLabel.text = teamNames[0]
-            firstTeamSecondBottomLabel.text = teamNames[0]
+            firstTeamSecondTopView.isHidden = false
+            firstTeamSecondBottomView.isHidden = false
+            secondTeamSecondTopView.isHidden = false
+            secondTeamSecondBottomView.isHidden = false
             
-            secondTeamSecondTopLabel.text = teamNames[1]
-            secondTeamSecondBottomLabel.text = teamNames[1]
+            firstTeamSecondTopLabel.text = "\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1))."
+            firstTeamSecondBottomLabel.text = "\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1))."
+            
+            secondTeamSecondTopLabel.text = "\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1))."
+            secondTeamSecondBottomLabel.text = "\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1))."
             
         } else {
             teamNames.removeAll()
             teamNames.append("\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1)) & \(currentMatch.firstTeamSecondPlayerSurname) \(currentMatch.firstTeamSecondPlayer.prefix(1))")
             teamNames.append("\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1)) & \(currentMatch.secondTeamSecondPlayerSurname) \(currentMatch.secondTeamSecondPlayer.prefix(1))")
+            
+            firstTeamFirstTopView.isHidden = false
+            firstTeamFirstBottomView.isHidden = false
+            secondTeamFirstTopView.isHidden = false
+            secondTeamFirstBottomView.isHidden = false
+            
+            firstTeamSecondTopView.isHidden = false
+            firstTeamSecondBottomView.isHidden = false
+            secondTeamSecondTopView.isHidden = false
+            secondTeamSecondBottomView.isHidden = false
+            
+            firstTeamFirstTopLabel.text = "\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1))."
+            firstTeamFirstBottomLabel.text = "\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1))."
+            
+            firstTeamSecondTopLabel.text = "\(currentMatch.firstTeamSecondPlayerSurname) \(currentMatch.firstTeamSecondPlayer.prefix(1))."
+            firstTeamSecondBottomLabel.text = "\(currentMatch.firstTeamSecondPlayerSurname) \(currentMatch.firstTeamSecondPlayer.prefix(1))."
+            
+            secondTeamFirstTopLabel.text = "\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1))."
+            secondTeamSecondBottomLabel.text = "\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1))."
+            
+            secondTeamSecondTopLabel.text = "\(currentMatch.secondTeamSecondPlayerSurname) \(currentMatch.secondTeamSecondPlayer.prefix(1))."
+            secondTeamSecondBottomLabel.text = "\(currentMatch.secondTeamSecondPlayerSurname) \(currentMatch.secondTeamSecondPlayer.prefix(1))."
         }
     }
     
@@ -2190,7 +2217,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             default:
                 break
             }
-            
             serverView.frame.origin.x = serverInitialLocation.x
             serverView.frame.origin.y = serverInitialLocation.y
             isDraggingServer = false
