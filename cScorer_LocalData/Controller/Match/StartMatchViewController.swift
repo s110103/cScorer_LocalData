@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 protocol StartMatchViewControllerDelegate {
     func sendStartMatchData(currentMatch: Match, selectedIndex: Int)
@@ -1184,6 +1185,120 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         firstTeamFirstTargetTopView.layer.borderWidth = 2
                     }
                     
+                    let trimmedPlayerIndex = currentView!.dropLast(10)
+                    currentMatch.matchStatistics.firstTeamFar = "\(trimmedPlayerIndex)"
+                    
+                    if currentView!.starts(with: "first") {
+                        currentMatch.matchStatistics.onLeftSide = "firstTeam"
+                        currentMatch.matchStatistics.onRightSide = "secondTeam"
+                    } else if currentView!.starts(with: "second") {
+                        currentMatch.matchStatistics.onLeftSide = "secondTeam"
+                        currentMatch.matchStatistics.onRightSide = "firstTeam"
+                    }
+                    
+                    if currentMatch.matchType.matchType == 0 {
+                        ProgressHUD.show("Falsche Seite für Standardmatch", icon: .failed, interaction: true)
+                    } else {
+                        /*
+                         doubles
+                         */
+                        
+                        
+                        if currentView!.starts(with: "firstTeamFirst") {
+                            
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "firstTeamSecondBottomView"
+                            firstTeamSecondTargetTopLabel.text = firstTeamSecondTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.firstTeamNear = "firstTeamSecond"
+                        } else if currentView!.starts(with: "firstTeamSecond") {
+                            
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "firstTeamFirstBottomView"
+                            firstTeamSecondTargetTopLabel.text = firstTeamFirstTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.firstTeamNear = "firstTeamFirst"
+                        } else if currentView!.starts(with: "secondTeamFirst") {
+                            
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "secondTeamSecondBottomView"
+                            firstTeamSecondTargetTopLabel.text = secondTeamSecondTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.firstTeamNear = "secondTeamSecond"
+                        } else if currentView!.starts(with: "secondTeamSecond") {
+                            
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "secondTeamFirstBottomView"
+                            firstTeamSecondTargetTopLabel.text = secondTeamFirstTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.firstTeamNear = "secondTeamFirst"
+                        }
+                    }
+                    
                     switch containsPlayerFirstTeamFirstTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1255,6 +1370,140 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         currentMatch.matchStatistics.isServer = "firstTeamSecond"
                         firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                         firstTeamSecondTargetTopView.layer.borderWidth = 2
+                    }
+                    
+                    let trimmedPlayerIndex = currentView!.dropLast(10)
+                    currentMatch.matchStatistics.firstTeamNear = "\(trimmedPlayerIndex)"
+                    
+                    if currentView!.starts(with: "first") {
+                        currentMatch.matchStatistics.onLeftSide = "firstTeam"
+                        currentMatch.matchStatistics.onRightSide = "secondTeam"
+                    } else if currentView!.starts(with: "second") {
+                        currentMatch.matchStatistics.onLeftSide = "secondTeam"
+                        currentMatch.matchStatistics.onRightSide = "firstTeam"
+                    }
+                    
+                    if currentMatch.matchType.matchType == 0 {
+                        if containsPlayerFirstTeamSecondTarget == "" {
+                            if currentView!.starts(with: "firstTeamSecond") {
+                                firstTeamSecondTopView.isHidden = true
+                                secondTeamSecondTopView.isHidden = true
+                                
+                                containsPlayerSecondTeamFirstTarget = "secondTeamSecondBottomView"
+                                secondTeamFirstTargetTopLabel.text = secondTeamSecondTopLabel.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                                
+                                currentMatch.matchStatistics.secondTeamFar = "secondTeamSecond"
+                            } else if currentView!.starts(with: "secondTeamSecond") {
+                                firstTeamSecondTopView.isHidden = true
+                                secondTeamSecondTopView.isHidden = true
+                                
+                                containsPlayerSecondTeamFirstTarget = "firstTeamSecondBottomView"
+                                secondTeamFirstTargetTopLabel.text = firstTeamSecondTopLabel.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                                
+                                currentMatch.matchStatistics.secondTeamFar = "firstTeamSecond"
+                            }
+                        }
+                    } else {
+                        /*
+                         doubles
+                         */
+                        
+                        
+                        if currentView!.starts(with: "firstTeamFirst") {
+                            
+                            switch containsPlayerFirstTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamFirstTarget = "firstTeamSecondBottomView"
+                            firstTeamFirstTargetTopLabel.text = firstTeamFirstTopLabel.text
+                            firstTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamNear = "firstTeamSecond"
+                        } else if currentView!.starts(with: "firstTeamSecond") {
+                            
+                            switch containsPlayerFirstTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamFirstTarget = "firstTeamFirstBottomView"
+                            firstTeamFirstTargetTopLabel.text = firstTeamFirstTopLabel.text
+                            firstTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.firstTeamFar = "firstTeamFirst"
+                        } else if currentView!.starts(with: "secondTeamFirst") {
+                            
+                            switch containsPlayerFirstTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamFirstTarget = "secondTeamSecondBottomView"
+                            firstTeamFirstTargetTopLabel.text = secondTeamSecondTopLabel.text
+                            firstTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.firstTeamFar = "secondTeamSecond"
+                        } else if currentView!.starts(with: "secondTeamSecond") {
+                            
+                            switch containsPlayerFirstTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamFirstTarget = "secondTeamFirstBottomView"
+                            firstTeamFirstTargetTopLabel.text = secondTeamFirstTopLabel.text
+                            firstTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.firstTeamFar = "secondTeamFirst"
+                        }
                     }
                     
                     switch containsPlayerFirstTeamSecondTarget {
@@ -1330,6 +1579,141 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         secondTeamFirstTargetTopView.layer.borderWidth = 2
                     }
                     
+                    let trimmedPlayerIndex = currentView!.dropLast(10)
+                    currentMatch.matchStatistics.secondTeamFar = "\(trimmedPlayerIndex)"
+                    
+                    if currentView!.starts(with: "first") {
+                        currentMatch.matchStatistics.onLeftSide = "secondTeam"
+                        currentMatch.matchStatistics.onRightSide = "firstTeam"
+                    } else if currentView!.starts(with: "second") {
+                        currentMatch.matchStatistics.onLeftSide = "firstTeam"
+                        currentMatch.matchStatistics.onRightSide = "secondTeam"
+                    }
+                    
+                    if currentMatch.matchType.matchType == 0 {
+                        if containsPlayerFirstTeamSecondTarget == "" {
+                            if currentView!.starts(with: "firstTeamSecond") {
+                                firstTeamSecondTopView.isHidden = true
+                                secondTeamSecondTopView.isHidden = true
+                                
+                                containsPlayerFirstTeamSecondTarget = "secondTeamSecondBottomView"
+                                firstTeamSecondTargetTopLabel.text = secondTeamSecondTopLabel.text
+                                firstTeamSecondTargetTopView.isHidden = false
+                                
+                                currentMatch.matchStatistics.firstTeamNear = "secondTeamSecond"
+                            } else if currentView!.starts(with: "secondTeamSecond") {
+                                
+                                firstTeamSecondTopView.isHidden = true
+                                secondTeamSecondTopView.isHidden = true
+                                
+                                containsPlayerSecondTeamFirstTarget = "firstTeamSecondBottomView"
+                                secondTeamFirstTargetTopLabel.text = firstTeamSecondTopLabel.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                                
+                                currentMatch.matchStatistics.firstTeamNear = "firstTeamSecond"
+                            }
+                        }
+                    } else {
+                        /*
+                         doubles
+                         */
+                        
+                        
+                        if currentView!.starts(with: "firstTeamFirst") {
+                            
+                            switch containsPlayerSecondTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamSecondTarget = "firstTeamSecondBottomView"
+                            secondTeamSecondTargetTopLabel.text = firstTeamSecondTopLabel.text
+                            secondTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamNear = "firstTeamSecond"
+                        } else if currentView!.starts(with: "firstTeamSecond") {
+                            
+                            switch containsPlayerSecondTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamSecondTarget = "firstTeamFirstBottomView"
+                            secondTeamSecondTargetTopLabel.text = firstTeamFirstTopLabel.text
+                            secondTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamNear = "firstTeamFirst"
+                        } else if currentView!.starts(with: "secondTeamFirst") {
+                            
+                            switch containsPlayerSecondTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamSecondTarget = "secondTeamSecondBottomView"
+                            secondTeamSecondTargetTopLabel.text = secondTeamSecondTopLabel.text
+                            secondTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamNear = "secondTeamSecond"
+                        } else if currentView!.starts(with: "secondTeamSecond") {
+                            
+                            switch containsPlayerSecondTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamSecondTarget = "secondTeamFirstBottomView"
+                            secondTeamSecondTargetTopLabel.text = secondTeamFirstTopLabel.text
+                            secondTeamSecondTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamNear = "secondTeamFirst"
+                        }
+                    }
+                    
                     switch containsPlayerSecondTeamFirstTarget {
                     case "firstTeamFirstBottomView":
                         firstTeamFirstTopView.isHidden = false
@@ -1401,6 +1785,120 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         currentMatch.matchStatistics.isServer = "secondTeamSecond"
                         secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
                         secondTeamSecondTargetTopView.layer.borderWidth = 2
+                    }
+                    
+                    let trimmedPlayerIndex = currentView!.dropLast(10)
+                    currentMatch.matchStatistics.secondTeamNear = "\(trimmedPlayerIndex)"
+                    
+                    if currentView!.starts(with: "first") {
+                        currentMatch.matchStatistics.onLeftSide = "secondTeam"
+                        currentMatch.matchStatistics.onRightSide = "firstTeam"
+                    } else if currentView!.starts(with: "second") {
+                        currentMatch.matchStatistics.onLeftSide = "firstTeam"
+                        currentMatch.matchStatistics.onRightSide = "secondTeam"
+                    }
+                    
+                    if currentMatch.matchType.matchType == 0 {
+                        ProgressHUD.show("Falsche Seite für Standardmatch", icon: .failed, interaction: true)
+                    } else {
+                        /*
+                         doubles
+                         */
+                        
+                        
+                        if currentView!.starts(with: "firstTeamFirst") {
+                            
+                            switch containsPlayerSecondTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamFirstTarget = "firstTeamSecondBottomView"
+                            secondTeamFirstTargetTopLabel.text = firstTeamSecondTopLabel.text
+                            secondTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamFar = "firstTeamSecond"
+                        } else if currentView!.starts(with: "firstTeamSecond") {
+                            
+                            switch containsPlayerSecondTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamFirstTarget = "firstTeamFirstBottomView"
+                            secondTeamFirstTargetTopLabel.text = firstTeamFirstTopLabel.text
+                            secondTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamFar = "firstTeamFirst"
+                        } else if currentView!.starts(with: "secondTeamFirst") {
+                            
+                            switch containsPlayerSecondTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamFirstTarget = "secondTeamSecondBottomView"
+                            secondTeamFirstTargetTopLabel.text = secondTeamSecondTopLabel.text
+                            secondTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamFar = "secondTeamSecond"
+                        } else if currentView!.starts(with: "secondTeamSecond") {
+                            
+                            switch containsPlayerSecondTeamFirstTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerSecondTeamFirstTarget = "secondTeamFirstBottomView"
+                            secondTeamFirstTargetTopLabel.text = secondTeamFirstTopLabel.text
+                            secondTeamFirstTargetTopView.isHidden = false
+                            
+                            currentMatch.matchStatistics.secondTeamFar = "secondTeamFirst"
+                        }
                     }
                     
                     switch containsPlayerSecondTeamSecondTarget {
