@@ -223,7 +223,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int,  forceStart: Bool) {
         if editingDistinctMatch == true {
             if match.backToChairUmpireViewController == true {
                 performSegue(withIdentifier: "chairUmpireOnCourtSegue", sender: self)
@@ -243,9 +243,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             editDistinctMatch = false
             matchesTableView.reloadData()
         } else {
-            savedMatches.append(match)
-            editDistinctMatch = false
-            matchesTableView.reloadData()
+            if forceStart == true {
+                if match.backToChairUmpireViewController == true {
+                    performSegue(withIdentifier: "chairUmpireOnCourtSegue", sender: self)
+                    match.backToChairUmpireViewController = false
+                }
+                if match.backToPlayersViewController == true {
+                    performSegue(withIdentifier: "playersOnCourtSegue", sender: self)
+                    match.backToPlayersViewController = false
+                }
+                if match.backToStartMatchViewController == true {
+                    performSegue(withIdentifier: "startMatchSegue", sender: self)
+                    match.backToStartMatchViewController = false
+                }
+                
+                savedMatches.append(match)
+                editDistinctMatch = false
+                matchesTableView.reloadData()
+            } else {
+                savedMatches.append(match)
+                editDistinctMatch = false
+                matchesTableView.reloadData()
+            }
         }
     }
     

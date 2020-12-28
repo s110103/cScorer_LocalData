@@ -134,7 +134,7 @@ extension PlayersOnCourtViewController: UINavigationControllerDelegate {
         return percentageDrivenInteractiveTransition
     }
     
-    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int) {
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int, forceStart: Bool) {
         currentMatch = match
         selectedIndex = indexOfMatch
     }

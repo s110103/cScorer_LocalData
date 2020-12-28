@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddMatchViewControllerDelegate {
-    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int)
+    func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int, forceStart: Bool)
 }
 
 class AddMatchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SelectMatchTypeViewControllerDelegate, SetPlayerNameViewControllerDelegate, SetCourtViewControllerDelegate, EditMatchRuleViewControllerDelegate, TournamentInfoViewControllerDelegate, SelectPlayerDetailsViewControllerDelegate {
@@ -87,22 +87,22 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         if match.backToChairUmpireViewController == true || match.backToPlayersViewController == true || match.backToStartMatchViewController == true {
             self.navigationController?.popViewController(animated: false)
             if editingDistinctMatch == true {
-                delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+                delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch, forceStart: false)
             }
         } else {
             self.navigationController?.popViewController(animated: true)
             if editingDistinctMatch == true {
-                delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+                delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch, forceStart: false)
             }
         }
     }
     @IBAction func addMatchButtonTapped(_ sender: UIButton) {
         if match.backToChairUmpireViewController == true || match.backToPlayersViewController == true || match.backToStartMatchViewController == true {
             self.navigationController?.popViewController(animated: false)
-            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch, forceStart: false)
         } else {
             self.navigationController?.popViewController(animated: true)
-            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch)
+            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch, forceStart: false)
         }
     }
     @IBAction func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
@@ -281,6 +281,30 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             performSegue(withIdentifier: "editTournamentInfoSegue", sender: self)
         case "Court":
             performSegue(withIdentifier: "setCourtSegue", sender: self)
+        case "Start":
+            if match.matchStatistics.chairUmpireOnCourt == true {
+                if match.matchStatistics.playersOnCourt == true {
+                    if match.matchStatistics.matchInitiated == true {
+                        /*
+                            Scoring View
+                         */
+                    } else {
+                        match.backToChairUmpireViewController = false
+                        match.backToPlayersViewController = false
+                        match.backToStartMatchViewController = true
+                    }
+                } else {
+                    match.backToChairUmpireViewController = false
+                    match.backToPlayersViewController = true
+                    match.backToStartMatchViewController = false
+                }
+            } else {
+                match.backToChairUmpireViewController = true
+                match.backToPlayersViewController = false
+                match.backToStartMatchViewController = false
+            }
+            navigationController?.popViewController(animated: false)
+            delegate?.sendMatch(match: match, editingDistinctMatch: editingDistinctMatch, indexOfMatch: indexOfMatch, forceStart: true)
         default:
             break
         }
