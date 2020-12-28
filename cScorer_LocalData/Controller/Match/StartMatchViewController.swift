@@ -659,7 +659,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             
             view.bringSubviewToFront(dummyView)
         } else if currentView != "" && currentView == "serverView" {
-            
+                        
             firstTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
             firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
             secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
@@ -1091,7 +1091,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     secondTeamSecondTargetBottomView.layer.borderWidth = 0
                 }
             }
-            
+                        
             serverView.frame.origin.x = touchedPoint.x - xOffset
             serverView.frame.origin.y = touchedPoint.y - yOffset
         }
@@ -2194,6 +2194,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             serverView.frame.origin.x = serverInitialLocation.x
             serverView.frame.origin.y = serverInitialLocation.y
             isDraggingServer = false
+            currentView = ""
         }
     }
     
