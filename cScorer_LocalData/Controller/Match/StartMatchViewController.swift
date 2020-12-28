@@ -1716,7 +1716,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         
                         if containsPlayerFirstTeamSecondTarget == "" {
                             if currentView!.starts(with: "firstTeamSecond") {
-                                print("first")
                                 firstTeamSecondTopView.isHidden = true
                                 secondTeamSecondTopView.isHidden = true
                                 
@@ -1728,7 +1727,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                                 
                                 if placeHolderServer == true {
                                     replacedServer = true
-                                    print("placeHolder")
                                     containsServerSecondTeamFirst = false
                                     containsServerFirstTeamSecond = true
                                     
@@ -1736,12 +1734,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                                     firstTeamSecondTargetTopView.layer.borderWidth = 2
                                     
                                     secondTeamFirstTargetTopView.layer.borderWidth = 0
-                                    
-                                    print(containsServerSecondTeamFirst)
-                                    print(containsServerFirstTeamSecond)
                                 }
                             } else if currentView!.starts(with: "secondTeamSecond") {
-                                print("second")
                                 
                                 firstTeamSecondTopView.isHidden = true
                                 secondTeamSecondTopView.isHidden = true
@@ -1754,7 +1748,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                                 
                                 if placeHolderServer == true {
                                     replacedServer = true
-                                    print("placeHolder")
                                     containsServerSecondTeamFirst = false
                                     containsServerFirstTeamSecond = true
                                     
@@ -1762,9 +1755,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                                     firstTeamSecondTargetTopView.layer.borderWidth = 2
                                     
                                     secondTeamFirstTargetTopView.layer.borderWidth = 0
-                                    
-                                    print(containsServerSecondTeamFirst)
-                                    print(containsServerFirstTeamSecond)
                                 }
                             }
                         }
