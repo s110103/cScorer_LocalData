@@ -1513,20 +1513,76 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
-                        firstTeamSecondTopView.isHidden = false
-                        containsPlayerFirstTeamSecondTarget = currentView!
-                        firstTeamSecondTargetTopLabel.text = dummyLabel.text
-                        firstTeamSecondTargetTopView.isHidden = false
+                        if currentMatch.matchType.matchType == 0 {
+                            if currentView!.starts(with: "secondTeamSecond") {
+                                firstTeamSecondTopView.isHidden = true
+                                containsPlayerFirstTeamSecondTarget = currentView!
+                                firstTeamSecondTargetTopLabel.text = dummyLabel.text
+                                firstTeamSecondTargetTopView.isHidden = false
+                                
+                                containsPlayerSecondTeamFirstTarget = "firstTeamSecondBottomView"
+                                secondTeamFirstTargetTopLabel.text = firstTeamSecondTopLabel!.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                                
+                                if containsServerSecondTeamFirst == true {
+                                    containsServerSecondTeamFirst = false
+                                    containsServerFirstTeamSecond = true
+                                    firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                    firstTeamSecondTargetTopView.layer.borderWidth = 2
+                                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                                    
+                                    currentMatch.matchStatistics.isServer = "firstTeamSecond"
+                                }
+                            } else {
+                                firstTeamSecondTopView.isHidden = false
+                                containsPlayerFirstTeamSecondTarget = currentView!
+                                firstTeamSecondTargetTopLabel.text = dummyLabel.text
+                                firstTeamSecondTargetTopView.isHidden = false
+                            }
+                        } else {
+                            firstTeamSecondTopView.isHidden = false
+                            containsPlayerFirstTeamSecondTarget = currentView!
+                            firstTeamSecondTargetTopLabel.text = dummyLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                        }
                     case "secondTeamFirstBottomView":
                         secondTeamFirstTopView.isHidden = false
                         containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
                         firstTeamSecondTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
-                        secondTeamSecondTopView.isHidden = false
-                        containsPlayerFirstTeamSecondTarget = currentView!
-                        firstTeamSecondTargetTopLabel.text = dummyLabel.text
-                        firstTeamSecondTargetTopView.isHidden = false
+                        if currentMatch.matchType.matchType == 0 {
+                            if currentView!.starts(with: "firstTeamSecond") {
+                                secondTeamSecondTopView.isHidden = true
+                                containsPlayerFirstTeamSecondTarget = currentView!
+                                firstTeamSecondTargetTopLabel.text = dummyLabel.text
+                                firstTeamSecondTargetTopView.isHidden = false
+                                
+                                containsPlayerSecondTeamFirstTarget = "secondTeamSecondBottomView"
+                                secondTeamFirstTargetTopLabel.text = secondTeamSecondTopLabel!.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                                
+                                if containsServerSecondTeamFirst == true {
+                                    containsServerSecondTeamFirst = false
+                                    containsServerFirstTeamSecond = true
+                                    firstTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                    firstTeamSecondTargetTopView.layer.borderWidth = 2
+                                    secondTeamFirstTargetTopView.layer.borderWidth = 0
+                                    
+                                    currentMatch.matchStatistics.isServer = "secondTeamSecond"
+                                }
+                            } else {
+                                secondTeamSecondTopView.isHidden = false
+                                containsPlayerFirstTeamSecondTarget = currentView!
+                                firstTeamSecondTargetTopLabel.text = dummyLabel.text
+                                firstTeamSecondTargetTopView.isHidden = false
+                            }
+                        } else {
+                            secondTeamSecondTopView.isHidden = false
+                            containsPlayerFirstTeamSecondTarget = currentView!
+                            firstTeamSecondTargetTopLabel.text = dummyLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                        }
                     case "":
                         containsPlayerFirstTeamSecondTarget = currentView!
                         firstTeamSecondTargetTopLabel.text = dummyLabel.text
@@ -1721,20 +1777,76 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
                         secondTeamFirstTargetTopView.isHidden = false
                     case "firstTeamSecondBottomView":
-                        firstTeamSecondTopView.isHidden = false
-                        containsPlayerSecondTeamFirstTarget = currentView!
-                        secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTargetTopView.isHidden = false
+                        if currentMatch.matchType.matchType == 0 {
+                            if currentView!.starts(with: "secondTeamSecond") {
+                                firstTeamSecondTopView.isHidden = true
+                                containsPlayerSecondTeamFirstTarget = currentView!
+                                secondTeamFirstTargetTopLabel.text = dummyLabel.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                                
+                                containsPlayerFirstTeamSecondTarget = "firstTeamSecondBottomView"
+                                firstTeamSecondTargetTopLabel.text = firstTeamSecondTopLabel!.text
+                                firstTeamSecondTargetTopView.isHidden = false
+                                
+                                if containsServerFirstTeamSecond == true {
+                                    containsServerFirstTeamSecond = false
+                                    containsServerSecondTeamFirst = true
+                                    secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                    secondTeamFirstTargetTopView.layer.borderWidth = 2
+                                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                                    
+                                    currentMatch.matchStatistics.isServer = "firstTeamSecond"
+                                }
+                            } else {
+                                firstTeamSecondTopView.isHidden = false
+                                containsPlayerSecondTeamFirstTarget = currentView!
+                                secondTeamFirstTargetTopLabel.text = dummyLabel.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                            }
+                        } else {
+                            firstTeamSecondTopView.isHidden = false
+                            containsPlayerSecondTeamFirstTarget = currentView!
+                            secondTeamFirstTargetTopLabel.text = dummyLabel.text
+                            secondTeamFirstTargetTopView.isHidden = false
+                        }
                     case "secondTeamFirstBottomView":
                         secondTeamFirstTopView.isHidden = false
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
                         secondTeamFirstTargetTopView.isHidden = false
                     case "secondTeamSecondBottomView":
-                        secondTeamSecondTopView.isHidden = false
-                        containsPlayerSecondTeamFirstTarget = currentView!
-                        secondTeamFirstTargetTopLabel.text = dummyLabel.text
-                        secondTeamFirstTargetTopView.isHidden = false
+                        if currentMatch.matchType.matchType == 0 {
+                            if currentView!.starts(with: "firstTeamSecond") {
+                                secondTeamSecondTopView.isHidden = true
+                                containsPlayerSecondTeamFirstTarget = currentView!
+                                secondTeamFirstTargetTopLabel.text = dummyLabel.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                                
+                                containsPlayerFirstTeamSecondTarget = "secondTeamSecondBottomView"
+                                firstTeamSecondTargetTopLabel.text = secondTeamSecondTopLabel!.text
+                                firstTeamSecondTargetTopView.isHidden = false
+                                
+                                if containsServerFirstTeamSecond == true {
+                                    containsServerFirstTeamSecond = false
+                                    containsServerSecondTeamFirst = true
+                                    secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                    secondTeamFirstTargetTopView.layer.borderWidth = 2
+                                    firstTeamSecondTargetTopView.layer.borderWidth = 0
+                                    
+                                    currentMatch.matchStatistics.isServer = "secondTeamSecond"
+                                }
+                            } else {
+                                secondTeamSecondTopView.isHidden = false
+                                containsPlayerSecondTeamFirstTarget = currentView!
+                                secondTeamFirstTargetTopLabel.text = dummyLabel.text
+                                secondTeamFirstTargetTopView.isHidden = false
+                            }
+                        } else {
+                            secondTeamSecondTopView.isHidden = false
+                            containsPlayerSecondTeamFirstTarget = currentView!
+                            secondTeamFirstTargetTopLabel.text = dummyLabel.text
+                            secondTeamFirstTargetTopView.isHidden = false
+                        }
                     case "":
                         containsPlayerSecondTeamFirstTarget = currentView!
                         secondTeamFirstTargetTopLabel.text = dummyLabel.text
