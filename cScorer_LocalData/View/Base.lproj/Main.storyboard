@@ -1003,6 +1003,24 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iXn-HD-SlM">
+                                <rect key="frame" x="182" y="52" width="50" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="0tg-Kp-1qm"/>
+                                    <constraint firstAttribute="height" constant="36" id="POQ-34-KjP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="info.circle" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="dP7-Se-g0s"/>
+                                    <action selector="closeButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="4mP-nO-Dvb"/>
+                                    <action selector="closeButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="ifl-Wq-sp4"/>
+                                    <action selector="infoButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="13t-y8-2vz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="goX-0k-TmN"/>
                         <color key="backgroundColor" red="0.00048875773790000004" green="0.1215891913" blue="0.1176489964" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1031,6 +1049,7 @@
                             <constraint firstItem="nNh-RN-NRs" firstAttribute="leading" secondItem="1k6-oB-eUq" secondAttribute="trailing" constant="8" symbolic="YES" id="FzB-Af-rSt"/>
                             <constraint firstItem="goX-0k-TmN" firstAttribute="trailing" secondItem="pmk-xw-fRa" secondAttribute="trailing" constant="68" id="GdW-KC-UKY"/>
                             <constraint firstItem="goX-0k-TmN" firstAttribute="trailing" secondItem="U4Z-iS-2SQ" secondAttribute="trailing" constant="20" id="Ipr-VC-hxM"/>
+                            <constraint firstItem="iXn-HD-SlM" firstAttribute="top" secondItem="goX-0k-TmN" secondAttribute="top" constant="8" id="L6g-uO-7wg"/>
                             <constraint firstItem="goX-0k-TmN" firstAttribute="trailing" secondItem="q4K-Sf-Mzn" secondAttribute="trailing" constant="20" id="LoX-G1-j4g"/>
                             <constraint firstItem="1k6-oB-eUq" firstAttribute="top" secondItem="M9u-s8-xXW" secondAttribute="bottom" constant="8" symbolic="YES" id="LzN-Nx-fic"/>
                             <constraint firstItem="pyv-5d-9ca" firstAttribute="leading" secondItem="goX-0k-TmN" secondAttribute="leading" constant="20" id="N05-7Z-wPB"/>
@@ -1058,6 +1077,7 @@
                             <constraint firstItem="gMN-R9-4QI" firstAttribute="top" secondItem="q4K-Sf-Mzn" secondAttribute="bottom" constant="8" symbolic="YES" id="rdj-GE-wbe"/>
                             <constraint firstItem="9hw-OQ-6he" firstAttribute="leading" secondItem="goX-0k-TmN" secondAttribute="leading" constant="20" id="sbd-XK-cOu"/>
                             <constraint firstItem="U4Z-iS-2SQ" firstAttribute="width" secondItem="bc9-md-m6h" secondAttribute="width" id="sqY-Ki-ZH9"/>
+                            <constraint firstItem="iXn-HD-SlM" firstAttribute="centerX" secondItem="kIZ-wp-cte" secondAttribute="centerX" id="tWN-tD-UCJ"/>
                             <constraint firstItem="pmk-xw-fRa" firstAttribute="leading" secondItem="goX-0k-TmN" secondAttribute="leading" constant="68" id="tlJ-HX-ZWI"/>
                             <constraint firstItem="goX-0k-TmN" firstAttribute="trailing" secondItem="d5d-Ds-Fh3" secondAttribute="trailing" constant="20" id="vpF-5c-AeC"/>
                             <constraint firstItem="d5d-Ds-Fh3" firstAttribute="leading" secondItem="goX-0k-TmN" secondAttribute="leading" constant="20" id="w7X-bt-Trs"/>
@@ -1105,6 +1125,7 @@
                         <outlet property="timerLabel" destination="9cy-JA-2Cd" id="8E9-QN-alG"/>
                         <outlet property="tossWinnerTextField" destination="0w1-4h-XbC" id="v8U-dG-xVe"/>
                         <outlet property="warmupButton" destination="pyv-5d-9ca" id="6iw-7v-0O4"/>
+                        <segue destination="IVX-JU-itH" kind="presentation" id="CrH-0m-wNf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fl9-ER-FdO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3708,6 +3729,21 @@
             </objects>
             <point key="canvasLocation" x="6509" y="-589"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Vo6-SP-ClH">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="IVX-JU-itH" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ieu-0G-rGs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="cfY-hb-LiC"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mZC-gL-3Wk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2761" y="1490"/>
+        </scene>
         <!--Start Match View Controller - Backup-->
         <scene sceneID="39R-us-7Gf">
             <objects>
@@ -4172,6 +4208,7 @@
         <image name="dot.circle" catalog="system" width="128" height="121"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="icloud.slash" catalog="system" width="128" height="101"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="trash" catalog="system" width="121" height="128"/>

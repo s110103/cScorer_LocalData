@@ -133,6 +133,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         navigationController?.popViewController(animated: true)
         delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
+    @IBAction func infoButtonTapped(_ sender: UIButton) {
+    }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: false)
         delegate?.sendEditMatchFromStartMatch(currentMatch: currentMatch, selectedIndex: selectedIndex)
