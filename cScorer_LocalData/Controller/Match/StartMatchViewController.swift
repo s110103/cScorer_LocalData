@@ -393,10 +393,14 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if tossWinnerTextField.isFirstResponder == true {
-            tossWinnerTextField.text = teamNames[pickerViewToss.selectedRow(inComponent: 0)]
+            let row: Int = pickerViewToss.selectedRow(inComponent: 0)
+            tossWinnerTextField.text = teamNames[row]
+            currentMatch.matchStatistics.madeChoice = row+1
         }
         if choiceMakerTextField.isFirstResponder == true {
-            choiceMakerTextField.text = teamNames[pickerViewChoice.selectedRow(inComponent: 0)]
+            let row: Int = pickerViewChoice.selectedRow(inComponent: 0)
+            choiceMakerTextField.text = teamNames[row]
+            currentMatch.matchStatistics.madeChoice = row+1
         }
         
         view.endEditing(true)

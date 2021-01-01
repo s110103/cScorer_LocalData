@@ -48,6 +48,7 @@ class EditDistinctTournamentDataViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func closeButtonTapped(_ sender: UIButton) {
+        tournamentDataTextField.text = removeBlankspaces(input: tournamentDataTextField.text!)
         delegate?.sendDistinctTournamendDate(_dataType: selectedItem, _distinctTournamentData: tournamentDataTextField.text!)
         dismiss(animated: true, completion: nil)
     }
@@ -84,6 +85,21 @@ class EditDistinctTournamentDataViewController: UIViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
+    }
+    
+    func removeBlankspaces(input: String) -> String {
+        var temporaryString: String = input
+        if temporaryString.hasPrefix(" ") {
+            temporaryString = String(temporaryString.dropFirst())
+            temporaryString = removeBlankspaces(input: temporaryString)
+        }
+        
+        if temporaryString.hasSuffix(" ") {
+            temporaryString = String(temporaryString.dropLast())
+            temporaryString = removeBlankspaces(input: temporaryString)
+        }
+        
+        return temporaryString
     }
 }
 

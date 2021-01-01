@@ -54,6 +54,8 @@ class SetPlayerNameViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction func closeButtonTapped(_ sender: UIButton) {
+        nameTextField.text = removeBlankspaces(input: nameTextField.text!)
+        surnameTextField.text = removeBlankspaces(input: surnameTextField.text!)
         delegate?.sendPlayerNameData(selectedPlayer: selectedPlayer, selectedPlayerName: nameTextField.text!, selectedPlayerSurname: surnameTextField.text!)
         dismiss(animated: true, completion: nil)
     }
@@ -90,6 +92,21 @@ class SetPlayerNameViewController: UIViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
+    }
+    
+    func removeBlankspaces(input: String) -> String {
+        var temporaryString: String = input
+        if temporaryString.hasPrefix(" ") {
+            temporaryString = String(temporaryString.dropFirst())
+            temporaryString = removeBlankspaces(input: temporaryString)
+        }
+        
+        if temporaryString.hasSuffix(" ") {
+            temporaryString = String(temporaryString.dropLast())
+            temporaryString = removeBlankspaces(input: temporaryString)
+        }
+        
+        return temporaryString
     }
 }
 
