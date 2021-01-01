@@ -33,6 +33,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var usingDummyView: Bool = false
     var isDummyServer: Bool = false
     var placeHolderServer: Bool = false
+    var isEditingTossTextField: Bool = false
+    var isEditingChoiceTextField: Bool = false
     
     var firstTeamFirstInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
     var firstTeamSecondInitialLocation: CGPoint = CGPoint(x: 0, y: 0)
@@ -350,7 +352,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             restartButton.isHidden = true
         }
     }
-    
+        
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -389,6 +391,14 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     // MARK: - touches BEGAN
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if tossWinnerTextField.isFirstResponder == true {
+            tossWinnerTextField.text = teamNames[pickerViewToss.selectedRow(inComponent: 0)]
+        }
+        if choiceMakerTextField.isFirstResponder == true {
+            choiceMakerTextField.text = teamNames[pickerViewChoice.selectedRow(inComponent: 0)]
+        }
+        
         view.endEditing(true)
         
         guard let touch = touches.first else {
