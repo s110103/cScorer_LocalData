@@ -13,7 +13,7 @@ protocol StartMatchViewControllerDelegate {
     func sendEditMatchFromStartMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, AddMatchViewControllerDelegate {
+class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, AddMatchViewControllerDelegate, WarmupInfoViewControllerDelegate {
     
     // MARK: - Variables
     var selectedIndex: Int = 0
@@ -136,6 +136,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func infoButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "showWarmupInfoSegue", sender: self)
     }
     @IBAction func editMatchButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: false)
@@ -194,6 +195,12 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             destinationVC.match = currentMatch
             destinationVC.editingDistinctMatch = true
             destinationVC.indexOfMatch = selectedIndex
+            
+            destinationVC.delegate = self
+        case "showWarmupInfoSegue":
+            let destinationVC = segue.destination as! WarmupInfoViewController
+            
+            destinationVC.currentMatch = currentMatch
             
             destinationVC.delegate = self
         default:
@@ -2335,5 +2342,9 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     func sendMatch(match: Match, editingDistinctMatch: Bool, indexOfMatch: Int, forceStart: Bool) {
         currentMatch = match
         selectedIndex = indexOfMatch
+    }
+    
+    func dismissWarmupInfo() {
+        
     }
 }

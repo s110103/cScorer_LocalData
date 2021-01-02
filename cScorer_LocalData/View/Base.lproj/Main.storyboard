@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1016,7 +1017,6 @@
                                 </state>
                                 <connections>
                                     <action selector="backButtonTapped:" destination="4vP-TD-oqp" eventType="touchUpInside" id="dP7-Se-g0s"/>
-                                    <action selector="closeButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="4mP-nO-Dvb"/>
                                     <action selector="closeButtonTapped:" destination="WVE-ZA-9yy" eventType="touchUpInside" id="ifl-Wq-sp4"/>
                                     <action selector="infoButtonTapped:" destination="TbA-co-MFg" eventType="touchUpInside" id="13t-y8-2vz"/>
                                 </connections>
@@ -1125,7 +1125,7 @@
                         <outlet property="timerLabel" destination="9cy-JA-2Cd" id="8E9-QN-alG"/>
                         <outlet property="tossWinnerTextField" destination="0w1-4h-XbC" id="v8U-dG-xVe"/>
                         <outlet property="warmupButton" destination="pyv-5d-9ca" id="6iw-7v-0O4"/>
-                        <segue destination="IVX-JU-itH" kind="presentation" id="CrH-0m-wNf"/>
+                        <segue destination="IVX-JU-itH" kind="presentation" identifier="showWarmupInfoSegue" id="CrH-0m-wNf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fl9-ER-FdO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3736,13 +3736,126 @@
                     <view key="view" contentMode="scaleToFill" id="ieu-0G-rGs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="whQ-TJ-7U6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ki4-6X-fJ5">
+                                <rect key="frame" x="20" y="44" width="374" height="398"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wre-nq-Cqa">
+                                        <rect key="frame" x="0.0" y="353" width="374" height="45"/>
+                                        <color key="backgroundColor" red="0.0060246014040000002" green="0.27461627129999999" blue="0.26274809240000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="LIi-0w-3dE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                        <state key="normal" title="Schließen">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeButtonTapped:" destination="IVX-JU-itH" eventType="touchUpInside" id="cgw-T5-25u"/>
+                                        </connections>
+                                    </button>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQ1-64-k5M">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="353"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="C8x-mu-VqD">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="353"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thiem, Dominik [Österreich]               \nTC Tulln" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gtz-iA-tq0">
+                                                    <rect key="frame" x="8" y="8" width="358" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.002115600975" green="0.2785953283" blue="0.26274758580000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thiem, Dominik [Österreich]               \nTC Tulln" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5p-R4-kOd">
+                                                    <rect key="frame" x="8" y="81" width="358" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.002115600975" green="0.2785953283" blue="0.26274758580000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thiem, Dominik [Österreich]               \nTC Tulln" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UlJ-Va-DWg">
+                                                    <rect key="frame" x="8" y="207" width="358" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.002115600975" green="0.2785953283" blue="0.26274758580000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thiem, Dominik [Österreich]               \nTC Tulln" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wnG-YR-FGC">
+                                                    <rect key="frame" x="8" y="280" width="358" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.002115600975" green="0.2785953283" blue="0.26274758580000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="vs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WrN-rc-aFj">
+                                                    <rect key="frame" x="166" y="159" width="43" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <blurEffect style="regular"/>
+                                    </visualEffectView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="hQ1-64-k5M" secondAttribute="trailing" id="1ad-ly-aAU"/>
+                                    <constraint firstItem="hQ1-64-k5M" firstAttribute="top" secondItem="Ki4-6X-fJ5" secondAttribute="top" id="Hjo-MU-Glh"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wre-nq-Cqa" secondAttribute="trailing" id="Ngj-8M-lUc"/>
+                                    <constraint firstItem="Wre-nq-Cqa" firstAttribute="leading" secondItem="Ki4-6X-fJ5" secondAttribute="leading" id="S4x-Jr-9SS"/>
+                                    <constraint firstItem="hQ1-64-k5M" firstAttribute="leading" secondItem="Ki4-6X-fJ5" secondAttribute="leading" id="jNQ-kb-edm"/>
+                                    <constraint firstItem="Wre-nq-Cqa" firstAttribute="top" secondItem="hQ1-64-k5M" secondAttribute="bottom" id="tbn-NZ-uFQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Wre-nq-Cqa" secondAttribute="bottom" id="wf2-Bw-FHP"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UwO-AH-iBM">
+                                <rect key="frame" x="20" y="450" width="374" height="412"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="cfY-hb-LiC"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UwO-AH-iBM" firstAttribute="top" secondItem="Ki4-6X-fJ5" secondAttribute="bottom" constant="8" symbolic="YES" id="3CC-Ma-5ho"/>
+                            <constraint firstItem="whQ-TJ-7U6" firstAttribute="trailing" secondItem="cfY-hb-LiC" secondAttribute="trailing" id="B9o-kh-ZqB"/>
+                            <constraint firstItem="Ki4-6X-fJ5" firstAttribute="leading" secondItem="cfY-hb-LiC" secondAttribute="leading" constant="20" id="D0J-ok-tWd"/>
+                            <constraint firstItem="whQ-TJ-7U6" firstAttribute="top" secondItem="ieu-0G-rGs" secondAttribute="top" id="GYh-ZR-0MA"/>
+                            <constraint firstItem="cfY-hb-LiC" firstAttribute="trailing" secondItem="UwO-AH-iBM" secondAttribute="trailing" constant="20" id="M0G-Ul-Hrq"/>
+                            <constraint firstItem="UwO-AH-iBM" firstAttribute="bottom" secondItem="cfY-hb-LiC" secondAttribute="bottom" id="R4H-yC-WCz"/>
+                            <constraint firstItem="UwO-AH-iBM" firstAttribute="top" secondItem="Ki4-6X-fJ5" secondAttribute="bottom" constant="8" symbolic="YES" id="RlW-zO-Obb"/>
+                            <constraint firstItem="whQ-TJ-7U6" firstAttribute="leading" secondItem="cfY-hb-LiC" secondAttribute="leading" id="U0f-N1-bFn"/>
+                            <constraint firstItem="UwO-AH-iBM" firstAttribute="leading" secondItem="cfY-hb-LiC" secondAttribute="leading" constant="20" id="WaK-bY-fe9"/>
+                            <constraint firstAttribute="bottom" secondItem="whQ-TJ-7U6" secondAttribute="bottom" id="k6J-7I-8Vs"/>
+                            <constraint firstItem="Ki4-6X-fJ5" firstAttribute="height" secondItem="UwO-AH-iBM" secondAttribute="height" multiplier="0.966019" id="lEY-FH-AkZ"/>
+                            <constraint firstItem="cfY-hb-LiC" firstAttribute="trailing" secondItem="Ki4-6X-fJ5" secondAttribute="trailing" constant="20" id="vGM-ZF-OwK"/>
+                            <constraint firstItem="Ki4-6X-fJ5" firstAttribute="top" secondItem="cfY-hb-LiC" secondAttribute="top" id="zCu-dr-Ma6"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="ho0-Mr-dfs"/>
+                    <connections>
+                        <outlet property="backgroundView" destination="Ki4-6X-fJ5" id="ezz-JN-nAC"/>
+                        <outlet property="firstTeamFirstLabel" destination="Gtz-iA-tq0" id="cJ7-g0-0bN"/>
+                        <outlet property="firstTeamSecondLabel" destination="Q5p-R4-kOd" id="pvl-Bp-4zO"/>
+                        <outlet property="secondTeamFirstLabel" destination="UlJ-Va-DWg" id="yXQ-PW-q3t"/>
+                        <outlet property="secondTeamSecondLabel" destination="wnG-YR-FGC" id="JTI-7w-5Ga"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZC-gL-3Wk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2761" y="1490"/>
+            <point key="canvasLocation" x="2760.8695652173915" y="1489.9553571428571"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -3762,5 +3875,8 @@
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="trash" catalog="system" width="121" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
