@@ -176,5 +176,17 @@ class WarmupInfoViewController: UIViewController {
         secondTeamSecondLabel.layer.cornerRadius = 5
         secondTeamSecondLabel.layer.masksToBounds = true
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super .touchesBegan(touches, with: event)
+        
+        let touch = touches.first
+        
+        guard let location = touch?.location(in: view) else { return }
+        
+        if !backgroundView.frame.contains(location) {
+            dismiss(animated: true, completion: nil)
+        }
+    }
 
 }
