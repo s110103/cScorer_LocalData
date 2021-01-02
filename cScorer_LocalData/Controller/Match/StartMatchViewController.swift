@@ -154,19 +154,24 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             
             warmupButton.setTitle("Stop", for: .normal)
             
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startWarmupTimer), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(startWarmupTimer), userInfo: nil, repeats: true)
         } else if warmupButton.title(for: .normal) == "Stop"{
             currentMatch.matchStatistics.warmupFinishedTimeStamp = NSDate()
+            
+            currentMatch.matchStatistics.warmupTimeInterval = currentMatch.matchStatistics.warmupTimeInterval + currentMatch.matchStatistics.warmupFinishedTimeStamp.timeIntervalSince(currentMatch.matchStatistics.warmupStartedTimeStamp as Date)
+            
             currentMatch.matchStatistics.warmupTimerRunning = false
             
             timer?.invalidate()
             
-            warmupButton.setTitle("Neustart", for: .normal)
-        } else if warmupButton.title(for: .normal) == "Neustart"{
-            currentMatch.matchStatistics.warmupFinishedTimeStamp = NSDate()
+            warmupButton.setTitle("Start", for: .normal)
+        } else if warmupButton.title(for: .normal) == "Start"{
+            currentMatch.matchStatistics.warmupStartedTimeStamp = NSDate()
             currentMatch.matchStatistics.warmupTimerRunning = true
                         
             warmupButton.setTitle("Stop", for: .normal)
+            
+            timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(startWarmupTimer), userInfo: nil, repeats: true)
         }
     }
     @IBAction func restartButtonTapped(_ sender: UIButton) {
@@ -175,14 +180,17 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             restartButton.isHidden = true
             timerLabel.text = "00:00:00"
             warmupButton.setTitle("Warmup", for: .normal)
+        } else {
+            currentMatch.matchStatistics.warmupStartedTimeStamp = NSDate()
         }
-        currentMatch.matchStatistics.warmupStartedTimeStamp = NSDate()
+        currentMatch.matchStatistics.warmupTimeInterval = TimeInterval()
     }
     
     // MARK: - Functions
     @objc func startWarmupTimer() {
         let now = NSDate()
-        let remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch.matchStatistics.warmupStartedTimeStamp as Date)
+        var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch.matchStatistics.warmupStartedTimeStamp as Date)
+        remainingTimeInterval = remainingTimeInterval + currentMatch.matchStatistics.warmupTimeInterval
                 
         timerLabel.text = "\(remainingTimeInterval.format(using: [.hour, .minute, .second])!)"
     }

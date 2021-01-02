@@ -13,8 +13,10 @@ class MatchStatistics {
     var playersOnCourtTimeStamp: NSDate = NSDate()
     var warmupStartedTimeStamp: NSDate = NSDate()
     var warmupFinishedTimeStamp: NSDate = NSDate()
+    var warmupTimeInterval: TimeInterval = TimeInterval()
     var matchStartedTimeStamp: NSDate = NSDate()
     var matchFinishedTimeStamp: NSDate = NSDate()
+    var matchTimeInterval: TimeInterval = TimeInterval()
     var timePlayed: NSDate = NSDate()
     
     var matchService: Int = 0
@@ -68,14 +70,16 @@ class MatchStatistics {
     var secondTeamFirstPlayerPosition: Int = 0
     var secondTeamSecondPlayerPosition: Int = 0
     
-    init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: String, _onLeftSide: String, _onRightSide: String, _firstTeamNear: String, _firstTeamFar: String, _secondTeamNear: String, _secondTeamFar: String, _matchInitiated: Bool, _warmupTimerRunning: Bool, _firstTeamFirstPlayerPosition: Int) {
+    init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _warmupTimeInterval: TimeInterval, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _matchTimeInterval: TimeInterval, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: String, _onLeftSide: String, _onRightSide: String, _firstTeamNear: String, _firstTeamFar: String, _secondTeamNear: String, _secondTeamFar: String, _matchInitiated: Bool, _warmupTimerRunning: Bool, _firstTeamFirstPlayerPosition: Int) {
         
         chairUmpireOnCourtTimeStamp = _chairUmpireOnCourtTimeStamp
         playersOnCourtTimeStamp = _playersOnCourtTimeStamp
         warmupStartedTimeStamp = _warmupStartedTimeStamp
         warmupFinishedTimeStamp = _warmupFinishedTimeStamp
+        warmupTimeInterval = _warmupTimeInterval
         matchStartedTimeStamp = _matchStartedTimeStamp
         matchFinishedTimeStamp = _matchFinishedTimeStamp
+        matchTimeInterval = _matchTimeInterval
         timePlayed = _timePlayed
         
         matchService = _matchService
