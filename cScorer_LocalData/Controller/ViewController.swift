@@ -78,7 +78,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if match.matchType.matchType == 0 {
             cell.matchDescriptionLabel.text = "\(match.firstTeamFirstPlayerSurname) \(match.firstTeamFirstPlayer.prefix(1)). vs \(match.secondTeamFirstPlayerSurname) \(match.secondTeamFirstPlayer.prefix(1))."
         } else {
-            cell.matchDescriptionLabel.text = "\(match.firstTeamFirstPlayerSurname) \(match.firstTeamFirstPlayer.prefix(1)). u \(match.firstTeamSecondPlayerSurname) \(match.firstTeamSecondPlayer.prefix(1)). vs \(match.secondTeamFirstPlayerSurname) \(match.secondTeamFirstPlayer.prefix(1)). u \(match.secondTeamSecondPlayerSurname) \(match.secondTeamSecondPlayer.prefix(1))."
+            cell.matchDescriptionLabel.text = "\(match.firstTeamFirstPlayerSurname) \(match.firstTeamFirstPlayer.prefix(1)). & \(match.firstTeamSecondPlayerSurname) \(match.firstTeamSecondPlayer.prefix(1)). vs \(match.secondTeamFirstPlayerSurname) \(match.secondTeamFirstPlayer.prefix(1)). & \(match.secondTeamSecondPlayerSurname) \(match.secondTeamSecondPlayer.prefix(1))."
         }
         
         cell.matchCourtLabel.text = "Platz \(match.court)"
@@ -244,6 +244,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             matchesTableView.reloadData()
         } else {
             if forceStart == true {
+                savedMatches.append(match)
+                editDistinctMatch = false
+                matchesTableView.reloadData()
+                
+                selectedMatch = match
+                selectedIndex = savedMatches.endIndex
+                
                 if match.backToChairUmpireViewController == true {
                     performSegue(withIdentifier: "chairUmpireOnCourtSegue", sender: self)
                     match.backToChairUmpireViewController = false
@@ -256,10 +263,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     performSegue(withIdentifier: "startMatchSegue", sender: self)
                     match.backToStartMatchViewController = false
                 }
-                
-                savedMatches.append(match)
-                editDistinctMatch = false
-                matchesTableView.reloadData()
             } else {
                 savedMatches.append(match)
                 editDistinctMatch = false
