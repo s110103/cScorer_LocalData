@@ -241,8 +241,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             
         } else {
             teamNames.removeAll()
-            teamNames.append("\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1)) & \(currentMatch.firstTeamSecondPlayerSurname) \(currentMatch.firstTeamSecondPlayer.prefix(1))")
-            teamNames.append("\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1)) & \(currentMatch.secondTeamSecondPlayerSurname) \(currentMatch.secondTeamSecondPlayer.prefix(1))")
+            teamNames.append("\(currentMatch.firstTeamFirstPlayerSurname) \(currentMatch.firstTeamFirstPlayer.prefix(1)). & \(currentMatch.firstTeamSecondPlayerSurname) \(currentMatch.firstTeamSecondPlayer.prefix(1)).")
+            teamNames.append("\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1)). & \(currentMatch.secondTeamSecondPlayerSurname) \(currentMatch.secondTeamSecondPlayer.prefix(1)).")
             
             firstTeamFirstTopView.isHidden = false
             firstTeamFirstBottomView.isHidden = false
@@ -261,7 +261,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
             firstTeamSecondBottomLabel.text = "\(currentMatch.firstTeamSecondPlayerSurname) \(currentMatch.firstTeamSecondPlayer.prefix(1))."
             
             secondTeamFirstTopLabel.text = "\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1))."
-            secondTeamSecondBottomLabel.text = "\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1))."
+            secondTeamFirstBottomLabel.text = "\(currentMatch.secondTeamFirstPlayerSurname) \(currentMatch.secondTeamFirstPlayer.prefix(1))."
             
             secondTeamSecondTopLabel.text = "\(currentMatch.secondTeamSecondPlayerSurname) \(currentMatch.secondTeamSecondPlayer.prefix(1))."
             secondTeamSecondBottomLabel.text = "\(currentMatch.secondTeamSecondPlayerSurname) \(currentMatch.secondTeamSecondPlayer.prefix(1))."
@@ -406,6 +406,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     // MARK: - touches BEGAN
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super .touchesBegan(touches, with: event)
         
         if tossWinnerTextField.isFirstResponder == true {
             let row: Int = pickerViewToss.selectedRow(inComponent: 0)
@@ -742,6 +743,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     // MARK: - touches MOVED
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super .touchesMoved(touches, with: event)
+        
         guard let touch = touches.first else {
             return
         }
@@ -1159,6 +1162,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
     // MARK: - touches ENDED
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super .touchesEnded(touches, with: event)
+        
         guard let touch = touches.first else {
             return
         }
@@ -1262,6 +1267,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         /*
                          doubles
                          */
+                        
+                        // MARK: - 1. Quarter
                         
                         
                         if currentView!.starts(with: "firstTeamFirst") {
@@ -1497,6 +1504,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         /*
                             Doubles
                          */
+                        
+                        // MARK: - 2. Quarter
                         
                         
                         if currentView!.starts(with: "firstTeamFirst") {
@@ -1794,6 +1803,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             Doubles
                          */
                         
+                        // MARK: - 1. Quarter
                         
                         if currentView!.starts(with: "firstTeamFirst") {
                             
@@ -2040,6 +2050,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         /*
                          doubles
                          */
+                        
+                        // MARK: - 1. Quarter 
                         
                         
                         if currentView!.starts(with: "firstTeamFirst") {

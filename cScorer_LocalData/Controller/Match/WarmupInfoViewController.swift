@@ -92,10 +92,10 @@ class WarmupInfoViewController: UIViewController {
                 Doubles
              */
             
-            firstTeamFirstLabel.isHidden = true
+            firstTeamFirstLabel.isHidden = false
             firstTeamSecondLabel.isHidden = false
             secondTeamFirstLabel.isHidden = false
-            secondTeamSecondLabel.isHidden = true
+            secondTeamSecondLabel.isHidden = false
             
             /*
                 1. Team
