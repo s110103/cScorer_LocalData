@@ -1233,6 +1233,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
                                 
                 switch touchedView {
+                // MARK: - Dragged To firstTeamFirstTargetBottomView
                 case "firstTeamFirstTargetBottomView":
                     
                     if containsServerFirstTeamFirst == true {
@@ -1270,7 +1271,92 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         
                         // MARK: - 1. Quarter
                         
+                        if currentView!.starts(with: "firstTeamFirst") {
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "firstTeamSecondBottomView"
+                            firstTeamSecondTargetTopLabel.text = firstTeamSecondTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                        } else if currentView!.starts(with: "firstTeamSecond") {
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = true
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = true
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = false
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = false
+                            default:
+                                break
+                            }
+                            
+                            firstTeamFirstTopView.isHidden = true
+                            firstTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "firstTeamFirstBottomView"
+                            firstTeamSecondTargetTopLabel.text = firstTeamFirstTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                        } else if currentView!.starts(with: "secondTeamFirst") {
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "secondTeamSecondBottomView"
+                            firstTeamSecondTargetTopLabel.text = secondTeamSecondTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                        } else if currentView!.starts(with: "secondTeamSecond") {
+                            switch containsPlayerFirstTeamSecondTarget {
+                            case "firstTeamFirstBottomView":
+                                firstTeamFirstTopView.isHidden = false
+                            case "firstTeamSecondBottomView":
+                                firstTeamSecondTopView.isHidden = false
+                            case "secondTeamFirstBottomView":
+                                secondTeamFirstTopView.isHidden = true
+                            case "secondTeamSecondBottomView":
+                                secondTeamSecondTopView.isHidden = true
+                            default:
+                                break
+                            }
+                            
+                            secondTeamFirstTopView.isHidden = true
+                            secondTeamSecondTopView.isHidden = true
+                            
+                            containsPlayerFirstTeamSecondTarget = "secondTeamFirstBottomView"
+                            firstTeamSecondTargetTopLabel.text = secondTeamFirstTopLabel.text
+                            firstTeamSecondTargetTopView.isHidden = false
+                        }
                         
+                        
+                        
+                        // MARK: - Old Code
+                        /*
                         if currentView!.starts(with: "firstTeamFirst") {
                             
                             switch containsPlayerFirstTeamSecondTarget {
@@ -1421,7 +1507,11 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         default:
                             break
                         }
+                         */
                     }
+ 
+                    
+                    // MARK: - Dragged To firstTeamSecondTargetBottomView
                 case "firstTeamSecondTargetBottomView":
                     
                     placeHolderServer = containsServerFirstTeamSecond
@@ -1719,6 +1809,7 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             break
                         }
                     }
+                        // MARK: - Dragged To secondTeamFirstTargetBottomView
                 case "secondTeamFirstTargetBottomView":
                     
                     placeHolderServer = containsServerSecondTeamFirst
@@ -2016,6 +2107,8 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             break
                         }
                     }
+                        
+                        // MARK: - secondTeamSecondTargetBottomView
                 case "secondTeamSecondTargetBottomView":
                     
                     if containsServerSecondTeamSecond == true {
