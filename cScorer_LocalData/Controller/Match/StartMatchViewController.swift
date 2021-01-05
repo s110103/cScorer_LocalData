@@ -1291,97 +1291,9 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             containsPlayerFirstTeamSecondTarget = "firstTeamSecondBottomView"
                             firstTeamSecondTargetTopLabel.text = firstTeamSecondTopLabel.text
                             firstTeamSecondTargetTopView.isHidden = false
-                        } else if currentView!.starts(with: "firstTeamSecond") {
-                            switch containsPlayerFirstTeamSecondTarget {
-                            case "firstTeamFirstBottomView":
-                                firstTeamFirstTopView.isHidden = true
-                            case "firstTeamSecondBottomView":
-                                firstTeamSecondTopView.isHidden = true
-                            case "secondTeamFirstBottomView":
-                                secondTeamFirstTopView.isHidden = false
-                            case "secondTeamSecondBottomView":
-                                secondTeamSecondTopView.isHidden = false
-                            default:
-                                break
-                            }
-                            
-                            firstTeamFirstTopView.isHidden = true
-                            firstTeamSecondTopView.isHidden = true
-                            
-                            containsPlayerFirstTeamSecondTarget = "firstTeamFirstBottomView"
-                            firstTeamSecondTargetTopLabel.text = firstTeamFirstTopLabel.text
-                            firstTeamSecondTargetTopView.isHidden = false
-                        } else if currentView!.starts(with: "secondTeamFirst") {
-                            switch containsPlayerFirstTeamSecondTarget {
-                            case "firstTeamFirstBottomView":
-                                firstTeamFirstTopView.isHidden = false
-                            case "firstTeamSecondBottomView":
-                                firstTeamSecondTopView.isHidden = false
-                            case "secondTeamFirstBottomView":
-                                secondTeamFirstTopView.isHidden = true
-                            case "secondTeamSecondBottomView":
-                                secondTeamSecondTopView.isHidden = true
-                            default:
-                                break
-                            }
-                            
-                            secondTeamFirstTopView.isHidden = true
-                            secondTeamSecondTopView.isHidden = true
-                            
-                            containsPlayerFirstTeamSecondTarget = "secondTeamSecondBottomView"
-                            firstTeamSecondTargetTopLabel.text = secondTeamSecondTopLabel.text
-                            firstTeamSecondTargetTopView.isHidden = false
-                        } else if currentView!.starts(with: "secondTeamSecond") {
-                            switch containsPlayerFirstTeamSecondTarget {
-                            case "firstTeamFirstBottomView":
-                                firstTeamFirstTopView.isHidden = false
-                            case "firstTeamSecondBottomView":
-                                firstTeamSecondTopView.isHidden = false
-                            case "secondTeamFirstBottomView":
-                                secondTeamFirstTopView.isHidden = true
-                            case "secondTeamSecondBottomView":
-                                secondTeamSecondTopView.isHidden = true
-                            default:
-                                break
-                            }
-                            
-                            secondTeamFirstTopView.isHidden = true
-                            secondTeamSecondTopView.isHidden = true
-                            
-                            containsPlayerFirstTeamSecondTarget = "secondTeamFirstBottomView"
-                            firstTeamSecondTargetTopLabel.text = secondTeamFirstTopLabel.text
-                            firstTeamSecondTargetTopView.isHidden = false
-                        }
-                        
-                        
-                        
-                        // MARK: - Old Code
-                        /*
-                        if currentView!.starts(with: "firstTeamFirst") {
-                            
-                            switch containsPlayerFirstTeamSecondTarget {
-                            case "firstTeamFirstBottomView":
-                                firstTeamFirstTopView.isHidden = true
-                            case "firstTeamSecondBottomView":
-                                firstTeamSecondTopView.isHidden = true
-                            case "secondTeamFirstBottomView":
-                                secondTeamFirstTopView.isHidden = false
-                            case "secondTeamSecondBottomView":
-                                secondTeamSecondTopView.isHidden = false
-                            default:
-                                break
-                            }
-                            
-                            firstTeamFirstTopView.isHidden = true
-                            firstTeamSecondTopView.isHidden = true
-                            
-                            containsPlayerFirstTeamSecondTarget = "firstTeamSecondBottomView"
-                            firstTeamSecondTargetTopLabel.text = firstTeamSecondTopLabel.text
-                            firstTeamSecondTargetTopView.isHidden = false
                             
                             currentMatch.matchStatistics.firstTeamNear = "firstTeamSecond"
                         } else if currentView!.starts(with: "firstTeamSecond") {
-                            
                             switch containsPlayerFirstTeamSecondTarget {
                             case "firstTeamFirstBottomView":
                                 firstTeamFirstTopView.isHidden = true
@@ -1404,7 +1316,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             
                             currentMatch.matchStatistics.firstTeamNear = "firstTeamFirst"
                         } else if currentView!.starts(with: "secondTeamFirst") {
-                            
                             switch containsPlayerFirstTeamSecondTarget {
                             case "firstTeamFirstBottomView":
                                 firstTeamFirstTopView.isHidden = false
@@ -1427,7 +1338,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             
                             currentMatch.matchStatistics.firstTeamNear = "secondTeamSecond"
                         } else if currentView!.starts(with: "secondTeamSecond") {
-                            
                             switch containsPlayerFirstTeamSecondTarget {
                             case "firstTeamFirstBottomView":
                                 firstTeamFirstTopView.isHidden = false
@@ -1445,12 +1355,23 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
                             secondTeamSecondTopView.isHidden = true
                             
                             containsPlayerFirstTeamSecondTarget = "secondTeamFirstBottomView"
-                            firstTeamSecondTargetTopLabel.text = secondTeamFirstTopLabel.text
+                            firstTeamSecondTargetTopLabel.text = secondTeamSecondTopLabel.text
                             firstTeamSecondTargetTopView.isHidden = false
                             
                             currentMatch.matchStatistics.firstTeamNear = "secondTeamFirst"
                         }
-                    }
+                        
+                        switch containsPlayerFirstTeamFirstTarget {
+                        case "firstTeamFirstBottomView":
+                            <#code#>
+                        default:
+                            break
+                        }
+                        
+                        
+                        
+                        // MARK: - Old Code
+                        /*
                     
                     switch containsPlayerFirstTeamFirstTarget {
                     case "firstTeamFirstBottomView":
