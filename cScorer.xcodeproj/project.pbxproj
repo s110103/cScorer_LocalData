@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0602A76825A52C220036B1B3 /* StartMatchViewControllerBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0602A76725A52C220036B1B3 /* StartMatchViewControllerBackup.swift */; };
 		0620B78C25853B59006AA479 /* StartMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0620B78B25853B59006AA479 /* StartMatchViewController.swift */; };
 		0630520A2583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */; };
 		0630523025840C9C00B9F5D2 /* PlayersOnCourtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0602A76725A52C220036B1B3 /* StartMatchViewControllerBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMatchViewControllerBackup.swift; sourceTree = "<group>"; };
 		0620B78B25853B59006AA479 /* StartMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMatchViewController.swift; sourceTree = "<group>"; };
 		063052092583E13C00B9F5D2 /* ChairUmpireOnCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChairUmpireOnCourtViewController.swift; sourceTree = "<group>"; };
 		0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersOnCourtViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				0630522F25840C9C00B9F5D2 /* PlayersOnCourtViewController.swift */,
 				0620B78B25853B59006AA479 /* StartMatchViewController.swift */,
 				0637844A259D381700EE8C81 /* WarmupInfoViewController.swift */,
+				0602A76725A52C220036B1B3 /* StartMatchViewControllerBackup.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				066F65312572DB3E006843D1 /* SetTrueFalseViewController.swift in Sources */,
 				067FB522255F16E3001AD911 /* AddMatchViewController.swift in Sources */,
 				06D6708E25694450005CB434 /* Match.swift in Sources */,
+				0602A76825A52C220036B1B3 /* StartMatchViewControllerBackup.swift in Sources */,
 				066F653F2572E763006843D1 /* SetTiebreakPointsViewController.swift in Sources */,
 				066F65452572E963006843D1 /* SetTiebreakPointsLastSetViewController.swift in Sources */,
 				067FB4FE255EF038001AD911 /* AppDelegate.swift in Sources */,
