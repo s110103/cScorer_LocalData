@@ -8,17 +8,17 @@
 import UIKit
 import ProgressHUD
 
-protocol StartMatchViewControllerDelegate {
+protocol StartMatchViewControllerBackupDelegate {
     func sendStartMatchData(currentMatch: Match, selectedIndex: Int)
     func sendEditMatchFromStartMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, AddMatchViewControllerDelegate, WarmupInfoViewControllerDelegate {
+class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, AddMatchViewControllerDelegate, WarmupInfoViewControllerDelegate {
     
     // MARK: - Variables
     var selectedIndex: Int = 0
     var currentMatch: Match = Match()
-    var delegate: StartMatchViewControllerDelegate?
+    var delegate: StartMatchViewControllerBackupDelegate?
         
     var isDragging: Bool = false
     var isDraggingServer: Bool = false
