@@ -2243,29 +2243,100 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
                             currentMatch.matchStatistics.firstTeamFar = "secondTeamFirst"
                         }
                         
+                        /*
+                         if placeHolderOtherServer == true {
+                             replacedServer = true
+                             containsServerFirstTeamFirst = false
+                             containsServerSecondTeamFirst = true
+                             
+                             secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                             secondTeamFirstTargetTopView.layer.borderWidth = 2
+                             
+                             firstTeamFirstTargetTopView.layer.borderWidth = 0
+                         }
+                         if placeHolderServer == true {
+                             replacedServer = true
+                             containsServerFirstTeamSecond = false
+                             containsServerSecondTeamSecond = true
+                             
+                             secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                             secondTeamSecondTargetTopView.layer.borderWidth = 2
+                             
+                             firstTeamSecondTargetTopView.layer.borderWidth = 0
+                         }
+                         */
+                        
+                        if currentViewInitialLocation.starts(with: "first") {
+                            
+                            if placeHolderServer == true {
+                                replacedServer = true
+                                containsServerFirstTeamSecond = false
+                                containsServerSecondTeamSecond = true
+                                
+                                secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                secondTeamSecondTargetTopView.layer.borderWidth = 2
+                                
+                                firstTeamSecondTargetTopView.layer.borderWidth = 0
+                            }
+                            
+                            if placeHolderOtherServer == true {
+                                replacedServer = true
+                                containsServerFirstTeamFirst = false
+                                containsServerSecondTeamFirst = true
+                                
+                                secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                secondTeamFirstTargetTopView.layer.borderWidth = 2
+                                
+                                firstTeamFirstTargetTopView.layer.borderWidth = 0
+                            }
+                            
+                                                        
+                            if placeHolderServer == true {
+                                replacedServer = true
+                                containsServerFirstTeamFirst = false
+                                containsServerSecondTeamFirst = true
+                                
+                                secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                secondTeamFirstTargetTopView.layer.borderWidth = 2
+                                
+                                firstTeamFirstTargetTopView.layer.borderWidth = 0
+                            }
+                            if placeHolderOtherServer == true {
+                                replacedServer = true
+                                containsServerFirstTeamSecond = false
+                                containsServerSecondTeamSecond = true
+                                
+                                secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                secondTeamSecondTargetTopView.layer.borderWidth = 2
+                                
+                                firstTeamSecondTargetTopView.layer.borderWidth = 0
+                            }
+                        } else {
+                            if placeHolderServer == true {
+                                replacedServer = true
+                                containsServerFirstTeamFirst = false
+                                containsServerSecondTeamFirst = true
+                                
+                                secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                secondTeamFirstTargetTopView.layer.borderWidth = 2
+                                
+                                firstTeamFirstTargetTopView.layer.borderWidth = 0
+                            }
+                            if placeHolderOtherServer == true {
+                                replacedServer = true
+                                containsServerFirstTeamSecond = false
+                                containsServerSecondTeamSecond = true
+                                
+                                secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
+                                secondTeamSecondTargetTopView.layer.borderWidth = 2
+                                
+                                firstTeamSecondTargetTopView.layer.borderWidth = 0
+                            }
+                        }
+                        
                         if firstQuarterPlaceholder != "" || secondQuarterPlaceholder != "" {
                             
                             if thirdQuarterPlaceholder != "" && fourthQuarterPlaceholder != "" {
-                                if placeHolderOtherServer == true {
-                                    replacedServer = true
-                                    containsServerFirstTeamFirst = false
-                                    containsServerSecondTeamFirst = true
-                                    
-                                    secondTeamFirstTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
-                                    secondTeamFirstTargetTopView.layer.borderWidth = 2
-                                    
-                                    firstTeamFirstTargetTopView.layer.borderWidth = 0
-                                }
-                                if placeHolderServer == true {
-                                    replacedServer = true
-                                    containsServerFirstTeamSecond = false
-                                    containsServerSecondTeamSecond = true
-                                    
-                                    secondTeamSecondTargetTopView.layer.borderColor = UIColor(red:14/255, green:245/255, blue:219/255, alpha: 1).cgColor
-                                    secondTeamSecondTargetTopView.layer.borderWidth = 2
-                                    
-                                    firstTeamSecondTargetTopView.layer.borderWidth = 0
-                                }
                                 
                                 // MARK: - Check Top Target
                                 if firstQuarterPlaceholder.starts(with: "firstTeamFirst") {
@@ -3860,13 +3931,14 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
                 dummyView.frame.origin.y = dummyViewInitialLocation.y
                 dummyView.layer.borderWidth = 0
                 dummyLabel.text = ""
-                
-                isDragging = false
-                usingDummyView = false
-                isDummyServer = false
-                currentView = ""
             }
         }
+        
+        isDragging = false
+        usingDummyView = false
+        isDummyServer = false
+        currentView = ""
+        currentViewInitialLocation = ""
         
         if isDraggingServer == true {
             
