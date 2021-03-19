@@ -304,7 +304,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if selectedMatch.matchStatistics.matchInitiated == false {
             performSegue(withIdentifier: "startMatchSegue", sender: self)
         } else {
-            
+            performSegue(withIdentifier: "showMatchSegueAnimated", sender: self)
         }
     }
     
@@ -314,6 +314,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         savedMatches.remove(at: selectedIndex)
         savedMatches.insert(currentMatch, at: selectedIndex)
         matchesTableView.reloadData()
+        self.performSegue(withIdentifier: "showMatchSegue", sender: self)
     }
     
     func sendEditMatchFromChairUmpire(currentMatch: Match, selectedIndex: Int) {

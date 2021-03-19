@@ -150,6 +150,12 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
         delegate?.sendEditMatchFromStartMatch(currentMatch: currentMatch, selectedIndex: selectedIndex)
     }
     @IBAction func startButtonTapped(_ sender: UIButton) {
+        
+        currentMatch.matchStatistics.matchInitiated = true
+        navigationController?.popViewController(animated: false)
+        delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
+        print("start button tapped")
+        
     }
     @IBAction func warmupButtonTapped(_ sender: UIButton) {
         
