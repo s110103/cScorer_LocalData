@@ -440,6 +440,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
         
         let touchedPoint: CGPoint = touch.location(in: view)
         
+        
         let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
         
         if touchedView != "" {
@@ -759,6 +760,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
             
             isDraggingServer = true
             view.bringSubviewToFront(serverView)
+            print("Server touched")
         }
     }
     
@@ -1070,6 +1072,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
         }
         
         if isDraggingServer == true {
+            print("Server")
             
             let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)
             
@@ -1085,6 +1088,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
                     firstTeamSecondTargetBottomView.layer.borderWidth = 0
                     secondTeamFirstTargetBottomView.layer.borderWidth = 0
                     secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    print("\(containsPlayerFirstTeamFirstTarget)")
                 }
             case "firstTeamSecondTargetBottomView":
                 if containsPlayerFirstTeamSecondTarget != "" {
@@ -1097,6 +1101,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
                     firstTeamSecondTargetBottomView.layer.borderWidth = 2
                     secondTeamFirstTargetBottomView.layer.borderWidth = 0
                     secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    print("\(containsPlayerFirstTeamSecondTarget)")
                 }
             case "secondTeamFirstTargetBottomView":
                 if containsPlayerSecondTeamFirstTarget != "" {
@@ -1109,6 +1114,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
                     firstTeamSecondTargetBottomView.layer.borderWidth = 0
                     secondTeamFirstTargetBottomView.layer.borderWidth = 2
                     secondTeamSecondTargetBottomView.layer.borderWidth = 0
+                    print("\(containsPlayerSecondTeamFirstTarget)")
                 }
             case "secondTeamSecondTargetBottomView":
                 if containsPlayerSecondTeamSecondTarget != "" {
@@ -1121,6 +1127,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
                     firstTeamSecondTargetBottomView.layer.borderWidth = 0
                     secondTeamFirstTargetBottomView.layer.borderWidth = 0
                     secondTeamSecondTargetBottomView.layer.borderWidth = 2
+                    print("\(containsPlayerSecondTeamSecondTarget)")
                 }
             default:
                 if containsServerFirstTeamFirst == true {
@@ -3945,7 +3952,7 @@ class StartMatchViewControllerBackup: UIViewController, UIPickerViewDelegate, UI
         isDummyServer = false
         currentView = ""
         currentViewInitialLocation = ""
-        
+                
         if isDraggingServer == true {
             
             let touchedView = receiveViewTouchedIn(touchedPoint: touchedPoint)

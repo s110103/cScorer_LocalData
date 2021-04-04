@@ -8,7 +8,7 @@
 import UIKit
 import ProgressHUD
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate, ChairUmpireOnCourtViewControllerDelegate, PlayersOnCourtViewControllerDelegate, StartMatchViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddMatchViewControllerDelegate, ChairUmpireOnCourtViewControllerDelegate, PlayersOnCourtViewControllerDelegate, StartMatchViewControllerDelegate, MatchViewControllerDelegate {
     
     // MARK: - Variables
     var savedMatches: [Match] = []
@@ -222,6 +222,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             destinationVC.currentMatch = selectedMatch
             
             destinationVC.delegate = self
+        case "showMatchSegueAnimated":
+            let destinationVC = segue.destination as! MatchViewController
+            
+            destinationVC.selectedIndex = selectedIndex
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
+        case "showMatchSegue":
+            let destinationVC = segue.destination as! MatchViewController
+            
+            destinationVC.selectedIndex = selectedIndex
+            destinationVC.currentMatch = selectedMatch
+            
+            destinationVC.delegate = self
         default:
             break
         }
@@ -339,6 +353,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.selectedIndex = selectedIndex
         self.selectedMatch = self.savedMatches[self.selectedIndex]
         self.performSegue(withIdentifier: "addMatchSegue", sender: self)
+    }
+    
+    func sendMatch(currentMatch: Match, selectedIndex: Int) {
+        
     }
     
     /*

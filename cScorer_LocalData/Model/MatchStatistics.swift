@@ -15,9 +15,13 @@ class MatchStatistics {
     var warmupFinishedTimeStamp: NSDate = NSDate()
     var warmupTimeInterval: TimeInterval = TimeInterval()
     var matchStartedTimeStamp: NSDate = NSDate()
+    var matchRestartTimeStamp: NSDate = NSDate()
     var matchFinishedTimeStamp: NSDate = NSDate()
     var matchTimeInterval: TimeInterval = TimeInterval()
     var timePlayed: NSDate = NSDate()
+    
+    var matchRunning: Bool = false
+    var matchSuspended: Bool = false
     
     var matchService: Int = 0
     
@@ -35,26 +39,26 @@ class MatchStatistics {
     var matchInitiated: Bool = false
     var warmupTimerRunning: Bool = false
     
-    var gmaesFirstSetFirstPlayer: Int = 0
+    var gamesFirstSetFirstPlayer: Int = 0
     var tiebreakFirstSetFirstPlayer: Int = 0
-    var gmaesSecondSetFirstPlayer: Int = 0
+    var gamesSecondSetFirstPlayer: Int = 0
     var tiebreakSecondSetFirstPlayer: Int = 0
-    var gmaesThirdSetFirstPlayer: Int = 0
+    var gamesThirdSetFirstPlayer: Int = 0
     var tiebreakThirdSetFirstPlayer: Int = 0
-    var gmaesFourthSetFirstPlayer: Int = 0
+    var gamesFourthSetFirstPlayer: Int = 0
     var tiebreakFourthSetFirstPlayer: Int = 0
-    var gmaesFifthSetFirstPlayer: Int = 0
+    var gamesFifthSetFirstPlayer: Int = 0
     var tiebreakFifthSetFirstPlayer: Int = 0
     
-    var gmaesFirstSetSecondPlayer: Int = 0
+    var gamesFirstSetSecondPlayer: Int = 0
     var tiebreakFirstSetSecondPlayer: Int = 0
-    var gmaesSecondSetSecondPlayer: Int = 0
+    var gamesSecondSetSecondPlayer: Int = 0
     var tiebreakSecondSetSecondPlayer: Int = 0
-    var gmaesThirdSetSecondPlayer: Int = 0
+    var gamesThirdSetSecondPlayer: Int = 0
     var tiebreakThirdSetSecondPlayer: Int = 0
-    var gmaesFourthSetSecondPlayer: Int = 0
+    var gamesFourthSetSecondPlayer: Int = 0
     var tiebreakFourthSetSecondPlayer: Int = 0
-    var gmaesFifthSetSecondPlayer: Int = 0
+    var gamesFifthSetSecondPlayer: Int = 0
     var tiebreakFifthSetSecondPlayer: Int = 0
     
     var matchTiebreakFirstPlayer: Int = 0
@@ -64,6 +68,8 @@ class MatchStatistics {
     var currentGameSecondPlayer: Int = 0
     var currentGame: String = "0:0"
     var currentSets: String = "0:0"
+    var totalGamesPlayed: Int = 0
+    var totalOverrules: Int = 0
     
     var firstTeamFirstPlayerPosition: Int = 0
     var firstTeamSecondPlayerPosition: Int = 0
