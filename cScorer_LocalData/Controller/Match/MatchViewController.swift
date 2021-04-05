@@ -22,9 +22,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     var pointStarted: Bool = false
     var firstFault: Bool = false
     var timer: Timer?
+    var interruptionTimer: Timer?
     
     var delegate: MatchViewControllerDelegate?
-    
+        
     var matchSuspensions: [String] =
     [
         "Rain",
@@ -86,6 +87,11 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     @IBOutlet weak var secondTeamPointButton: UIButton!
     @IBOutlet weak var startOfPointButton: UIButton!
     
+    @IBOutlet weak var interruptedMatchView: UIView!
+    @IBOutlet weak var interruptedMatchTimerLabel: UILabel!
+    @IBOutlet weak var interruptedMatchContinueButton: UIButton!
+    @IBOutlet weak var interruptedMatchReWarmupButton: UIButton!
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,10 +105,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     
     // MARK: - Actions
     @IBAction func matchSettingsButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        //dismiss(animated: true, completion: nil)
     }
     
     @IBAction func interactMatchButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         if interactMatchButton.title(for: .normal) == "Start Match" {
             
             if currentMatch?.matchStatistics.matchSuspended == true {
@@ -121,6 +132,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
                 currentMatch?.matchStatistics.matchRunning = true
                 currentMatch?.matchStatistics.matchInterrupted = false
                 currentMatch?.matchStatistics.matchInterruptionReason = ""
+                currentMatch?.matchStatistics.matchInterruptedTimeInterval = TimeInterval()
+                interruptedMatchView.isHidden = true
+                interruptionTimer?.invalidate()
                 
                 timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
             } else {
@@ -138,12 +152,19 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     }
     
     @IBAction func courtButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
     }
     
     @IBAction func infoButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
     }
     
     @IBAction func startOfPointButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         startOfPointButton.isHidden = true
         pointStarted = true
         
@@ -179,6 +200,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     }
     
     @IBAction func aceButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         pointStarted = false
         startOfPointButton.isHidden = false
         
@@ -330,9 +354,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     }
     
     @IBAction func netButtonTaped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
     }
     
     @IBAction func faultButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         if firstFault == false {
             firstFault = true
         } else {
@@ -489,13 +518,21 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     }
     
     @IBAction func overruleButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         currentMatch?.matchStatistics.totalOverrules+=1
     }
     
     @IBAction func undoButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
     }
     
     @IBAction func footfaultButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         if firstFault == false {
             firstFault = true
         } else {
@@ -652,6 +689,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     }
     
     @IBAction func firstTeamPointButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         pointStarted = false
         startOfPointButton.isHidden = false
 
@@ -803,6 +843,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     }
     
     @IBAction func secondTeamPointButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         pointStarted = false
         startOfPointButton.isHidden = false
         
@@ -953,9 +996,31 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         }
     }
     
+    @IBAction func interruptedMatchContinueButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
+        interruptionTimer?.invalidate()
+        interruptedMatchView.isHidden = true
+        currentMatch?.matchStatistics.matchInterruptedTimeInterval = TimeInterval()
+        
+        interactMatchButton.setTitle("Stop Match", for: .normal)
+        interactMatchButton.backgroundColor = UIColor.systemRed
+        currentMatch?.matchStatistics.matchRunning = true
+        currentMatch?.matchStatistics.matchInterrupted = false
+    }
+    
+    @IBAction func interruptedMatchReWarmupButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+    }
+    
     // MARK: - Functions
     func initLayout() {
         startOfPointButton.layer.cornerRadius = 10
+        
+        interruptedMatchView.layer.masksToBounds = true
+        interruptedMatchView.layer.cornerRadius = 10
         
         firstTeamPointButton.layer.cornerRadius = 10
         firstTeamPointButton.layer.maskedCorners = [.layerMinXMaxYCorner]
@@ -1063,6 +1128,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     
     @objc func volumeChanged(_ notification: NSNotification) {
         if (notification.userInfo!["AVSystemController_AudioVolumeNotificationParameter"] as? Float) != nil {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
             if pointStarted == false {
                 startOfPointButton.isHidden = true
                 pointStarted = true
@@ -1283,6 +1351,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         matchTimeLabel.text = "\(remainingTimeInterval.format(using: [.hour, .minute])!)"
     }
     
+    @objc func startInterruptionTimer() {
+        let now = NSDate()
+        var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchInterruptedTimeStamp as Date)
+        remainingTimeInterval = remainingTimeInterval + currentMatch!.matchStatistics.matchInterruptedTimeInterval
+                
+        interruptedMatchTimerLabel.text = "\(remainingTimeInterval.format(using: [.minute, .second])!)"
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         switch segue.identifier {
@@ -1312,8 +1388,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         
         currentMatch?.matchStatistics.matchTimeInterval = remainingTimeInterval
         
-        delegate?.sendMatch(currentMatch: currentMatch!, selectedIndex: selectedIndex!)
-        dismiss(animated: true, completion: nil)
+        currentMatch?.matchStatistics.matchInterruptedTimeStamp = NSDate()
+        interruptionTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(startInterruptionTimer), userInfo: nil, repeats: true)
+        
+        interruptedMatchView.isHidden = false
     }
     
     func suspendMatch(suspension: Int) {
@@ -1332,6 +1410,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         remainingTimeInterval = remainingTimeInterval + currentMatch!.matchStatistics.matchTimeInterval
         
         currentMatch?.matchStatistics.matchTimeInterval = remainingTimeInterval
+        
+        delegate?.sendMatch(currentMatch: currentMatch!, selectedIndex: selectedIndex!)
+        navigationController?.popViewController(animated: true)
     }
 
 }

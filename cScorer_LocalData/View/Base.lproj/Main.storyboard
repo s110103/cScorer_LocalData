@@ -4472,6 +4472,71 @@
                                     <action selector="startOfPointButtonTapped:" destination="Ur3-qe-1A8" eventType="touchUpInside" id="DTm-Dw-rXL"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J8Y-DB-qch">
+                                <rect key="frame" x="20" y="578" width="374" height="284"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAH-FU-YMP">
+                                        <rect key="frame" x="20" y="45" width="334" height="103"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="70"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbM-hy-FFM">
+                                        <rect key="frame" x="0.0" y="224" width="374" height="60"/>
+                                        <color key="backgroundColor" red="0.002118087607" green="0.28655153509999998" blue="0.2627465725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="PCQ-XA-pdw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
+                                        <state key="normal" title="Continue">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="interruptedMatchContinueButtonTapped:" destination="Ur3-qe-1A8" eventType="touchUpInside" id="5T7-ZA-aUm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QE9-YP-ubf">
+                                        <rect key="frame" x="0.0" y="156" width="374" height="60"/>
+                                        <color key="backgroundColor" red="0.002118087607" green="0.28655153509999998" blue="0.2627465725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Dv2-94-JJo"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
+                                        <state key="normal" title="Re-Warmup">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="interruptedMatchReWarmupButtonTapped:" destination="Ur3-qe-1A8" eventType="touchUpInside" id="ggd-Gv-bST"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Match interrupted" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ba-vN-tAd">
+                                        <rect key="frame" x="20" y="0.0" width="334" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="37" id="UHU-cG-6rk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0002114298986" green="0.074599243699999998" blue="0.066667370500000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="3Ba-vN-tAd" secondAttribute="trailing" constant="20" symbolic="YES" id="6SR-Ci-Rh1"/>
+                                    <constraint firstItem="3Ba-vN-tAd" firstAttribute="leading" secondItem="J8Y-DB-qch" secondAttribute="leading" constant="20" symbolic="YES" id="AD6-je-Vqy"/>
+                                    <constraint firstAttribute="trailing" secondItem="mbM-hy-FFM" secondAttribute="trailing" id="AYf-2F-ua6"/>
+                                    <constraint firstAttribute="trailing" secondItem="QE9-YP-ubf" secondAttribute="trailing" id="D2t-fP-IXG"/>
+                                    <constraint firstAttribute="trailing" secondItem="rAH-FU-YMP" secondAttribute="trailing" constant="20" symbolic="YES" id="DDE-kU-FO2"/>
+                                    <constraint firstItem="mbM-hy-FFM" firstAttribute="leading" secondItem="J8Y-DB-qch" secondAttribute="leading" id="DEF-Gn-iXL"/>
+                                    <constraint firstItem="mbM-hy-FFM" firstAttribute="top" secondItem="QE9-YP-ubf" secondAttribute="bottom" constant="8" symbolic="YES" id="Lko-2w-yxL"/>
+                                    <constraint firstAttribute="height" constant="284" id="PM3-3K-msn"/>
+                                    <constraint firstItem="rAH-FU-YMP" firstAttribute="leading" secondItem="J8Y-DB-qch" secondAttribute="leading" constant="20" symbolic="YES" id="Tlj-2p-eVY"/>
+                                    <constraint firstAttribute="bottom" secondItem="mbM-hy-FFM" secondAttribute="bottom" id="Y9z-qY-KiJ"/>
+                                    <constraint firstItem="QE9-YP-ubf" firstAttribute="top" secondItem="rAH-FU-YMP" secondAttribute="bottom" constant="8" symbolic="YES" id="ZFI-gG-Mmv"/>
+                                    <constraint firstItem="QE9-YP-ubf" firstAttribute="leading" secondItem="J8Y-DB-qch" secondAttribute="leading" id="gVU-h7-o3I"/>
+                                    <constraint firstItem="3Ba-vN-tAd" firstAttribute="top" secondItem="J8Y-DB-qch" secondAttribute="top" id="owE-vR-d2H"/>
+                                    <constraint firstItem="rAH-FU-YMP" firstAttribute="top" secondItem="3Ba-vN-tAd" secondAttribute="bottom" constant="8" symbolic="YES" id="vv6-f4-BNT"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QHo-OL-t1I"/>
                         <color key="backgroundColor" red="0.00048926781160000003" green="0.1255693138" blue="0.1176485047" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -4503,7 +4568,9 @@
                             <constraint firstItem="Re1-bZ-xXh" firstAttribute="top" secondItem="f7M-y7-mJo" secondAttribute="bottom" constant="8" symbolic="YES" id="Obi-Tn-VKJ"/>
                             <constraint firstItem="ncU-dY-U0D" firstAttribute="top" secondItem="0N8-9o-2VC" secondAttribute="bottom" constant="8" symbolic="YES" id="OeK-bT-uTg"/>
                             <constraint firstItem="S8A-Rx-TVr" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" constant="20" id="RNG-WA-nqN"/>
+                            <constraint firstItem="J8Y-DB-qch" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" constant="20" id="SJ7-k1-g1i"/>
                             <constraint firstItem="vj9-Ka-cVp" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" constant="20" id="ScJ-hW-Uz9"/>
+                            <constraint firstItem="J8Y-DB-qch" firstAttribute="bottom" secondItem="QHo-OL-t1I" secondAttribute="bottom" id="Tkh-tg-DdJ"/>
                             <constraint firstItem="QHo-OL-t1I" firstAttribute="trailing" secondItem="NMs-ew-0eb" secondAttribute="trailing" constant="20" id="Tlc-vs-fsI"/>
                             <constraint firstItem="lqD-ix-rfL" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" constant="20" id="UFj-jo-i14"/>
                             <constraint firstItem="l3s-y5-fwe" firstAttribute="leading" secondItem="vkI-DD-XrQ" secondAttribute="trailing" constant="4" id="UlD-ep-0OK"/>
@@ -4533,6 +4600,7 @@
                             <constraint firstItem="CyE-HH-Jwa" firstAttribute="bottom" secondItem="QHo-OL-t1I" secondAttribute="bottom" id="s6L-oA-XuV"/>
                             <constraint firstItem="f7M-y7-mJo" firstAttribute="top" secondItem="tYC-11-4p6" secondAttribute="bottom" constant="27" id="s7A-kv-3px"/>
                             <constraint firstItem="cYx-pz-gYq" firstAttribute="top" secondItem="y56-oY-Am7" secondAttribute="bottom" constant="8" symbolic="YES" id="sK2-w2-BoA"/>
+                            <constraint firstItem="QHo-OL-t1I" firstAttribute="trailing" secondItem="J8Y-DB-qch" secondAttribute="trailing" constant="20" id="sZ9-j3-03x"/>
                             <constraint firstItem="HHI-xZ-Een" firstAttribute="leading" secondItem="C75-V4-lRA" secondAttribute="trailing" constant="8" symbolic="YES" id="sar-kn-Qe8"/>
                             <constraint firstItem="f7M-y7-mJo" firstAttribute="leading" secondItem="HHI-xZ-Een" secondAttribute="trailing" constant="8" symbolic="YES" id="sb5-ca-I2V"/>
                             <constraint firstItem="cJQ-qC-CdV" firstAttribute="leading" secondItem="S8A-Rx-TVr" secondAttribute="trailing" constant="8" symbolic="YES" id="wUn-JL-SMf"/>
@@ -4561,6 +4629,10 @@
                         <outlet property="footfaultButton" destination="y56-oY-Am7" id="Rdi-42-b1M"/>
                         <outlet property="infoButton" destination="Kyu-nG-W7U" id="Gon-my-CwC"/>
                         <outlet property="interactMatchButton" destination="S8A-Rx-TVr" id="gtd-t9-bCI"/>
+                        <outlet property="interruptedMatchContinueButton" destination="mbM-hy-FFM" id="nKo-KT-1y2"/>
+                        <outlet property="interruptedMatchReWarmupButton" destination="QE9-YP-ubf" id="zbK-NV-lhv"/>
+                        <outlet property="interruptedMatchTimerLabel" destination="rAH-FU-YMP" id="L0x-KD-ixy"/>
+                        <outlet property="interruptedMatchView" destination="J8Y-DB-qch" id="TZ7-Id-DCs"/>
                         <outlet property="matchTimeLabel" destination="cJQ-qC-CdV" id="YAr-IR-hiB"/>
                         <outlet property="netButton" destination="l3s-y5-fwe" id="f6Y-TG-xr8"/>
                         <outlet property="overruleButton" destination="0N8-9o-2VC" id="73S-Gn-VOg"/>
