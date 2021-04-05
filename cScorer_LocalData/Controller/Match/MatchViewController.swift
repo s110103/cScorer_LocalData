@@ -13,7 +13,7 @@ protocol MatchViewControllerDelegate {
     func sendMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class MatchViewController: UIViewController {
+class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     
     // MARK: - Variables
     var currentMatch: Match?
@@ -23,6 +23,21 @@ class MatchViewController: UIViewController {
     var firstFault: Bool = false
     
     var delegate: MatchViewControllerDelegate?
+    
+    var matchSuspensions: [String] =
+    [
+        "Rain",
+        "Darkness",
+        "Heat",
+        "Other"
+    ]
+    var matchInterruptions: [String] =
+    [
+        "Power Down",
+        "Lights Out",
+        "Switch Device",
+        "Other"
+    ]
     
     // Court orange color: R151 G101 B56
     
@@ -92,6 +107,8 @@ class MatchViewController: UIViewController {
             interactMatchButton.setTitle("Stop Match", for: .normal)
             currentMatch?.matchStatistics.matchStartedTimeStamp = NSDate()
             currentMatch?.matchStatistics.matchRunning = true
+        } else if interactMatchButton.title(for: .normal) == "Stop Match" {
+            performSegue(withIdentifier: "showStopMatchSegue", sender: self)
         }
     }
     
@@ -1208,6 +1225,26 @@ class MatchViewController: UIViewController {
             firstTeamFifthScoreLabel.text = "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)"
             secondTeamFifthScoreLabel.text = "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)"
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        switch segue.identifier {
+        case "showStopMatchSegue":
+            let destinationVC = segue.destination as! StopMatchViewController
+            
+            destinationVC.delegate = self
+        default:
+            break
+        }
+    }
+    
+    func interruptMatch(interruption: Int) {
+        
+    }
+    
+    func suspendMatch(suspension: Int) {
+        
     }
 
 }

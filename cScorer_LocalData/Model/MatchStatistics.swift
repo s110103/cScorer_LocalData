@@ -19,6 +19,8 @@ class MatchStatistics {
     var matchFinishedTimeStamp: NSDate = NSDate()
     var matchTimeInterval: TimeInterval = TimeInterval()
     var timePlayed: NSDate = NSDate()
+    var matchInterruptedTimeStamp: NSDate = NSDate()
+    var matchInterruptedTimeInterval: TimeInterval = TimeInterval()
     
     var matchRunning: Bool = false
     var matchSuspended: Bool = false
