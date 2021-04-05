@@ -21,6 +21,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     
     var pointStarted: Bool = false
     var firstFault: Bool = false
+    var timer: Timer?
     
     var delegate: MatchViewControllerDelegate?
     
@@ -29,13 +30,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         "Rain",
         "Darkness",
         "Heat",
+        "Switch Device",
         "Other"
     ]
     var matchInterruptions: [String] =
     [
         "Power Down",
         "Lights Out",
-        "Switch Device",
         "Other"
     ]
     
@@ -103,10 +104,34 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     
     @IBAction func interactMatchButtonTapped(_ sender: UIButton) {
         if interactMatchButton.title(for: .normal) == "Start Match" {
-            interactMatchButton.backgroundColor = UIColor.systemRed
-            interactMatchButton.setTitle("Stop Match", for: .normal)
-            currentMatch?.matchStatistics.matchStartedTimeStamp = NSDate()
-            currentMatch?.matchStatistics.matchRunning = true
+            
+            if currentMatch?.matchStatistics.matchSuspended == true {
+                interactMatchButton.backgroundColor = UIColor.systemRed
+                interactMatchButton.setTitle("Stop Match", for: .normal)
+                currentMatch?.matchStatistics.matchRestartTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRunning = true
+                currentMatch?.matchStatistics.matchSuspended = false
+                currentMatch?.matchStatistics.matchSuspensionReason = ""
+                
+                timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
+            } else if currentMatch?.matchStatistics.matchInterrupted == true {
+                interactMatchButton.backgroundColor = UIColor.systemRed
+                interactMatchButton.setTitle("Stop Match", for: .normal)
+                currentMatch?.matchStatistics.matchRestartTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRunning = true
+                currentMatch?.matchStatistics.matchInterrupted = false
+                currentMatch?.matchStatistics.matchInterruptionReason = ""
+                
+                timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
+            } else {
+                interactMatchButton.backgroundColor = UIColor.systemRed
+                interactMatchButton.setTitle("Stop Match", for: .normal)
+                currentMatch?.matchStatistics.matchStartedTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRestartTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRunning = true
+                
+                timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
+            }
         } else if interactMatchButton.title(for: .normal) == "Stop Match" {
             performSegue(withIdentifier: "showStopMatchSegue", sender: self)
         }
@@ -123,10 +148,33 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         pointStarted = true
         
         if currentMatch?.matchStatistics.matchRunning == false {
-            interactMatchButton.backgroundColor = UIColor.systemRed
-            interactMatchButton.setTitle("Stop Match", for: .normal)
-            currentMatch?.matchStatistics.matchStartedTimeStamp = NSDate()
-            currentMatch?.matchStatistics.matchRunning = true
+            if currentMatch?.matchStatistics.matchSuspended == true {
+                interactMatchButton.backgroundColor = UIColor.systemRed
+                interactMatchButton.setTitle("Stop Match", for: .normal)
+                currentMatch?.matchStatistics.matchRestartTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRunning = true
+                currentMatch?.matchStatistics.matchSuspended = false
+                currentMatch?.matchStatistics.matchSuspensionReason = ""
+                
+                timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
+            } else if currentMatch?.matchStatistics.matchInterrupted == true {
+                interactMatchButton.backgroundColor = UIColor.systemRed
+                interactMatchButton.setTitle("Stop Match", for: .normal)
+                currentMatch?.matchStatistics.matchRestartTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRunning = true
+                currentMatch?.matchStatistics.matchInterrupted = false
+                currentMatch?.matchStatistics.matchInterruptionReason = ""
+                
+                timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
+            } else {
+                interactMatchButton.backgroundColor = UIColor.systemRed
+                interactMatchButton.setTitle("Stop Match", for: .normal)
+                currentMatch?.matchStatistics.matchStartedTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRestartTimeStamp = NSDate()
+                currentMatch?.matchStatistics.matchRunning = true
+                
+                timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
+            }
         }
     }
     
@@ -1227,6 +1275,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         }
     }
     
+    @objc func startMatchTimer() {
+        let now = NSDate()
+        var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchRestartTimeStamp as Date)
+        remainingTimeInterval = remainingTimeInterval + currentMatch!.matchStatistics.matchTimeInterval
+                
+        matchTimeLabel.text = "\(remainingTimeInterval.format(using: [.hour, .minute])!)"
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         switch segue.identifier {
@@ -1240,11 +1296,42 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     }
     
     func interruptMatch(interruption: Int) {
+        timer?.invalidate()
         
+        interactMatchButton.setTitle("Start Match", for: .normal)
+        interactMatchButton.backgroundColor = UIColor.systemTeal
+        
+        currentMatch?.matchStatistics.matchInterrupted = true
+        currentMatch?.matchStatistics.matchInterruptionReason = matchInterruptions[interruption]
+        currentMatch?.matchStatistics.matchRunning = false
+        currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
+        
+        let now = NSDate()
+        var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchRestartTimeStamp as Date)
+        remainingTimeInterval = remainingTimeInterval + currentMatch!.matchStatistics.matchTimeInterval
+        
+        currentMatch?.matchStatistics.matchTimeInterval = remainingTimeInterval
+        
+        delegate?.sendMatch(currentMatch: currentMatch!, selectedIndex: selectedIndex!)
+        dismiss(animated: true, completion: nil)
     }
     
     func suspendMatch(suspension: Int) {
+        timer?.invalidate()
         
+        interactMatchButton.setTitle("Start Match", for: .normal)
+        interactMatchButton.backgroundColor = UIColor.systemTeal
+        
+        currentMatch?.matchStatistics.matchSuspended = true
+        currentMatch?.matchStatistics.matchSuspensionReason = matchSuspensions[suspension]
+        currentMatch?.matchStatistics.matchRunning = false
+        currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
+        
+        let now = NSDate()
+        var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchRestartTimeStamp as Date)
+        remainingTimeInterval = remainingTimeInterval + currentMatch!.matchStatistics.matchTimeInterval
+        
+        currentMatch?.matchStatistics.matchTimeInterval = remainingTimeInterval
     }
 
 }

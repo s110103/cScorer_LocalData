@@ -24,6 +24,9 @@ class MatchStatistics {
     
     var matchRunning: Bool = false
     var matchSuspended: Bool = false
+    var matchInterrupted: Bool = false
+    var matchSuspensionReason: String = ""
+    var matchInterruptionReason: String = ""
     
     var matchService: Int = 0
     

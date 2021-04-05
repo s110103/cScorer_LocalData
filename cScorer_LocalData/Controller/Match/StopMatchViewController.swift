@@ -28,13 +28,13 @@ class StopMatchViewController: UIViewController, UITableViewDelegate, UITableVie
         "Rain",
         "Darkness",
         "Heat",
+        "Switch Device",
         "Other"
     ]
     var matchInterruptions: [String] =
     [
         "Power Down",
         "Lights Out",
-        "Switch Device",
         "Other"
     ]
     
