@@ -66,10 +66,17 @@ class MatchStatistics {
     
     var currentGameFirstPlayer: Int = 0
     var currentGameSecondPlayer: Int = 0
+    var currentGameInteger: Int = 0
     var currentGame: String = "0:0"
     var currentSets: String = "0:0"
     var totalGamesPlayed: Int = 0
     var totalOverrules: Int = 0
+    var currentFirstPosition: String = ""
+    var currentSecondPosition: String = ""
+    var currentLeftNear: String = ""
+    var currentLeftFar: String = ""
+    var currentRightNear: String = ""
+    var currentRightFar: String = ""
     
     var firstTeamFirstPlayerPosition: Int = 0
     var firstTeamSecondPlayerPosition: Int = 0

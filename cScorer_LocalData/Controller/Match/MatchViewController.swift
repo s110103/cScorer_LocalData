@@ -83,6 +83,7 @@ class MatchViewController: UIViewController {
     @IBAction func matchSettingsButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func interactMatchButtonTapped(_ sender: UIButton) {
         if interactMatchButton.title(for: .normal) == "Start Match" {
             interactMatchButton.backgroundColor = UIColor.systemRed
@@ -91,10 +92,13 @@ class MatchViewController: UIViewController {
             currentMatch?.matchStatistics.matchRunning = true
         }
     }
+    
     @IBAction func courtButtonTapped(_ sender: UIButton) {
     }
+    
     @IBAction func infoButtonTapped(_ sender: UIButton) {
     }
+    
     @IBAction func startOfPointButtonTapped(_ sender: UIButton) {
         startOfPointButton.isHidden = true
         pointStarted = true
@@ -106,12 +110,15 @@ class MatchViewController: UIViewController {
             currentMatch?.matchStatistics.matchRunning = true
         }
     }
+    
     @IBAction func aceButtonTapped(_ sender: UIButton) {
         pointStarted = false
         startOfPointButton.isHidden = false
     }
+    
     @IBAction func netButtonTaped(_ sender: UIButton) {
     }
+    
     @IBAction func faultButtonTapped(_ sender: UIButton) {
         if firstFault == false {
             firstFault = true
@@ -121,11 +128,14 @@ class MatchViewController: UIViewController {
             startOfPointButton.isHidden = false
         }
     }
+    
     @IBAction func overruleButtonTapped(_ sender: UIButton) {
         currentMatch?.matchStatistics.totalOverrules+=1
     }
+    
     @IBAction func undoButtonTapped(_ sender: UIButton) {
     }
+    
     @IBAction func footfaultButtonTapped(_ sender: UIButton) {
         if firstFault == false {
             firstFault = true
@@ -135,13 +145,291 @@ class MatchViewController: UIViewController {
             startOfPointButton.isHidden = false
         }
     }
+    
     @IBAction func firstTeamPointButtonTapped(_ sender: UIButton) {
         pointStarted = false
         startOfPointButton.isHidden = false
+
+        currentMatch?.matchStatistics.currentGameInteger += 1
+        
+        if currentMatch?.matchType.matchType == 0 {
+            if currentMatch?.matchStatistics.currentFirstPosition == "firstTeam" {
+                if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 15
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 30
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 40
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
+                    if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                        if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                            // Ad
+                            currentMatch?.matchStatistics.currentGameFirstPlayer = 50
+                        } else {
+                            // Deuce
+                            currentMatch?.matchStatistics.currentGameSecondPlayer = 40
+                        }
+                        
+                    } else{
+                        /*
+                                Game finished Routine
+                         */
+                        
+                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                        
+                        currentMatch?.matchStatistics.currentGameInteger = 0
+                    }
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
+                    /*
+                            Game finished Routine
+                     */
+                    
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                    
+                    currentMatch?.matchStatistics.currentGameInteger = 0
+                }
+                
+                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "DEUCE"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
+                } else {
+                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
+                    } else {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
+                    }
+                }
+                
+                scoreLabel.text = currentMatch?.matchStatistics.currentGame
+            } else {
+                if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 15
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 30
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 40
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
+                        if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
+                            // Ad
+                            currentMatch?.matchStatistics.currentGameSecondPlayer = 50
+                        } else {
+                            // Deuce
+                            currentMatch?.matchStatistics.currentGameFirstPlayer = 40
+                        }
+                        
+                    } else{
+                        /*
+                                Game finished Routine
+                         */
+                        
+                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                        
+                        currentMatch?.matchStatistics.currentGameInteger = 0
+                    }
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                    /*
+                            Game finished Routine
+                     */
+                    
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                    
+                    currentMatch?.matchStatistics.currentGameInteger = 0
+                }
+                
+                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "DEUCE"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
+                } else {
+                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
+                    } else {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
+                    }
+                }
+                
+                scoreLabel.text = currentMatch?.matchStatistics.currentGame
+            }
+            
+            if currentMatch?.matchStatistics.currentGameInteger == 0 {
+                courtLeftFarLabel.isHidden = true
+                courtLeftNearLabel.isHidden = false
+                courtRightFarLabel.isHidden = false
+                courtRightNearLabel.isHidden = true
+            } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
+                courtLeftFarLabel.isHidden = false
+                courtLeftNearLabel.isHidden = true
+                courtRightFarLabel.isHidden = true
+                courtRightNearLabel.isHidden = false
+            } else {
+                if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
+                    courtLeftFarLabel.isHidden = true
+                    courtLeftNearLabel.isHidden = false
+                    courtRightFarLabel.isHidden = false
+                    courtRightNearLabel.isHidden = true
+                } else {
+                    courtLeftFarLabel.isHidden = false
+                    courtLeftNearLabel.isHidden = true
+                    courtRightFarLabel.isHidden = true
+                    courtRightNearLabel.isHidden = false
+                }
+            }
+        } else {
+            // Doubles
+        }
     }
+    
     @IBAction func secondTeamPointButtonTapped(_ sender: UIButton) {
         pointStarted = false
         startOfPointButton.isHidden = false
+        
+        currentMatch?.matchStatistics.currentGameInteger += 1
+        
+        if currentMatch?.matchType.matchType == 0 {
+            if currentMatch?.matchStatistics.currentSecondPosition == "firstTeam" {
+                if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 15
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 30
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 40
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
+                    if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                        if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                            // Ad
+                            currentMatch?.matchStatistics.currentGameFirstPlayer = 50
+                        } else {
+                            // Deuce
+                            currentMatch?.matchStatistics.currentGameSecondPlayer = 40
+                        }
+                        
+                    } else{
+                        /*
+                                Game finished Routine
+                         */
+                        
+                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                        
+                        currentMatch?.matchStatistics.currentGameInteger = 0
+                    }
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
+                    /*
+                            Game finished Routine
+                     */
+                    
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                    
+                    currentMatch?.matchStatistics.currentGameInteger = 0
+                }
+                
+                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "DEUCE"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
+                } else {
+                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
+                    } else {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
+                    }
+                }
+                
+                scoreLabel.text = currentMatch?.matchStatistics.currentGame
+            } else {
+                if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 15
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 30
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 40
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
+                        if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
+                            // Ad
+                            currentMatch?.matchStatistics.currentGameSecondPlayer = 50
+                        } else {
+                            // Deuce
+                            currentMatch?.matchStatistics.currentGameFirstPlayer = 40
+                        }
+                        
+                    } else{
+                        /*
+                                Game finished Routine
+                         */
+                        
+                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                        
+                        currentMatch?.matchStatistics.currentGameInteger = 0
+                    }
+                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                    /*
+                            Game finished Routine
+                     */
+                    
+                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                    
+                    currentMatch?.matchStatistics.currentGameInteger = 0
+                }
+                
+                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "DEUCE"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
+                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
+                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
+                } else {
+                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
+                    } else {
+                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
+                    }
+                }
+                
+                scoreLabel.text = currentMatch?.matchStatistics.currentGame
+            }
+            
+            if currentMatch?.matchStatistics.currentGameInteger == 0 {
+                courtLeftFarLabel.isHidden = true
+                courtLeftNearLabel.isHidden = false
+                courtRightFarLabel.isHidden = false
+                courtRightNearLabel.isHidden = true
+            } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
+                courtLeftFarLabel.isHidden = false
+                courtLeftNearLabel.isHidden = true
+                courtRightFarLabel.isHidden = true
+                courtRightNearLabel.isHidden = false
+            } else {
+                if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
+                    courtLeftFarLabel.isHidden = true
+                    courtLeftNearLabel.isHidden = false
+                    courtRightFarLabel.isHidden = false
+                    courtRightNearLabel.isHidden = true
+                } else {
+                    courtLeftFarLabel.isHidden = false
+                    courtLeftNearLabel.isHidden = true
+                    courtRightFarLabel.isHidden = true
+                    courtRightNearLabel.isHidden = false
+                }
+            }
+        } else {
+            // Doubles
+        }
     }
     
     // MARK: - Functions
@@ -174,12 +462,22 @@ class MatchViewController: UIViewController {
     func initMatch() {
         startOfPointButton.isHidden = false
         
+        currentMatch?.matchStatistics.isServer = "firstTeamFirst"
+        
         if currentMatch?.matchType.matchType == 0 {
+            
             firstTeamLabel.text = "\(currentMatch!.firstTeamFirstPlayer), \(currentMatch!.firstTeamFirstPlayerSurname)"
             secondTeamLabel.text = "\(currentMatch!.secondTeamFirstPlayer), \(currentMatch!.secondTeamFirstPlayerSurname)"
             
             if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 0) && (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 0) {
                 if (currentMatch!.matchStatistics.onLeftSide == "firstTeam") && (currentMatch!.matchStatistics.onRightSide == "secondTeam") {
+                    
+                    currentMatch?.matchStatistics.currentFirstPosition = "firstTeam"
+                    currentMatch?.matchStatistics.currentSecondPosition = "secondTeam"
+                    
+                    currentMatch?.matchStatistics.currentLeftNear = "firstTeamFirst"
+                    currentMatch?.matchStatistics.currentRightFar = "secondTeamFirst"
+                    
                     courtLeftNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                     courtLeftFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                     
@@ -201,6 +499,13 @@ class MatchViewController: UIViewController {
                         courtRightFarLabel.layer.borderWidth = 1
                     }
                 } else {
+                    
+                    currentMatch?.matchStatistics.currentFirstPosition = "secondTeam"
+                    currentMatch?.matchStatistics.currentSecondPosition = "firstTeam"
+                    
+                    currentMatch?.matchStatistics.currentLeftNear = "secondTeamFirst"
+                    currentMatch?.matchStatistics.currentRightFar = "firstTeamFirst"
+                    
                     courtRightNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                     courtRightFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                     
