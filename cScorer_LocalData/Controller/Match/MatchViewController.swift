@@ -13,7 +13,7 @@ protocol MatchViewControllerDelegate {
     func sendMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
+class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate {
     
     // MARK: - Variables
     var currentMatch: Match?
@@ -159,6 +159,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
     @IBAction func infoButtonTapped(_ sender: UIButton) {
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
+        
+        performSegue(withIdentifier: "showWarmupInfoFromMatchSegue", sender: self)
     }
     
     @IBAction func startOfPointButtonTapped(_ sender: UIButton) {
@@ -362,12 +364,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
         
+        pointStarted = false
+        startOfPointButton.isHidden = false
+        
         if firstFault == false {
             firstFault = true
         } else {
             firstFault = false
-            pointStarted = false
-            startOfPointButton.isHidden = false
             
             currentMatch?.matchStatistics.currentGameInteger += 1
             
@@ -533,12 +536,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
         
+        pointStarted = false
+        startOfPointButton.isHidden = false
+        
         if firstFault == false {
             firstFault = true
         } else {
             firstFault = false
-            pointStarted = false
-            startOfPointButton.isHidden = false
             
             currentMatch?.matchStatistics.currentGameInteger += 1
             
@@ -1366,6 +1370,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
             let destinationVC = segue.destination as! StopMatchViewController
             
             destinationVC.delegate = self
+        case "showWarmupInfoFromMatchSegue":
+            let destinationVC = segue.destination as! WarmupInfoViewController
+            
+            destinationVC.currentMatch = currentMatch
+            
+            destinationVC.delegate = self
         default:
             break
         }
@@ -1392,6 +1402,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         interruptionTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(startInterruptionTimer), userInfo: nil, repeats: true)
         
         interruptedMatchView.isHidden = false
+        
+        pointStarted = false
+        startOfPointButton.isHidden = false
     }
     
     func suspendMatch(suspension: Int) {
@@ -1413,6 +1426,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate {
         
         delegate?.sendMatch(currentMatch: currentMatch!, selectedIndex: selectedIndex!)
         navigationController?.popViewController(animated: true)
+    }
+    
+    func dismissWarmupInfo() {
+        
     }
 
 }

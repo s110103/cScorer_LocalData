@@ -4649,6 +4649,7 @@
                         <outlet property="timerLabel" destination="a1J-dt-BdM" id="7Pe-yZ-SZY"/>
                         <outlet property="undoButton" destination="PLm-df-Knj" id="6FM-fQ-3cI"/>
                         <segue destination="dtX-Xc-di3" kind="presentation" identifier="showStopMatchSegue" id="Hds-H3-meZ"/>
+                        <segue destination="IVX-JU-itH" kind="presentation" identifier="showWarmupInfoFromMatchSegue" id="acH-FC-tpd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NNT-Dd-4fp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4805,6 +4806,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="xLe-xN-gis"/>
+        <segue reference="acH-FC-tpd"/>
         <segue reference="a12-7m-IqZ"/>
         <segue reference="qiU-K6-lD1"/>
         <segue reference="ZJa-Pi-ciA"/>
