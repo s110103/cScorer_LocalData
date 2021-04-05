@@ -69,6 +69,7 @@ class MatchStatistics {
     var currentGameInteger: Int = 0
     var currentGame: String = "0:0"
     var currentSets: String = "0:0"
+    var currentSetPlayed: Int = 1
     var totalGamesPlayed: Int = 0
     var totalOverrules: Int = 0
     var currentFirstPosition: String = ""

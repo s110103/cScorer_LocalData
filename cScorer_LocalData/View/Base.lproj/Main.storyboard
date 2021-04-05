@@ -4396,7 +4396,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.62535668126040189" blue="0.36439752612744203" alpha="0.55655271012262009" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.4141913115967738" blue="0.81021172109276351" alpha="0.84343290013193295" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="AgE-dx-fCF" firstAttribute="leading" secondItem="huw-pi-pO3" secondAttribute="leading" constant="71" id="2d4-JA-cjE"/>
                                     <constraint firstItem="hv6-Nt-cJ4" firstAttribute="leading" secondItem="huw-pi-pO3" secondAttribute="leading" id="4el-jS-tuV"/>

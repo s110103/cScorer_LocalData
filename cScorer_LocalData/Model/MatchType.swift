@@ -12,7 +12,7 @@ class MatchType {
     var matchType: Int = 0
     var template: Int = 0
     var templateBackup: Int = 0
-    var totalSets: Int = 1
+    var totalSets: Int = 3
     var gamesInSet: Int = 6
     var twoGameDifference: Bool = true
     var noAd: Bool = false
