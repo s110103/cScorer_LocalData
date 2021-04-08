@@ -112,6 +112,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             } else {
                 if selectedMatch.matchStatistics.matchInitiated == false {
                     performSegue(withIdentifier: "startMatchSegueAnimated", sender: self)
+                } else {
+                    performSegue(withIdentifier: "showMatchSegueAnimated", sender: self)
                 }
             }
         }
