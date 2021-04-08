@@ -208,150 +208,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
-        currentMatch?.matchStatistics.currentGameInteger += 1
-        
-        if currentMatch?.matchType.matchType == 0 {
-            if currentMatch?.matchStatistics.currentSecondPosition == "firstTeam" {
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 15
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 30
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                    if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                            // Ad
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 50
-                        } else {
-                            // Deuce
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                        }
-                        
-                    } else{
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "firstTeam")
-                    }
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                    /*
-                            Game finished Routine
-                     */
-                    
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                    
-                    currentMatch?.matchStatistics.currentGameInteger = 0
-                    
-                    updateGames(teamWon: "firstTeam")
-                }
-                
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "DEUCE"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                } else {
-                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                    } else {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                    }
-                }
-                
-                scoreLabel.text = currentMatch?.matchStatistics.currentGame
-            } else {
-                if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 15
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 30
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                        if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                            // Ad
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 50
-                        } else {
-                            // Deuce
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                        }
-                        
-                    } else{
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "secondTeam")
-                    }
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    /*
-                            Game finished Routine
-                     */
-                    
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                    
-                    currentMatch?.matchStatistics.currentGameInteger = 0
-                    
-                    updateGames(teamWon: "secondTeam")
-                }
-                
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "DEUCE"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                } else {
-                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                    } else {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                    }
-                }
-                
-                scoreLabel.text = currentMatch?.matchStatistics.currentGame
-            }
-            
-            if currentMatch?.matchStatistics.currentGameInteger == 0 {
-                courtLeftFarLabel.isHidden = true
-                courtLeftNearLabel.isHidden = false
-                courtRightFarLabel.isHidden = false
-                courtRightNearLabel.isHidden = true
-            } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
-                courtLeftFarLabel.isHidden = false
-                courtLeftNearLabel.isHidden = true
-                courtRightFarLabel.isHidden = true
-                courtRightNearLabel.isHidden = false
-            } else {
-                if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
-                    courtLeftFarLabel.isHidden = true
-                    courtLeftNearLabel.isHidden = false
-                    courtRightFarLabel.isHidden = false
-                    courtRightNearLabel.isHidden = true
-                } else {
-                    courtLeftFarLabel.isHidden = false
-                    courtLeftNearLabel.isHidden = true
-                    courtRightFarLabel.isHidden = true
-                    courtRightNearLabel.isHidden = false
-                }
-            }
+        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+            endOfPoint(team: 0)
         } else {
-            // Doubles
+            endOfPoint(team: 1)
         }
     }
     
@@ -367,156 +227,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
-        if firstFault == false {
-            firstFault = true
+        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+            addFault(team: 0)
         } else {
-            firstFault = false
-            
-            currentMatch?.matchStatistics.currentGameInteger += 1
-            
-            if currentMatch?.matchType.matchType == 0 {
-                if currentMatch?.matchStatistics.currentSecondPosition == "firstTeam" {
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 15
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 30
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                        if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                            if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                                // Ad
-                                currentMatch?.matchStatistics.currentGameFirstPlayer = 50
-                            } else {
-                                // Deuce
-                                currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                            }
-                            
-                        } else{
-                            /*
-                                    Game finished Routine
-                             */
-                            
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                            
-                            currentMatch?.matchStatistics.currentGameInteger = 0
-                            
-                            updateGames(teamWon: "firstTeam")
-                        }
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "firstTeam")
-                    }
-                    
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "DEUCE"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                    } else {
-                        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                        } else {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                        }
-                    }
-                    
-                    scoreLabel.text = currentMatch?.matchStatistics.currentGame
-                } else {
-                    if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 15
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 30
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                            if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                                // Ad
-                                currentMatch?.matchStatistics.currentGameSecondPlayer = 50
-                            } else {
-                                // Deuce
-                                currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                            }
-                            
-                        } else{
-                            /*
-                                    Game finished Routine
-                             */
-                            
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                            
-                            currentMatch?.matchStatistics.currentGameInteger = 0
-                            
-                            updateGames(teamWon: "secondTeam")
-                        }
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "secondTeam")
-                    }
-                    
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "DEUCE"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                    } else {
-                        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                        } else {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                        }
-                    }
-                    
-                    scoreLabel.text = currentMatch?.matchStatistics.currentGame
-                }
-                
-                if currentMatch?.matchStatistics.currentGameInteger == 0 {
-                    courtLeftFarLabel.isHidden = true
-                    courtLeftNearLabel.isHidden = false
-                    courtRightFarLabel.isHidden = false
-                    courtRightNearLabel.isHidden = true
-                } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
-                    courtLeftFarLabel.isHidden = false
-                    courtLeftNearLabel.isHidden = true
-                    courtRightFarLabel.isHidden = true
-                    courtRightNearLabel.isHidden = false
-                } else {
-                    if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
-                        courtLeftFarLabel.isHidden = true
-                        courtLeftNearLabel.isHidden = false
-                        courtRightFarLabel.isHidden = false
-                        courtRightNearLabel.isHidden = true
-                    } else {
-                        courtLeftFarLabel.isHidden = false
-                        courtLeftNearLabel.isHidden = true
-                        courtRightFarLabel.isHidden = true
-                        courtRightNearLabel.isHidden = false
-                    }
-                }
-            } else {
-                // Doubles
-            }
+            addFault(team: 1)
         }
     }
     
@@ -539,156 +253,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
-        if firstFault == false {
-            firstFault = true
+        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+            addFault(team: 0)
         } else {
-            firstFault = false
-            
-            currentMatch?.matchStatistics.currentGameInteger += 1
-            
-            if currentMatch?.matchType.matchType == 0 {
-                if currentMatch?.matchStatistics.currentSecondPosition == "firstTeam" {
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 15
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 30
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                        if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                            if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                                // Ad
-                                currentMatch?.matchStatistics.currentGameFirstPlayer = 50
-                            } else {
-                                // Deuce
-                                currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                            }
-                            
-                        } else{
-                            /*
-                                    Game finished Routine
-                             */
-                            
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                            
-                            currentMatch?.matchStatistics.currentGameInteger = 0
-                            
-                            updateGames(teamWon: "firstTeam")
-                        }
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "firstTeam")
-                    }
-                    
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "DEUCE"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                    } else {
-                        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                        } else {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                        }
-                    }
-                    
-                    scoreLabel.text = currentMatch?.matchStatistics.currentGame
-                } else {
-                    if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 15
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 30
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                            if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                                // Ad
-                                currentMatch?.matchStatistics.currentGameSecondPlayer = 50
-                            } else {
-                                // Deuce
-                                currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                            }
-                            
-                        } else{
-                            /*
-                                    Game finished Routine
-                             */
-                            
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                            
-                            currentMatch?.matchStatistics.currentGameInteger = 0
-                            
-                            updateGames(teamWon: "secondTeam")
-                        }
-                    } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "secondTeam")
-                    }
-                    
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "DEUCE"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                    } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                    } else {
-                        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                        } else {
-                            currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                        }
-                    }
-                    
-                    scoreLabel.text = currentMatch?.matchStatistics.currentGame
-                }
-                
-                if currentMatch?.matchStatistics.currentGameInteger == 0 {
-                    courtLeftFarLabel.isHidden = true
-                    courtLeftNearLabel.isHidden = false
-                    courtRightFarLabel.isHidden = false
-                    courtRightNearLabel.isHidden = true
-                } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
-                    courtLeftFarLabel.isHidden = false
-                    courtLeftNearLabel.isHidden = true
-                    courtRightFarLabel.isHidden = true
-                    courtRightNearLabel.isHidden = false
-                } else {
-                    if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
-                        courtLeftFarLabel.isHidden = true
-                        courtLeftNearLabel.isHidden = false
-                        courtRightFarLabel.isHidden = false
-                        courtRightNearLabel.isHidden = true
-                    } else {
-                        courtLeftFarLabel.isHidden = false
-                        courtLeftNearLabel.isHidden = true
-                        courtRightFarLabel.isHidden = true
-                        courtRightNearLabel.isHidden = false
-                    }
-                }
-            } else {
-                // Doubles
-            }
+            addFault(team: 1)
         }
     }
     
@@ -699,150 +267,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
 
-        currentMatch?.matchStatistics.currentGameInteger += 1
-        
-        if currentMatch?.matchType.matchType == 0 {
-            if currentMatch?.matchStatistics.currentFirstPosition == "firstTeam" {
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 15
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 30
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                    if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                            // Ad
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 50
-                        } else {
-                            // Deuce
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                        }
-                        
-                    } else{
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "firstTeam")
-                    }
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                    /*
-                            Game finished Routine
-                     */
-                    
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                    
-                    currentMatch?.matchStatistics.currentGameInteger = 0
-                    
-                    updateGames(teamWon: "firstTeam")
-                }
-                
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "DEUCE"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                } else {
-                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                    } else {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                    }
-                }
-                
-                scoreLabel.text = currentMatch?.matchStatistics.currentGame
-            } else {
-                if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 15
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 30
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                        if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                            // Ad
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 50
-                        } else {
-                            // Deuce
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                        }
-                        
-                    } else{
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "secondTeam")
-                    }
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    /*
-                            Game finished Routine
-                     */
-                    
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                    
-                    currentMatch?.matchStatistics.currentGameInteger = 0
-                    
-                    updateGames(teamWon: "secondTeam")
-                }
-                
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "DEUCE"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                } else {
-                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                    } else {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                    }
-                }
-                
-                scoreLabel.text = currentMatch?.matchStatistics.currentGame
-            }
-            
-            if currentMatch?.matchStatistics.currentGameInteger == 0 {
-                courtLeftFarLabel.isHidden = true
-                courtLeftNearLabel.isHidden = false
-                courtRightFarLabel.isHidden = false
-                courtRightNearLabel.isHidden = true
-            } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
-                courtLeftFarLabel.isHidden = false
-                courtLeftNearLabel.isHidden = true
-                courtRightFarLabel.isHidden = true
-                courtRightNearLabel.isHidden = false
-            } else {
-                if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
-                    courtLeftFarLabel.isHidden = true
-                    courtLeftNearLabel.isHidden = false
-                    courtRightFarLabel.isHidden = false
-                    courtRightNearLabel.isHidden = true
-                } else {
-                    courtLeftFarLabel.isHidden = false
-                    courtLeftNearLabel.isHidden = true
-                    courtRightFarLabel.isHidden = true
-                    courtRightNearLabel.isHidden = false
-                }
-            }
+        if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+            endOfPoint(team: 0)
         } else {
-            // Doubles
+            endOfPoint(team: 1)
         }
     }
     
@@ -853,150 +281,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
-        currentMatch?.matchStatistics.currentGameInteger += 1
-        
-        if currentMatch?.matchType.matchType == 0 {
-            if currentMatch?.matchStatistics.currentSecondPosition == "firstTeam" {
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 15
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 30
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                    if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                        if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                            // Ad
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 50
-                        } else {
-                            // Deuce
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                        }
-                        
-                    } else{
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "firstTeam")
-                    }
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                    /*
-                            Game finished Routine
-                     */
-                    
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                    
-                    currentMatch?.matchStatistics.currentGameInteger = 0
-                    
-                    updateGames(teamWon: "firstTeam")
-                }
-                
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "DEUCE"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                } else {
-                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                    } else {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                    }
-                }
-                
-                scoreLabel.text = currentMatch?.matchStatistics.currentGame
-            } else {
-                if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 15
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 30
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                        if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                            // Ad
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 50
-                        } else {
-                            // Deuce
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                        }
-                        
-                    } else{
-                        /*
-                                Game finished Routine
-                         */
-                        
-                        currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                        currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                        
-                        currentMatch?.matchStatistics.currentGameInteger = 0
-                        
-                        updateGames(teamWon: "secondTeam")
-                    }
-                } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    /*
-                            Game finished Routine
-                     */
-                    
-                    currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                    currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                    
-                    currentMatch?.matchStatistics.currentGameInteger = 0
-                    
-                    updateGames(teamWon: "secondTeam")
-                }
-                
-                if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "DEUCE"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-                } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                    currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-                } else {
-                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                    } else {
-                        currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                    }
-                }
-                
-                scoreLabel.text = currentMatch?.matchStatistics.currentGame
-            }
-            
-            if currentMatch?.matchStatistics.currentGameInteger == 0 {
-                courtLeftFarLabel.isHidden = true
-                courtLeftNearLabel.isHidden = false
-                courtRightFarLabel.isHidden = false
-                courtRightNearLabel.isHidden = true
-            } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
-                courtLeftFarLabel.isHidden = false
-                courtLeftNearLabel.isHidden = true
-                courtRightFarLabel.isHidden = true
-                courtRightNearLabel.isHidden = false
-            } else {
-                if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
-                    courtLeftFarLabel.isHidden = true
-                    courtLeftNearLabel.isHidden = false
-                    courtRightFarLabel.isHidden = false
-                    courtRightNearLabel.isHidden = true
-                } else {
-                    courtLeftFarLabel.isHidden = false
-                    courtLeftNearLabel.isHidden = true
-                    courtRightFarLabel.isHidden = true
-                    courtRightNearLabel.isHidden = false
-                }
-            }
+        if currentMatch?.matchStatistics.onRightSide == "firstTeam" {
+            endOfPoint(team: 0)
         } else {
-            // Doubles
+            endOfPoint(team: 1)
         }
     }
     
@@ -1053,6 +341,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         startOfPointButton.isHidden = false
         
         currentMatch?.matchStatistics.isServer = "firstTeamFirst"
+        currentMatch?.matchStatistics.onLeftSide = "firstTeam"
+        currentMatch?.matchStatistics.onRightSide = "secondTeam"
         
         updateSetView()
         
@@ -1067,8 +357,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     currentMatch?.matchStatistics.currentFirstPosition = "firstTeam"
                     currentMatch?.matchStatistics.currentSecondPosition = "secondTeam"
                     
-                    currentMatch?.matchStatistics.currentLeftNear = "firstTeamFirst"
-                    currentMatch?.matchStatistics.currentRightFar = "secondTeamFirst"
+                    currentMatch?.matchStatistics.currentLeftNear = "first"
+                    currentMatch?.matchStatistics.currentRightFar = "first"
                     
                     courtLeftNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                     courtLeftFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
@@ -1079,7 +369,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     firstTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
                     secondTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
                     
-                    if currentMatch?.matchStatistics.isServer == "firstTeam" {
+                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
                         courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
                         courtLeftNearLabel.layer.borderWidth = 1
                         courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
@@ -1095,8 +385,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     currentMatch?.matchStatistics.currentFirstPosition = "secondTeam"
                     currentMatch?.matchStatistics.currentSecondPosition = "firstTeam"
                     
-                    currentMatch?.matchStatistics.currentLeftNear = "secondTeamFirst"
-                    currentMatch?.matchStatistics.currentRightFar = "firstTeamFirst"
+                    currentMatch?.matchStatistics.currentLeftNear = "first"
+                    currentMatch?.matchStatistics.currentLeftFar = ""
+                    currentMatch?.matchStatistics.currentRightFar = "first"
+                    currentMatch?.matchStatistics.currentRightNear = ""
                     
                     courtRightNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                     courtRightFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
@@ -1107,7 +399,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     firstTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
                     secondTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
                     
-                    if currentMatch?.matchStatistics.isServer == "secondTeam" {
+                    if currentMatch?.matchStatistics.isServer == "secondTeamFirst" {
                         courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
                         courtLeftNearLabel.layer.borderWidth = 1
                         courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
@@ -1452,161 +744,30 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         }
     }
     
-    /*
-     currentMatch?.matchStatistics.currentGameInteger += 1
-     
-     if currentMatch?.matchType.matchType == 0 {
-         if currentMatch?.matchStatistics.currentSecondPosition == "firstTeam" {
-             if currentMatch?.matchStatistics.currentGameFirstPlayer == 0 {
-                 currentMatch?.matchStatistics.currentGameFirstPlayer = 15
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 15 {
-                 currentMatch?.matchStatistics.currentGameFirstPlayer = 30
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
-                 currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                 if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 || currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                     if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                         // Ad
-                         currentMatch?.matchStatistics.currentGameFirstPlayer = 50
-                     } else {
-                         // Deuce
-                         currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-                     }
-                     
-                 } else{
-                     /*
-                             Game finished Routine
-                      */
-                     
-                     currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                     currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                     
-                     currentMatch?.matchStatistics.currentGameInteger = 0
-                     
-                     updateGames(teamWon: "firstTeam")
-                 }
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                 /*
-                         Game finished Routine
-                  */
-                 
-                 currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                 currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                 
-                 currentMatch?.matchStatistics.currentGameInteger = 0
-                 
-                 updateGames(teamWon: "firstTeam")
-             }
-             
-             if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                 currentMatch?.matchStatistics.currentGame = "DEUCE"
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                 currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                 currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-             } else {
-                 if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                     currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                 } else {
-                     currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                 }
-             }
-             
-             scoreLabel.text = currentMatch?.matchStatistics.currentGame
-         } else {
-             if currentMatch?.matchStatistics.currentGameSecondPlayer == 0 {
-                 currentMatch?.matchStatistics.currentGameSecondPlayer = 15
-             } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 15 {
-                 currentMatch?.matchStatistics.currentGameSecondPlayer = 30
-             } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
-                 currentMatch?.matchStatistics.currentGameSecondPlayer = 40
-             } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                 if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 || currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
-                     if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                         // Ad
-                         currentMatch?.matchStatistics.currentGameSecondPlayer = 50
-                     } else {
-                         // Deuce
-                         currentMatch?.matchStatistics.currentGameFirstPlayer = 40
-                     }
-                     
-                 } else{
-                     /*
-                             Game finished Routine
-                      */
-                     
-                     currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                     currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                     
-                     currentMatch?.matchStatistics.currentGameInteger = 0
-                     
-                     updateGames(teamWon: "secondTeam")
-                 }
-             } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                 /*
-                         Game finished Routine
-                  */
-                 
-                 currentMatch?.matchStatistics.currentGameSecondPlayer = 0
-                 currentMatch?.matchStatistics.currentGameFirstPlayer = 0
-                 
-                 currentMatch?.matchStatistics.currentGameInteger = 0
-                 
-                 updateGames(teamWon: "secondTeam")
-             }
-             
-             if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                 currentMatch?.matchStatistics.currentGame = "DEUCE"
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 && currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                 currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.firstTeamFirstPlayerSurname)"
-             } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 && currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
-                 currentMatch?.matchStatistics.currentGame = "Ad \(currentMatch!.secondTeamFirstPlayerSurname)"
-             } else {
-                 if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                     currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
-                 } else {
-                     currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
-                 }
-             }
-             
-             scoreLabel.text = currentMatch?.matchStatistics.currentGame
-         }
-         
-         if currentMatch?.matchStatistics.currentGameInteger == 0 {
-             courtLeftFarLabel.isHidden = true
-             courtLeftNearLabel.isHidden = false
-             courtRightFarLabel.isHidden = false
-             courtRightNearLabel.isHidden = true
-         } else if currentMatch?.matchStatistics.currentGameInteger == 1 {
-             courtLeftFarLabel.isHidden = false
-             courtLeftNearLabel.isHidden = true
-             courtRightFarLabel.isHidden = true
-             courtRightNearLabel.isHidden = false
-         } else {
-             if currentMatch!.matchStatistics.currentGameInteger % 2 == 0 {
-                 courtLeftFarLabel.isHidden = true
-                 courtLeftNearLabel.isHidden = false
-                 courtRightFarLabel.isHidden = false
-                 courtRightNearLabel.isHidden = true
-             } else {
-                 courtLeftFarLabel.isHidden = false
-                 courtLeftNearLabel.isHidden = true
-                 courtRightFarLabel.isHidden = true
-                 courtRightNearLabel.isHidden = false
-             }
-         }
-     } else {
-         // Doubles
-     }
-     */
-    
     func endOfPoint(team: Int) {
+        print(team)
         if currentMatch?.matchType.matchType == 0 {
             // MARK: - Singles
             currentMatch?.matchStatistics.currentGameInteger += 1
             
             if currentMatch?.matchStatistics.inTiebreak == false {
                 // MARK: - Check for Deuce or other team Ad.
+                
+                if currentMatch?.matchStatistics.currentLeftFar == "first" {
+                    currentMatch?.matchStatistics.currentLeftFar = ""
+                    currentMatch?.matchStatistics.currentLeftNear = "first"
+                } else {
+                    currentMatch?.matchStatistics.currentLeftFar = "first"
+                    currentMatch?.matchStatistics.currentLeftNear = ""
+                }
+                
+                if currentMatch?.matchStatistics.currentRightFar == "first" {
+                    currentMatch?.matchStatistics.currentRightFar = ""
+                    currentMatch?.matchStatistics.currentRightNear = "first"
+                } else {
+                    currentMatch?.matchStatistics.currentRightFar = "first"
+                    currentMatch?.matchStatistics.currentRightNear = ""
+                }
                 
                 if team == 0 {
                     if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
@@ -1617,10 +778,23 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
                             currentMatch?.matchStatistics.currentGameFirstPlayer = 40
                         } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 50
+                            if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                                currentMatch?.matchStatistics.currentGameFirstPlayer = 50
+                            } else {
+                                currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                                currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                                
+                                currentMatch?.matchStatistics.currentLeftNear = "first"
+                                currentMatch?.matchStatistics.currentRightFar = "first"
+                                
+                                updateGames(teamWon: "firstTeam")
+                            }
                         } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
                             currentMatch?.matchStatistics.currentGameFirstPlayer = 0
                             currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                            
+                            currentMatch?.matchStatistics.currentLeftNear = "first"
+                            currentMatch?.matchStatistics.currentRightFar = "first"
                             
                             updateGames(teamWon: "firstTeam")
                         }
@@ -1634,10 +808,24 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 30 {
                             currentMatch?.matchStatistics.currentGameFirstPlayer = 40
                         } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
-                            currentMatch?.matchStatistics.currentGameFirstPlayer = 50
+                            
+                            if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
+                                currentMatch?.matchStatistics.currentGameFirstPlayer = 50
+                            } else {
+                                currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                                currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                                
+                                currentMatch?.matchStatistics.currentLeftNear = "first"
+                                currentMatch?.matchStatistics.currentRightFar = "first"
+                                
+                                updateGames(teamWon: "firstTeam")
+                            }
                         } else if currentMatch?.matchStatistics.currentGameFirstPlayer == 50 {
                             currentMatch?.matchStatistics.currentGameFirstPlayer = 0
                             currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                            
+                            currentMatch?.matchStatistics.currentLeftNear = "first"
+                            currentMatch?.matchStatistics.currentRightFar = "first"
                             
                             updateGames(teamWon: "firstTeam")
                         }
@@ -1651,10 +839,23 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
                             currentMatch?.matchStatistics.currentGameSecondPlayer = 40
                         } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 50
+                            if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
+                                currentMatch?.matchStatistics.currentGameSecondPlayer = 50
+                            } else {
+                                currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                                currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                                
+                                currentMatch?.matchStatistics.currentLeftNear = "first"
+                                currentMatch?.matchStatistics.currentRightFar = "first"
+                                
+                                updateGames(teamWon: "secondTeam")
+                            }
                         } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
                             currentMatch?.matchStatistics.currentGameFirstPlayer = 0
                             currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                            
+                            currentMatch?.matchStatistics.currentLeftNear = "first"
+                            currentMatch?.matchStatistics.currentRightFar = "first"
                             
                             updateGames(teamWon: "secondTeam")
                         }
@@ -1668,10 +869,23 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 30 {
                             currentMatch?.matchStatistics.currentGameSecondPlayer = 40
                         } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 40 {
-                            currentMatch?.matchStatistics.currentGameSecondPlayer = 50
+                            if currentMatch?.matchStatistics.currentGameFirstPlayer == 40 {
+                                currentMatch?.matchStatistics.currentGameSecondPlayer = 50
+                            } else {
+                                currentMatch?.matchStatistics.currentGameFirstPlayer = 0
+                                currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                                
+                                currentMatch?.matchStatistics.currentLeftNear = "first"
+                                currentMatch?.matchStatistics.currentRightFar = "first"
+                                
+                                updateGames(teamWon: "secondTeam")
+                            }
                         } else if currentMatch?.matchStatistics.currentGameSecondPlayer == 50 {
                             currentMatch?.matchStatistics.currentGameFirstPlayer = 0
                             currentMatch?.matchStatistics.currentGameSecondPlayer = 0
+                            
+                            currentMatch?.matchStatistics.currentLeftNear = "first"
+                            currentMatch?.matchStatistics.currentRightFar = "first"
                             
                             updateGames(teamWon: "secondTeam")
                         }
@@ -1680,6 +894,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 reorientatePlayerLabels()
                 updateScoreDisplay()
+                reorientatePlayerLabels()
             }
             
         } else {
@@ -1703,7 +918,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 currentMatch?.matchStatistics.currentGame = "Ad. \(currentMatch!.secondTeamFirstPlayerSurname), \(currentMatch!.secondTeamSecondPlayerSurname)"
             }
         } else {
-            if currentMatch?.matchStatistics.isServer == "firstTeam" {
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firstTeamSecond" {
                 currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameFirstPlayer)/\(currentMatch!.matchStatistics.currentGameSecondPlayer)"
             } else {
                 currentMatch?.matchStatistics.currentGame = "\(currentMatch!.matchStatistics.currentGameSecondPlayer)/\(currentMatch!.matchStatistics.currentGameFirstPlayer)"
@@ -1712,29 +927,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         scoreLabel.text = currentMatch?.matchStatistics.currentGame
     }
-    
-    /*
-     courtLeftNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
-     courtLeftFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
-     
-     courtRightNearLabel.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1))\(currentMatch!.secondTeamFirstPlayerSurname.prefix(1))"
-     courtRightFarLabel.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1))\(currentMatch!.secondTeamFirstPlayerSurname.prefix(1))"
-     
-     firstTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
-     secondTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
-     
-     if currentMatch?.matchStatistics.isServer == "firstTeam" {
-         courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
-         courtLeftNearLabel.layer.borderWidth = 1
-         courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
-         courtLeftFarLabel.layer.borderWidth = 1
-     } else {
-         courtRightNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
-         courtRightNearLabel.layer.borderWidth = 1
-         courtRightFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
-         courtRightFarLabel.layer.borderWidth = 1
-     }
-     */
     
     func reorientatePlayerLabels() {
         
@@ -1747,7 +939,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 switch currentMatch?.matchStatistics.isServer {
                 case "firstTeamFirst":
-                    if currentMatch?.matchStatistics.firstTeamFar == "first" {
+                    if currentMatch?.matchStatistics.currentLeftFar == "first" {
                         courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
                         courtLeftFarLabel.layer.borderWidth = 1
                         courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
@@ -1759,7 +951,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         courtLeftNearLabel.layer.borderWidth = 1
                     }
                 case "secondTeamFirst":
-                    if currentMatch?.matchStatistics.firstTeamFar == "first" {
+                    if currentMatch?.matchStatistics.currentRightFar == "first" {
                         courtRightFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
                         courtRightFarLabel.layer.borderWidth = 1
                         courtRightNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
@@ -1778,7 +970,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 switch currentMatch?.matchStatistics.isServer {
                 case "secondTeamFirst":
-                    if currentMatch?.matchStatistics.firstTeamFar == "first" {
+                    if currentMatch?.matchStatistics.currentLeftFar == "first" {
                         courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
                         courtLeftFarLabel.layer.borderWidth = 1
                         courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
@@ -1790,7 +982,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         courtLeftNearLabel.layer.borderWidth = 1
                     }
                 case "firstTeamFirst":
-                    if currentMatch?.matchStatistics.firstTeamFar == "first" {
+                    if currentMatch?.matchStatistics.currentRightFar == "first" {
                         courtRightFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
                         courtRightFarLabel.layer.borderWidth = 1
                         courtRightNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
@@ -1808,17 +1000,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             
             //      Logic to replace Player Labels
             if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
-                if currentMatch?.matchStatistics.isServer == "firstTeam" {
-                    courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtLeftNearLabel.layer.borderWidth = 1
-                    courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtLeftFarLabel.layer.borderWidth = 1
-                } else {
-                    courtRightNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtRightNearLabel.layer.borderWidth = 1
-                    courtRightFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtRightFarLabel.layer.borderWidth = 1
-                }
                 
                 courtLeftNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                 courtLeftFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
@@ -1829,17 +1010,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 firstTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
                 secondTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
             } else {
-                if currentMatch?.matchStatistics.isServer == "secondTeam" {
-                    courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtLeftNearLabel.layer.borderWidth = 1
-                    courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtLeftFarLabel.layer.borderWidth = 1
-                } else {
-                    courtRightNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtRightNearLabel.layer.borderWidth = 1
-                    courtRightFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
-                    courtRightFarLabel.layer.borderWidth = 1
-                }
                 
                 courtLeftNearLabel.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1))\(currentMatch!.secondTeamFirstPlayerSurname.prefix(1))"
                 courtLeftFarLabel.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1))\(currentMatch!.secondTeamFirstPlayerSurname.prefix(1))"
@@ -1849,6 +1019,22 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 firstTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
                 secondTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
+            }
+            
+            if currentMatch?.matchStatistics.currentLeftFar == "first" {
+                courtLeftFarLabel.isHidden = false
+                courtLeftNearLabel.isHidden = true
+            } else {
+                courtLeftFarLabel.isHidden = true
+                courtLeftNearLabel.isHidden = false
+            }
+            
+            if currentMatch?.matchStatistics.currentRightFar == "first" {
+                courtRightFarLabel.isHidden = false
+                courtRightNearLabel.isHidden = true
+            } else {
+                courtRightFarLabel.isHidden = true
+                courtRightNearLabel.isHidden = false
             }
         } else {
             //      Doubles
