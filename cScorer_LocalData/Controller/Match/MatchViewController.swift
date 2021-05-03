@@ -359,6 +359,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             secondTeamServerIndicatorView.isHidden = false
         }
         
+        matchTimeLabel.text = "\(currentMatch!.matchStatistics.matchTimeInterval.format(using: [.hour, .minute])!)"
+        
     }
     
     func initMatch() {
@@ -597,6 +599,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         currentMatch?.matchStatistics.matchSuspensionReason = matchSuspensions[suspension]
         currentMatch?.matchStatistics.matchRunning = false
         currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
+        currentMatch?.matchStatistics.matchInitiated = false
         
         let now = NSDate()
         var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchRestartTimeStamp as Date)
