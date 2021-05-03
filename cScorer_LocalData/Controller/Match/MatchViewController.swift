@@ -218,6 +218,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBAction func netButtonTaped(_ sender: UIButton) {
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
+        
+        pointStarted = false
+        startOfPointButton.isHidden = false
     }
     
     @IBAction func faultButtonTapped(_ sender: UIButton) {
@@ -286,6 +289,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         } else {
             endOfPoint(team: 1)
         }
+        
+        print(currentMatch?.matchStatistics.isServer)
     }
     
     @IBAction func interruptedMatchContinueButtonTapped(_ sender: UIButton) {
@@ -334,6 +339,25 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         courtRightFarLabel.layer.cornerRadius = 5
         courtRightNearLabel.layer.masksToBounds = true
         courtRightNearLabel.layer.cornerRadius = 5
+        
+        aceButton.layer.borderWidth = 1
+        aceButton.layer.borderColor = UIColor.lightGray.cgColor
+        netButton.layer.borderWidth = 1
+        netButton.layer.borderColor = UIColor.lightGray.cgColor
+        faultButton.layer.borderWidth = 1
+        faultButton.layer.borderColor = UIColor.lightGray.cgColor
+        overruleButton.layer.borderWidth = 1
+        overruleButton.layer.borderColor = UIColor.lightGray.cgColor
+        footfaultButton.layer.borderWidth = 1
+        footfaultButton.layer.borderColor = UIColor.lightGray.cgColor
+        
+        if currentMatch!.matchStatistics.isServer.starts(with: "firstTeam") {
+            firstTeamServerIndicatorView.isHidden = false
+            secondTeamServerIndicatorView.isHidden = true
+        } else {
+            firstTeamServerIndicatorView.isHidden = true
+            secondTeamServerIndicatorView.isHidden = false
+        }
         
     }
     
@@ -441,156 +465,20 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         }
     }
     
-    func updateGames(teamWon: String) {
-        if currentMatch?.matchStatistics.currentSetPlayed == 1 {
-            if teamWon == "firstTeam" {
-                currentMatch?.matchStatistics.gamesFirstSetFirstPlayer += 1
-                
-                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= 4 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                } else if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 7 && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 5 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                } else if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 6 {
-                    /*
-                        Tiebreak
-                     */
-                }
-            } else {
-                currentMatch?.matchStatistics.gamesFirstSetSecondPlayer += 1
-                
-                if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= 4 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 7 && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 5 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 6 {
-                    /*
-                        Tiebreak
-                     */
-                }
-            }
-        } else if currentMatch?.matchStatistics.currentSetPlayed == 2 {
-            if teamWon == "firstTeam" {
-                currentMatch?.matchStatistics.gamesSecondSetFirstPlayer += 1
-                
-                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer <= 4 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 3
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
-                            /*
-                                Game Set Match first Team
-                             */
-                        }
-                    }
-                } else if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 7 && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 5 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 3
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
-                            /*
-                                Game Set Match first Team
-                             */
-                        }
-                    }
-                    
-                } else if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 6 {
-                    /*
-                        Tiebreak
-                     */
-                }
-            } else {
-                currentMatch?.matchStatistics.gamesSecondSetSecondPlayer += 1
-                
-                if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= 4 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 3
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
-                            /*
-                                Game Set Match second Team
-                             */
-                        }
-                    }
-                } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 7 && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 5 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 3
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
-                            /*
-                                Game Set Match second Team
-                             */
-                        }
-                    }
-                } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 6 {
-                    /*
-                        Tiebreak
-                     */
-                }
-            }
-        } else if currentMatch?.matchStatistics.currentSetPlayed == 3 {
-            if teamWon == "firstTeam" {
-                currentMatch?.matchStatistics.gamesThirdSetFirstPlayer += 1
-                
-                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer <= 4 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
-                            /*
-                                Game Set Match first Team
-                             */
-                        }
-                    }
-                } else if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 7 && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 5 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
-                            /*
-                                Game Set Match first Team
-                             */
-                        }
-                    }
-                    
-                } else if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 6 {
-                    /*
-                        Tiebreak
-                     */
-                }
-            } else {
-                currentMatch?.matchStatistics.gamesThirdSetSecondPlayer += 1
-                
-                if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= 4 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
-                            /*
-                                Game Set Match second Team
-                             */
-                        }
-                    }
-                } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 7 && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 5 {
-                    currentMatch?.matchStatistics.currentSetPlayed = 2
-                    
-                    if currentMatch?.matchType.totalSets == 3 {
-                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
-                            /*
-                                Game Set Match second Team
-                             */
-                        }
-                    }
-                } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 6 {
-                    /*
-                        Tiebreak
-                     */
-                }
-            }
-        }
-        updateSetView()
-    }
-    
     func updateSetView() {
+        
+        /*
+                Update server Icon
+         */
+        
+        if currentMatch!.matchStatistics.isServer.starts(with: "firstTeam") {
+            firstTeamServerIndicatorView.isHidden = false
+            secondTeamServerIndicatorView.isHidden = true
+        } else {
+            firstTeamServerIndicatorView.isHidden = true
+            secondTeamServerIndicatorView.isHidden = false
+        }
+        
         if currentMatch?.matchStatistics.currentSetPlayed == 1 {
             firstTeamFifthScoreLabel.text = "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)"
             secondTeamFifthScoreLabel.text = "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)"
@@ -937,6 +825,11 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
                 // 1. Team links
                 
+                courtLeftFarLabel.layer.borderWidth = 0
+                courtLeftNearLabel.layer.borderWidth = 0
+                courtRightFarLabel.layer.borderWidth = 0
+                courtRightNearLabel.layer.borderWidth = 0
+                
                 switch currentMatch?.matchStatistics.isServer {
                 case "firstTeamFirst":
                     if currentMatch?.matchStatistics.currentLeftFar == "first" {
@@ -1188,5 +1081,204 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 }
             }
         }
+    }
+    
+    func endGame(team: Int) {
+        
+    }
+    
+    func updateGames(teamWon: String) {
+        if currentMatch?.matchStatistics.currentSetPlayed == 1 {
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesFirstSetFirstPlayer += 1
+                
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= 4 {
+                    
+                    if currentMatch?.matchType.totalSets == 1 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 2
+                    }
+                } else if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 7 && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 5 {
+                    if currentMatch?.matchType.totalSets == 1 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 2
+                    }
+                } else if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 6 {
+                    /*
+                        Tiebreak
+                     */
+                }
+            } else {
+                currentMatch?.matchStatistics.gamesFirstSetSecondPlayer += 1
+                
+                if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= 4 {
+                    if currentMatch?.matchType.totalSets == 1 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 2
+                    }
+                } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 7 && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 5 {
+                    if currentMatch?.matchType.totalSets == 1 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 2
+                    }
+                } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == 6 {
+                    /*
+                        Tiebreak
+                     */
+                }
+            }
+        } else if currentMatch?.matchStatistics.currentSetPlayed == 2 {
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesSecondSetFirstPlayer += 1
+                
+                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer <= 4 {
+                    if currentMatch?.matchType.totalSets == 2 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 3
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                } else if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 7 && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 5 {
+                    if currentMatch?.matchType.totalSets == 2 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 3
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                    
+                } else if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 6 {
+                    /*
+                        Tiebreak
+                     */
+                }
+            } else {
+                currentMatch?.matchStatistics.gamesSecondSetSecondPlayer += 1
+                
+                if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= 4 {
+                    if currentMatch?.matchType.totalSets == 2 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 3
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 7 && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 5 {
+                    if currentMatch?.matchType.totalSets == 2 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 3
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 6 {
+                    /*
+                        Tiebreak
+                     */
+                }
+            }
+        } else if currentMatch?.matchStatistics.currentSetPlayed == 3 {
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesThirdSetFirstPlayer += 1
+                
+                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer <= 4 {
+                    if currentMatch?.matchType.totalSets == 3 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 4
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                } else if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 7 && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 5 {
+                    if currentMatch?.matchType.totalSets == 3 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 4
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) && (currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                    
+                } else if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 6 {
+                    /*
+                        Tiebreak
+                     */
+                }
+            } else {
+                currentMatch?.matchStatistics.gamesThirdSetSecondPlayer += 1
+                
+                if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= 4 {
+                    if currentMatch?.matchType.totalSets == 3 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 4
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 7 && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 5 {
+                    if currentMatch?.matchType.totalSets == 3 {
+                        gameSetMatch()
+                    } else {
+                        currentMatch?.matchStatistics.currentSetPlayed = 4
+                    }
+                    
+                    if currentMatch?.matchType.totalSets == 3 {
+                        if (currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) && (currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) {
+                            gameSetMatch()
+                        }
+                    }
+                } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == 6 && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == 6 {
+                    /*
+                        Tiebreak
+                     */
+                }
+            }
+        }
+        
+        if  currentMatch?.matchType.matchType == 0 {
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                currentMatch?.matchStatistics.isServer = "secondTeamFirst"
+            } else {
+                currentMatch?.matchStatistics.isServer = "firstTeamFirst"
+            }
+        }
+        
+        updateSetView()
+    }
+    
+    func gameSetMatch() {
+        
     }
 }
