@@ -51,11 +51,11 @@ class SelectMatchTypeViewController: UIViewController {
         let title = sender.title(for: .normal)
         
         switch title {
-        case "Einzel":
+        case "Singles":
             matchType = 0
             singlesButton.setImage(circleSelected, for: .normal)
             doublesButton.setImage(circleUnselected, for: .normal)
-        case "Doppel":
+        case "Doubles":
             matchType = 1
             singlesButton.setImage(circleUnselected, for: .normal)
             doublesButton.setImage(circleSelected, for: .normal)

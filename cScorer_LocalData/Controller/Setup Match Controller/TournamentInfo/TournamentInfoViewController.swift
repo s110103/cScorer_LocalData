@@ -19,15 +19,15 @@ class TournamentInfoViewController: UIViewController, UITableViewDelegate, UITab
     var tournamentInfo: TournamentData = TournamentData()
     var sectionHeaders: [String] =
     [
-        "Tournier Info"
+        "Tournament info"
     ]
     
     var itemTitles: [[String]] =
     [
-        ["Turniername",
-        "Austragungsort",
-        "Turnier Stufe",
-        "Turnier Kategorie"]
+        ["Tournament name",
+        "Tournament venue",
+        "Tournament level",
+        "Tournament category"]
     ]
     var itemSubtitles: [[String]] = [[]]
     var delegate: TournamentInfoViewControllerDelegate?
@@ -117,13 +117,13 @@ class TournamentInfoViewController: UIViewController, UITableViewDelegate, UITab
     func sendDistinctTournamendDate(_dataType: String, _distinctTournamentData: String) {
 
         switch _dataType {
-        case "Turniername":
+        case "Tournament name":
             tournamentInfo.tournamentName = _distinctTournamentData
-        case "Austragungsort":
+        case "Tournament venue":
             tournamentInfo.tournamentPlace = _distinctTournamentData
-        case "Turnier Stufe":
+        case "Tournament level":
             tournamentInfo.tournamentStage = _distinctTournamentData
-        case "Turnier Kategorie":
+        case "Tournament category":
             tournamentInfo.tournamentCategory = _distinctTournamentData
         default:
             break

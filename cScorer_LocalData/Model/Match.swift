@@ -9,14 +9,14 @@ import Foundation
 
 class Match {
     
-    var firstTeamFirstPlayer: String = "Spieler"
+    var firstTeamFirstPlayer: String = "Player"
     var firstTeamFirstPlayerSurname: String = "1"
-    var firstTeamSecondPlayer: String = "Spieler"
+    var firstTeamSecondPlayer: String = "Player"
     var firstTeamSecondPlayerSurname: String = "1.1"
     
-    var secondTeamFirstPlayer: String = "Spieler"
+    var secondTeamFirstPlayer: String = "Player"
     var secondTeamFirstPlayerSurname: String = "2"
-    var secondTeamSecondPlayer: String = "Spieler"
+    var secondTeamSecondPlayer: String = "Player"
     var secondTeamSecondPlayerSurname: String = "2.1"
     
     var firstTeamFirstPlayerDetails: Player = Player()

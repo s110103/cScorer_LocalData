@@ -25,13 +25,13 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     let sectionHeaders: [String] =
     [
-        "Spieler", "Match Einstellungen", "Match"
+        "Players", "Match settings", "Match"
     ]
     
     let itemTitles: [[String]] =
     [
-        ["Match Typ","Spieler 1","Spieler 1 Details","Spieler 1.1","Spieler 1.1 Details","Spieler 2","Spieler 2 Details","Spieler 2.1","Spieler 2.1 Details"],
-        ["Court","Matchregel","Turnierinfos"],
+        ["Matchtype","Player 1","Player 1 details","Player 1.1","Player 1.1 details","Player 2","Player 2 details","Player 2.1","Player 2.1 details"],
+        ["Court","Matchrule","Tournament info"],
         ["Start"]
     ]
     
@@ -41,16 +41,16 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
     
     var selectableTemplates: [String] =
     [
-        "Standard Match - 3 Sätze",
-        "Standard Match - 1 Satz",
-        "3 Sätze, Match TieBreak, NoAd",
-        "4 Games Pro Satz",
-        "8 Games Pro Satz",
-        "10 Games Pro Satz",
-        "4 Games 1 Satz",
+        "Standard match - 3 Sets",
+        "Standard match - 1 Set",
+        "3 Sets, Match TieBreak, NoAd",
+        "4 Games per Set",
+        "8 Games per Set",
+        "10 Games per Set",
+        "4 Games 1 Set",
         "TieBreak",
         "Match Tiebreak",
-        "Benutzerdefiniert"
+        "Userdefined"
     ]
     
     var percentageDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition!
@@ -74,10 +74,10 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         addGesture()
         
         if editingDistinctMatch == true {
-            addMatchHeaderLabel.text = "Match bearbeiten"
+            addMatchHeaderLabel.text = "Edit Match"
             addMatchButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
         } else {
-            addMatchHeaderLabel.text = "Neues Match"
+            addMatchHeaderLabel.text = "New Match"
             addMatchButton.setImage(UIImage(systemName: "plus"), for: .normal)
         }
     }
@@ -233,51 +233,51 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
                 
                         
         switch title {
-        case "Match Typ":
+        case "Matchtype":
             performSegue(withIdentifier: "selectMatchTypeSegue", sender: self)
-        case "Spieler 1":
+        case "Player 1":
             selectedPlayer = "1"
             selectedPlayerName = match.firstTeamFirstPlayer
             selectedPlayerSurname = match.firstTeamFirstPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
-        case "Spieler 1 Details":
+        case "Player 1 details":
             selectedPlayer = "1"
             selectedPlayerName = match.firstTeamFirstPlayer
             selectedPlayerSurname = match.firstTeamFirstPlayerSurname
             performSegue(withIdentifier: "selectPlayerSegue", sender: self)
-        case "Spieler 1.1":
+        case "Player 1.1":
             selectedPlayer = "1.1"
             selectedPlayerName = match.firstTeamSecondPlayer
             selectedPlayerSurname = match.firstTeamSecondPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
-        case "Spieler 1.1 Details":
+        case "Player 1.1 details":
             selectedPlayer = "1.1"
             selectedPlayerName = match.firstTeamSecondPlayer
             selectedPlayerSurname = match.firstTeamSecondPlayerSurname
             performSegue(withIdentifier: "selectPlayerSegue", sender: self)
-        case "Spieler 2":
+        case "Player 2":
             selectedPlayer = "2"
             selectedPlayerName = match.secondTeamFirstPlayer
             selectedPlayerSurname = match.secondTeamFirstPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
-        case "Spieler 2 Details":
+        case "Player 2 details":
             selectedPlayer = "2"
             selectedPlayerName = match.secondTeamFirstPlayer
             selectedPlayerSurname = match.secondTeamFirstPlayerSurname
             performSegue(withIdentifier: "selectPlayerSegue", sender: self)
-        case "Spieler 2.1":
+        case "Player 2.1":
             selectedPlayer = "2.1"
             selectedPlayerName = match.secondTeamSecondPlayer
             selectedPlayerSurname = match.secondTeamSecondPlayerSurname
             performSegue(withIdentifier: "setPlayerNameSegue", sender: self)
-        case "Spieler 2.1 Details":
+        case "Player 2.1 details":
             selectedPlayer = "2.1"
             selectedPlayerName = match.secondTeamSecondPlayer
             selectedPlayerSurname = match.secondTeamSecondPlayerSurname
             performSegue(withIdentifier: "selectPlayerSegue", sender: self)
-        case "Matchregel":
+        case "Matchrule":
             performSegue(withIdentifier: "editMatchRuleSegue", sender: self)
-        case "Turnierinfos":
+        case "Tournament info":
             performSegue(withIdentifier: "editTournamentInfoSegue", sender: self)
         case "Court":
             performSegue(withIdentifier: "setCourtSegue", sender: self)
@@ -324,7 +324,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
             
             destinationVC.selectedPlayer = selectedPlayer
                         
-            if selectedPlayerName == "Spieler" && (selectedPlayerSurname == "1" || selectedPlayerSurname == "1.1" || selectedPlayerSurname == "2" || selectedPlayerSurname == "2.1") {
+            if selectedPlayerName == "Player" && (selectedPlayerSurname == "1" || selectedPlayerSurname == "1.1" || selectedPlayerSurname == "2" || selectedPlayerSurname == "2.1") {
                 
                 destinationVC.selectedPlayerName = ""
                 destinationVC.selectedPlayerSurname = ""
@@ -367,38 +367,38 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         var firstSection: [String] = []
         
         if match.matchType.matchType == 0 {
-            firstSection.append("Einzel")
+            firstSection.append("Singles")
         } else {
-            firstSection.append("Doppel")
+            firstSection.append("Doubles")
         }
         
         if match.firstTeamFirstPlayer == "" && match.firstTeamFirstPlayerSurname == "" {
-            firstSection.append("Spieler 1")
-            firstSection.append("Spieler 1")
+            firstSection.append("Player 1")
+            firstSection.append("Player 1")
         } else {
             firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
             firstSection.append("\(match.firstTeamFirstPlayer) \(match.firstTeamFirstPlayerSurname)")
         }
         
         if match.firstTeamSecondPlayer == "" && match.firstTeamSecondPlayerSurname == "" {
-            firstSection.append("Spieler 1.1")
-            firstSection.append("Spieler 1.1")
+            firstSection.append("Player 1.1")
+            firstSection.append("Player 1.1")
         } else {
             firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
             firstSection.append("\(match.firstTeamSecondPlayer) \(match.firstTeamSecondPlayerSurname)")
         }
         
         if match.secondTeamFirstPlayer == "" && match.secondTeamFirstPlayerSurname == "" {
-            firstSection.append("Spieler 2")
-            firstSection.append("Spieler 2")
+            firstSection.append("Player 2")
+            firstSection.append("Player 2")
         } else {
             firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
             firstSection.append("\(match.secondTeamFirstPlayer) \(match.secondTeamFirstPlayerSurname)")
         }
         
         if match.secondTeamSecondPlayer == "" && match.secondTeamSecondPlayerSurname == "" {
-            firstSection.append("Spieler 2.1")
-            firstSection.append("Spieler 2.1")
+            firstSection.append("Player 2.1")
+            firstSection.append("Player 2.1")
         } else {
             firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
             firstSection.append("\(match.secondTeamSecondPlayer) \(match.secondTeamSecondPlayerSurname)")
@@ -408,7 +408,7 @@ class AddMatchViewController: UIViewController, UITableViewDelegate, UITableView
         
         secondSection.append(match.court)
         secondSection.append(selectableTemplates[match.matchType.template])
-        secondSection.append("Daten zum Turnier")
+        secondSection.append("Tournament data")
         
         let thirdSection: [String] = [""]
         
