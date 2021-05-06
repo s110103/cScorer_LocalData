@@ -27,6 +27,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var removeReadbackTask: DispatchWorkItem?
     var gameFinished: Bool = false
     
+    // Timer
+    var shotclockTimerTime: Int = 25
+    var shotclockTimerRunning: Bool = false
+    var shotclockTimerInterrupted: Bool = false
+    var shotclockTimer: Timer? = nil
+    
     var delegate: MatchViewControllerDelegate?
         
     var matchSuspensions: [String] =
@@ -53,6 +59,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     
     @IBOutlet weak var matchTimeLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var timerView: UIView!
     
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var firstTeamFirstScoreLabel: UILabel!
@@ -495,6 +502,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         }
         
         matchTimeLabel.text = "\(currentMatch!.matchStatistics.matchTimeInterval.format(using: [.hour, .minute])!)"
+        
+        let singleTapTimerView = UITapGestureRecognizer(target: self, action: #selector(singleTappedInTimerView))
+        singleTapTimerView.numberOfTapsRequired = 2
+        timerView.addGestureRecognizer(singleTapTimerView)
+        
+        let doubleTapTimerView = UITapGestureRecognizer(target: self, action: #selector(doubleTappedInTimerView))
+        doubleTapTimerView.numberOfTapsRequired = 2
+        timerView.addGestureRecognizer(doubleTapTimerView)
         
     }
     
@@ -1456,6 +1471,65 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
     }
     
+    @objc func shotclockTimerFired() {
+        if shotclockTimerTime != 0 {
+            shotclockTimerTime = shotclockTimerTime-1
+            timerLabel.text = String(format: "%02d", shotclockTimerTime)
+        } else {
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+        }
+    }
+    
+    @objc func singleTappedInTimerView() {
+        print("timer fire")
+        if shotclockTimerRunning == true {
+            if shotclockTimerInterrupted == true {
+                shotclockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(shotclockTimerFired), userInfo: nil, repeats: true)
+                shotclockTimerRunning = true
+                shotclockTimerInterrupted = false
+            } else {
+                shotclockTimer?.invalidate()
+                if shotclockTimerTime != 0 {
+                    shotclockTimerInterrupted = true
+                } else {
+                    shotclockTimerInterrupted = false
+                    shotclockTimerRunning = false
+                    shotclockTimerTime = 25
+                    timerLabel.text = "25"
+                }
+            }
+        } else {
+            shotclockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(shotclockTimerFired), userInfo: nil, repeats: true)
+            shotclockTimerRunning = true
+            shotclockTimerInterrupted = false
+        }
+    }
+    
+    @objc func doubleTappedInTimerView() {
+        if shotclockTimerRunning == true {
+            if shotclockTimerInterrupted == true {
+                shotclockTimerInterrupted = false
+                shotclockTimerRunning = false
+                shotclockTimerTime = 25
+                timerLabel.text = "25"
+            } else {
+                shotclockTimer?.invalidate()
+                shotclockTimerInterrupted = false
+                shotclockTimerRunning = false
+                shotclockTimerTime = 25
+                timerLabel.text = "25"
+            }
+        } else {
+            shotclockTimerInterrupted = false
+            shotclockTimerRunning = false
+            shotclockTimerTime = 25
+            timerLabel.text = "25"
+        }
+    }
+    
     func gameSetMatch() {
         
     }
@@ -1482,5 +1556,4 @@ extension MatchViewController {
             }
         }
     }
-    
 }
