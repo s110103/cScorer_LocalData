@@ -18,10 +18,10 @@ class SetAmountOfSetsViewController: UIViewController, UITableViewDelegate, UITa
     var selectedCell: SelectorTableViewCell?
     var selectableSets: [String] =
     [
-        "0 Sätze",
-        "1 Satz",
-        "3 Sätze",
-        "5 Sätze"
+        "0 Sets",
+        "1 Sets",
+        "3 Sets",
+        "5 Sets"
     ]
     let circleUnselected = UIImage(systemName: "circle")
     let circleSelected = UIImage(systemName: "dot.circle")

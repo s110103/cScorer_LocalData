@@ -19,8 +19,8 @@ class SelectAdvantageSetViewController: UIViewController, UITableViewDelegate, U
     var selectableAdvantageSetSettings: [String] =
     [
         "-",
-        "Letzter Satz Vorteil Satz",
-        "Jeder Satz Vorteil Satz"
+        "Last Set Advantage Set",
+        "Every Set Advantage Set"
     ]
     let circleUnselected = UIImage(systemName: "circle")
     let circleSelected = UIImage(systemName: "dot.circle")

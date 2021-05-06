@@ -58,12 +58,12 @@ class SetTrueFalseViewController: UIViewController {
         let title = sender.title(for: .normal)
         
         switch title {
-        case "Ja":
+        case "Yes":
             selectedBool = true
             setTrueButton.setImage(circleSelected, for: .normal)
             setFalseButton.setImage(circleUnselected, for: .normal)
             delegate?.sendTrueFalseData(selectedBool: selectedBool, currentHeading: currentHeading)
-        case "Nein":
+        case "No":
             selectedBool = false
             setTrueButton.setImage(circleUnselected, for: .normal)
             setFalseButton.setImage(circleSelected, for: .normal)

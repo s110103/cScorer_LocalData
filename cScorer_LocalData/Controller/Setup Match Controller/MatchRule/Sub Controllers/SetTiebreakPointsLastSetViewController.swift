@@ -18,17 +18,17 @@ class SetTiebreakPointsLastSetViewController: UIViewController, UITableViewDeleg
     var selectedCell: SelectorTableViewCell?
     var selectablePoints: [String] =
     [
-        "0 Punkte",
-        "1 Punkte",
-        "2 Punkte",
-        "3 Punkte",
-        "4 Punkte",
-        "5 Punkte",
-        "6 Punkte",
-        "7 Punkte",
-        "8 Punkte",
-        "9 Punkte",
-        "10 Punkte"
+        "0 Points",
+        "1 Points",
+        "2 Points",
+        "3 Points",
+        "4 Points",
+        "5 Points",
+        "6 Points",
+        "7 Points",
+        "8 Points",
+        "9 Points",
+        "10 Points"
     ]
     let circleUnselected = UIImage(systemName: "circle")
     let circleSelected = UIImage(systemName: "dot.circle")

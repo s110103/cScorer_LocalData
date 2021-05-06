@@ -20,13 +20,15 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     var template: String = ""
     var matchType: MatchType = MatchType()
     var comparisonMatchType: MatchType = MatchType()
-    var sectionHeaders: [String] = ["Matchregel", "Vorteil Satz", "TieBreak"]
+    var sectionHeaders: [String] = ["Matchrule", "Advantage Set", "TieBreak"]
     var matchRuleTitles: [[String]] =
     [
-        ["Vorlage", "Sätze im Match", "Games im Satz", "2 Games Unterschied", "NoAd", "Heat Rule", "Ballwechsel"],
-        ["Vorteil Satz"],
-        ["TieBreak bei", "Punkte im Satz", "Punkte im letzten Satz", "Punkte im Match TieBreak", "Letzter Satz Match TieBreak"]
+        ["Template", "Sets", "Games", "2 Games difference", "NoAd", "Heat Rule", "Ballchange"],
+        ["Advantage Set"],
+        ["TieBreak at", "Points in Set", "Points in last set", "Points in Match TieBreak", "Final Set Match TieBreak"]
     ]
+    
+    
     var matchRuleSubTitles: [[String]] =
     [
         [""]
@@ -46,10 +48,10 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     ]
     var selectableSets: [String] =
     [
-        "0 Sätze",
-        "1 Satz",
-        "3 Sätze",
-        "5 Sätze"
+        "0 Sets",
+        "1 Sets",
+        "3 Sets",
+        "5 Sets"
     ]
     var selectableGames: [String] =
     [
@@ -68,40 +70,40 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     var selectableAdvantageSetSettings: [String] =
     [
         "-",
-        "Letzter Satz Vorteil Satz",
-        "Jeder Satz Vorteil Satz"
+        "Final Set Advantage Set",
+        "Every Set Advantage Set"
     ]
     var selectableTiebreakAt: [String] =
     [
-        "0 Beide",
-        "1 Beide",
-        "2 Beide",
-        "3 Beide",
-        "4 Beide",
-        "5 Beide",
-        "6 Beide",
-        "7 Beide",
-        "8 Beide",
-        "9 Beide",
-        "10 Beide"
+        "0 all",
+        "1 all",
+        "2 all",
+        "3 all",
+        "4 all",
+        "5 all",
+        "6 all",
+        "7 all",
+        "8 all",
+        "9 all",
+        "10 all"
     ]
     var selectablePoints: [String] =
     [
-        "0 Punkte",
-        "1 Punkte",
-        "2 Punkte",
-        "3 Punkte",
-        "4 Punkte",
-        "5 Punkte",
-        "6 Punkte",
-        "7 Punkte",
-        "8 Punkte",
-        "9 Punkte",
-        "10 Punkte"
+        "0 Points",
+        "1 Points",
+        "2 Points",
+        "3 Points",
+        "4 Points",
+        "5 Points",
+        "6 Points",
+        "7 Points",
+        "8 Points",
+        "9 Points",
+        "10 Points"
     ]
     var selectableBallChanges: [String] =
     [
-        "Kein Ballwechsel",
+        "No Ballchange",
         "7/9",
         "9/11",
         "11/13",
@@ -181,21 +183,21 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         var firstSection: [String] = [template, "\(selectableSets[matchType.totalSets])", "\(selectableGames[matchType.gamesInSet])"]
         
         if matchType.twoGameDifference == true {
-            firstSection.append("Ja")
+            firstSection.append("Yes")
         } else {
-            firstSection.append("Nein")
+            firstSection.append("No")
         }
         
         if matchType.noAd == true {
-            firstSection.append("Ja")
+            firstSection.append("Yes")
         } else {
-            firstSection.append("Nein")
+            firstSection.append("No")
         }
         
         if matchType.heatRule == true {
-            firstSection.append("Ja")
+            firstSection.append("Yes")
         } else {
-            firstSection.append("Nein")
+            firstSection.append("No")
         }
         
         firstSection.append(selectableBallChanges[matchType.ballChange])
@@ -205,9 +207,9 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         var thirdSection: [String] = ["\(selectableTiebreakAt[matchType.tiebreakAt])", "\(selectablePoints[matchType.tiebreakPoints])", "\(selectablePoints[matchType.lastSetTiebreakPoints])", "\(selectablePoints[matchType.matchTiebreakPoints])"]
         
         if matchType.matchTiebreak == true {
-            thirdSection.append("Ja")
+            thirdSection.append("Yes")
         } else {
-            thirdSection.append("Nein")
+            thirdSection.append("No")
         }
         
         matchRuleSubTitles.append(firstSection)
@@ -226,31 +228,31 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
         selectedItem = title
         
         switch title {
-        case "Vorlage":
+        case "Template":
             performSegue(withIdentifier: "templateMatchRuleSegue", sender: self)
-        case "Sätze im Match":
+        case "Sets":
             performSegue(withIdentifier: "setAmountOfSetsSegue", sender: self)
-        case "Games im Satz":
+        case "Games":
             performSegue(withIdentifier: "setAmountOfGamesSegue", sender: self)
-        case "2 Games Unterschied":
+        case "2 Games difference":
             performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
         case "NoAd":
             performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
         case "Heat Rule":
             performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
-        case "Ballwechsel":
+        case "Ballchange":
             performSegue(withIdentifier: "setBallChangeSegue", sender: self)
-        case "Letzter Satz Match TieBreak":
+        case "Final Set Match TieBreak":
             performSegue(withIdentifier: "setTrueFalseSegue", sender: self)
-        case "Vorteil Satz":
+        case "Advantage Set":
             performSegue(withIdentifier: "selectAdvantageSetSegue", sender: self)
-        case "TieBreak bei":
+        case "TieBreak at":
             performSegue(withIdentifier: "setTiebreakAtSegue", sender: self)
-        case "Punkte im Satz":
+        case "Points in Set":
             performSegue(withIdentifier: "setTiebreakPointsSegue", sender: self)
-        case "Punkte im letzten Satz":
+        case "Points in final Set":
             performSegue(withIdentifier: "setTiebreakPointsLastSetSegue", sender: self)
-        case "Punkte im Match TieBreak":
+        case "Points in Match TieBreak":
             performSegue(withIdentifier: "setMatchTiebreakPointsSegue", sender: self)
         default:
             break
@@ -320,13 +322,13 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             
             destinationVC.currentHeading = selectedItem
             switch selectedItem {
-            case "2 Games Unterschied":
+            case "2 Games difference":
                 destinationVC.selectedBool = matchType.twoGameDifference
             case "NoAd":
                 destinationVC.selectedBool = matchType.noAd
             case "Heat Rule":
                 destinationVC.selectedBool = matchType.heatRule
-            case "Letzter Satz Match TieBreak":
+            case "Final Set Match TieBreak":
                 destinationVC.selectedBool = matchType.matchTiebreak
             default:
                 destinationVC.selectedBool = false
@@ -855,7 +857,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     
     func sendTrueFalseData(selectedBool: Bool, currentHeading: String) {
         switch currentHeading {
-        case "2 Games Unterschied":
+        case "2 Games difference":
             matchType.twoGameDifference = selectedBool
             
             initComparison()
@@ -915,7 +917,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
                     }
                 }
             }
-        case "Letzter Satz Match TieBreak":
+        case "Final Set Match TieBreak":
             matchType.matchTiebreak = selectedBool
             
             initComparison()

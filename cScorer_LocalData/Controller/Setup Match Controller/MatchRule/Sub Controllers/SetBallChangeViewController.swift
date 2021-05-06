@@ -18,7 +18,7 @@ class SetBallChangeViewController: UIViewController, UITableViewDelegate, UITabl
     var selectedCell: SelectorTableViewCell?
     var selectableBallChanges: [String] =
     [
-        "Kein Ballwechsel",
+        "No Ballchange",
         "7/9",
         "9/11",
         "11/13",
