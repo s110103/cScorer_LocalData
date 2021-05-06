@@ -25,6 +25,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var interruptionTimer: Timer?
     var readbackVisible: Bool = false
     var removeReadbackTask: DispatchWorkItem?
+    var gameFinished: Bool = false
     
     var delegate: MatchViewControllerDelegate?
         
@@ -120,7 +121,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         if interactMatchButton.title(for: .normal) == "Start Match" {
             
-            triggerReadback(message: "MATCH STARTED")
+            triggerReadback(message: "MATCH STARTED", fontSize: 45)
             
             if currentMatch?.matchStatistics.matchSuspended == true {
                 interactMatchButton.backgroundColor = UIColor.systemRed
@@ -217,7 +218,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         startOfPointButton.isHidden = false
         
         resetFaults()
-        triggerReadback(message: "ACE")
+        triggerReadback(message: "ACE", fontSize: 60)
         
         if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
             endOfPoint(team: 0)
@@ -234,9 +235,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         startOfPointButton.isHidden = false
     
         if firstFault == false {
-            triggerReadback(message: "NET - FIRST SERVE")
+            triggerReadback(message: "NET - FIRST SERVE", fontSize: 45)
         } else {
-            triggerReadback(message: "NET - SECOND SERVE")
+            triggerReadback(message: "NET - SECOND SERVE", fontSize: 45)
         }
     }
     
@@ -260,9 +261,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         }
         
         if savedFault == true {
-            triggerReadback(message: "FAULT \n \(scoreLabel.text!)")
+            triggerReadback(message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
         } else {
-            triggerReadback(message: "FAULT")
+            triggerReadback(message: "FAULT", fontSize: 60)
         }
         
         savedFault = false
@@ -274,7 +275,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         currentMatch?.matchStatistics.totalOverrules+=1
         
-        triggerReadback(message: "OVERRULE")
+        triggerReadback(message: "OVERRULE", fontSize: 60)
     }
     
     @IBAction func undoButtonTapped(_ sender: UIButton) {
@@ -302,9 +303,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         }
         
         if savedFault == true {
-            triggerReadback(message: "FAULT \n \(scoreLabel.text!)")
+            triggerReadback(message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
         } else {
-            triggerReadback(message: "FAULT")
+            triggerReadback(message: "FAULT", fontSize: 60)
         }
         
         savedFault = false
@@ -325,7 +326,45 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             endOfPoint(team: 1)
         }
         
-        triggerReadback(message: scoreLabel.text!)
+        if gameFinished == true {
+            switch currentMatch?.matchStatistics.currentSetPlayed {
+            case 1:
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                }
+            case 2:
+                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                }
+            case 3:
+                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                }
+            case 4:
+                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                }
+            case 5:
+                if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                }
+            default:
+                break
+            }
+            gameFinished = false
+        } else {
+            triggerReadback(message: scoreLabel.text!, fontSize: 100)
+        }
     }
     
     @IBAction func secondTeamPointButtonTapped(_ sender: UIButton) {
@@ -343,7 +382,45 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             endOfPoint(team: 1)
         }
         
-        triggerReadback(message: scoreLabel.text!)
+        if gameFinished == true {
+            switch currentMatch?.matchStatistics.currentSetPlayed {
+            case 1:
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                }
+            case 2:
+                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                }
+            case 3:
+                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                }
+            case 4:
+                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                }
+            case 5:
+                if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                }
+            default:
+                break
+            }
+            gameFinished = false
+        } else {
+            triggerReadback(message: scoreLabel.text!, fontSize: 100)
+        }
     }
     
     @IBAction func interruptedMatchContinueButtonTapped(_ sender: UIButton) {
@@ -1150,6 +1227,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func updateGames(teamWon: String) {
+        gameFinished = true
+        
         if currentMatch?.matchStatistics.currentSetPlayed == 1 {
             if teamWon == "firstTeam" {
                 currentMatch?.matchStatistics.gamesFirstSetFirstPlayer += 1
@@ -1345,7 +1424,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         currentMatch?.matchStatistics.firstFault = false
     }
     
-    func triggerReadback(message: String) {
+    func triggerReadback(message: String, fontSize: Int) {
         self.removeCurrentReadback()
         readbackVisible = true
         removeReadbackTask = DispatchWorkItem { self.removeCurrentReadback() }
@@ -1353,6 +1432,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         readbackView.alpha = 0.0
         readbackView.isHidden = false
         
+        readbackLabel.font = readbackLabel.font.withSize(CGFloat(fontSize))
         readbackLabel.text = message
         
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
