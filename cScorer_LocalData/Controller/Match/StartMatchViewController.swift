@@ -153,7 +153,6 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         currentMatch.matchStatistics.matchInitiated = true
         navigationController?.popViewController(animated: false)
         delegate?.sendStartMatchData(currentMatch: currentMatch, selectedIndex: selectedIndex)
-        print("start button tapped")
     }
     @IBAction func warmupButtonTapped(_ sender: UIButton) {
         
@@ -317,13 +316,13 @@ class StartMatchViewController: UIViewController, UIPickerViewDelegate, UIPicker
         tossWinnerTextField.layer.borderWidth = 1
         tossWinnerTextField.layer.cornerRadius = 5
         tossWinnerTextField.layer.borderColor = UIColor(ciColor: .white).cgColor
-        tossWinnerTextField.attributedPlaceholder = NSAttributedString(string: "Wahlgewinner", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        tossWinnerTextField.attributedPlaceholder = NSAttributedString(string: "Toss winner", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         tossWinnerTextField.inputView = pickerViewToss
         
         choiceMakerTextField.layer.borderWidth = 1
         choiceMakerTextField.layer.cornerRadius = 5
         choiceMakerTextField.layer.borderColor = UIColor(ciColor: .white).cgColor
-        choiceMakerTextField.attributedPlaceholder = NSAttributedString(string: "Entscheidung", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        choiceMakerTextField.attributedPlaceholder = NSAttributedString(string: "Decision made", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         choiceMakerTextField.inputView = pickerViewChoice
         
         serverView.layer.borderWidth = 2

@@ -23,6 +23,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var firstFault: Bool = false
     var timer: Timer?
     var interruptionTimer: Timer?
+    var readbackVisible: Bool = false
     
     var delegate: MatchViewControllerDelegate?
         
@@ -76,6 +77,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBOutlet weak var firstTeamServerIndicatorView: UIView!
     @IBOutlet weak var secondTeamServerIndicatorView: UIView!
     
+    @IBOutlet weak var readbackView: UIView!
+    @IBOutlet weak var readbackLabel: UILabel!
     
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var footfaultButton: UIButton!
@@ -115,6 +118,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         generator.impactOccurred()
         
         if interactMatchButton.title(for: .normal) == "Start Match" {
+            
+            triggerReadback(message: "MATCH STARTED")
             
             if currentMatch?.matchStatistics.matchSuspended == true {
                 interactMatchButton.backgroundColor = UIColor.systemRed
@@ -170,6 +175,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         startOfPointButton.isHidden = true
         pointStarted = true
         
+        removeCurrentReadback()
+        
         if currentMatch?.matchStatistics.matchRunning == false {
             if currentMatch?.matchStatistics.matchSuspended == true {
                 interactMatchButton.backgroundColor = UIColor.systemRed
@@ -208,6 +215,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
+        resetFaults()
+        triggerReadback(message: "ACE")
+        
         if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
             endOfPoint(team: 0)
         } else {
@@ -221,6 +231,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         pointStarted = false
         startOfPointButton.isHidden = false
+    
+        if firstFault == false {
+            triggerReadback(message: "NET - FIRST SERVE")
+        } else {
+            triggerReadback(message: "NET - SECOND SERVE")
+        }
     }
     
     @IBAction func faultButtonTapped(_ sender: UIButton) {
@@ -230,11 +246,25 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
+        var savedFault: Bool = false
+        
+        if firstFault == true {
+            savedFault = true
+        }
+        
         if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
             addFault(team: 0)
         } else {
             addFault(team: 1)
         }
+        
+        if savedFault == true {
+            triggerReadback(message: "FAULT \n \(scoreLabel.text!)")
+        } else {
+            triggerReadback(message: "FAULT")
+        }
+        
+        savedFault = false
     }
     
     @IBAction func overruleButtonTapped(_ sender: UIButton) {
@@ -242,6 +272,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         generator.impactOccurred()
         
         currentMatch?.matchStatistics.totalOverrules+=1
+        
+        triggerReadback(message: "OVERRULE")
     }
     
     @IBAction func undoButtonTapped(_ sender: UIButton) {
@@ -256,11 +288,25 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
+        var savedFault: Bool = false
+        
+        if firstFault == true {
+            savedFault = true
+        }
+        
         if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
             addFault(team: 0)
         } else {
             addFault(team: 1)
         }
+        
+        if savedFault == true {
+            triggerReadback(message: "FAULT \n \(scoreLabel.text!)")
+        } else {
+            triggerReadback(message: "FAULT")
+        }
+        
+        savedFault = false
     }
     
     @IBAction func firstTeamPointButtonTapped(_ sender: UIButton) {
@@ -269,12 +315,16 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         pointStarted = false
         startOfPointButton.isHidden = false
+        
+        resetFaults()
 
         if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
             endOfPoint(team: 0)
         } else {
             endOfPoint(team: 1)
         }
+        
+        triggerReadback(message: scoreLabel.text!)
     }
     
     @IBAction func secondTeamPointButtonTapped(_ sender: UIButton) {
@@ -284,13 +334,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
+        resetFaults()
+        
         if currentMatch?.matchStatistics.onRightSide == "firstTeam" {
             endOfPoint(team: 0)
         } else {
             endOfPoint(team: 1)
         }
         
-        print(currentMatch?.matchStatistics.isServer)
+        triggerReadback(message: scoreLabel.text!)
     }
     
     @IBAction func interruptedMatchContinueButtonTapped(_ sender: UIButton) {
@@ -350,6 +402,11 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         overruleButton.layer.borderColor = UIColor.lightGray.cgColor
         footfaultButton.layer.borderWidth = 1
         footfaultButton.layer.borderColor = UIColor.lightGray.cgColor
+        
+        readbackView.layer.cornerRadius = 10
+        readbackView.layer.masksToBounds = true
+        
+        removeCurrentReadback()
         
         if currentMatch!.matchStatistics.isServer.starts(with: "firstTeam") {
             firstTeamServerIndicatorView.isHidden = false
@@ -623,9 +680,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         if currentMatch?.matchStatistics.firstFault == false {
             currentMatch?.matchStatistics.firstFault = true
-            currentMatch?.matchStatistics.firstFault = true
+            firstFault = true
         } else {
             currentMatch?.matchStatistics.firstFault = false
+            firstFault = false
             
             if team == 0 {
                 endOfPoint(team: 1)
@@ -1281,7 +1339,62 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         updateSetView()
     }
     
+    func resetFaults() {
+        firstFault = false
+        currentMatch?.matchStatistics.firstFault = false
+    }
+    
+    func triggerReadback(message: String) {
+        self.removeCurrentReadback()
+        readbackVisible = true
+        
+        readbackView.alpha = 0.0
+        readbackView.isHidden = false
+        
+        readbackLabel.text = message
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+            self.readbackView.alpha = 0.9
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            self.removeCurrentReadback()
+        }
+    }
+    
+    func removeCurrentReadback() {
+        if readbackVisible == true {
+            UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
+                self.readbackView.alpha = 0.0
+            })
+        }
+    }
+    
     func gameSetMatch() {
         
     }
+}
+
+extension MatchViewController {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super .touchesBegan(touches, with: event)
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let touchedPoint: CGPoint = touch.location(in: view)
+        
+        /*
+                Check if readbackView was touched
+         */
+        
+        if touchedPoint.x >= readbackView.frame.minX && touchedPoint.x <= readbackView.frame.maxX && touchedPoint.y >= readbackView.frame.minY && touchedPoint.y <= readbackView.frame.maxY {
+            if readbackVisible == true {
+                removeCurrentReadback()
+            }
+        }
+    }
+    
 }

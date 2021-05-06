@@ -33,16 +33,16 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     ]
     var selectableTemplates: [String] =
     [
-        "Standard Match - 3 Sätze",
-        "Standard Match - 1 Satz",
-        "3 Sätze, Match TieBreak, NoAd",
-        "4 Games Pro Satz",
-        "8 Games Pro Satz",
-        "10 Games Pro Satz",
-        "4 Games 1 Satz",
+        "Standard match - 3 Sets",
+        "Standard match - 1 Set",
+        "3 Sets, Match TieBreak, NoAd",
+        "4 Games per Set",
+        "8 Games per Set",
+        "10 Games per Set",
+        "4 Games 1 Set",
         "TieBreak",
         "Match Tiebreak",
-        "Benutzerdefiniert"
+        "Userdefined"
     ]
     var selectableSets: [String] =
     [

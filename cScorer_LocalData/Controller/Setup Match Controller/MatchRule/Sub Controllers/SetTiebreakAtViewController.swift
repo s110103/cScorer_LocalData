@@ -19,17 +19,17 @@ class SetTiebreakAtViewController: UIViewController, UITableViewDelegate, UITabl
     var selectedCell: SelectorTableViewCell?
     var selectableTiebreakAt: [String] =
     [
-        "0 Beide",
-        "1 Beide",
-        "2 Beide",
-        "3 Beide",
-        "4 Beide",
-        "5 Beide",
-        "6 Beide",
-        "7 Beide",
-        "8 Beide",
-        "9 Beide",
-        "10 Beide"
+        "0 all",
+        "1 all",
+        "2 all",
+        "3 all",
+        "4 all",
+        "5 all",
+        "6 all",
+        "7 all",
+        "8 all",
+        "9 all",
+        "10 all"
     ]
     let circleUnselected = UIImage(systemName: "circle")
     let circleSelected = UIImage(systemName: "dot.circle")
