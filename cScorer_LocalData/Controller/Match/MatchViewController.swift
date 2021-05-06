@@ -24,6 +24,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var timer: Timer?
     var interruptionTimer: Timer?
     var readbackVisible: Bool = false
+    var removeReadbackTask: DispatchWorkItem?
     
     var delegate: MatchViewControllerDelegate?
         
@@ -1347,6 +1348,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     func triggerReadback(message: String) {
         self.removeCurrentReadback()
         readbackVisible = true
+        removeReadbackTask = DispatchWorkItem { self.removeCurrentReadback() }
         
         readbackView.alpha = 0.0
         readbackView.isHidden = false
@@ -1357,17 +1359,21 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             self.readbackView.alpha = 0.9
         })
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
-            self.removeCurrentReadback()
-        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: removeReadbackTask!)
     }
     
     func removeCurrentReadback() {
+        
+        if removeReadbackTask?.isCancelled == false{
+            removeReadbackTask!.cancel()
+        }
+        
         if readbackVisible == true {
             UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
                 self.readbackView.alpha = 0.0
             })
         }
+        
     }
     
     func gameSetMatch() {
