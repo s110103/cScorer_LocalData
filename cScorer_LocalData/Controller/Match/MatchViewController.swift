@@ -161,6 +161,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(startMatchTimer), userInfo: nil, repeats: true)
             }
         } else if interactMatchButton.title(for: .normal) == "Stop Match" {
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
+            
             performSegue(withIdentifier: "showStopMatchSegue", sender: self)
         }
     }
@@ -233,6 +239,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         resetFaults()
         triggerReadback(message: "ACE", fontSize: 60)
         
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
+        
         if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
             endOfPoint(team: 0)
         } else {
@@ -246,6 +258,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         pointStarted = false
         startOfPointButton.isHidden = false
+        
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
     
         if firstFault == false {
             triggerReadback(message: "NET - FIRST SERVE", fontSize: 45)
@@ -260,6 +278,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         pointStarted = false
         startOfPointButton.isHidden = false
+        
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
         
         var savedFault: Bool = false
         
@@ -303,6 +327,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         pointStarted = false
         startOfPointButton.isHidden = false
         
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
+        
         var savedFault: Bool = false
         
         if firstFault == true {
@@ -332,6 +362,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         startOfPointButton.isHidden = false
         
         resetFaults()
+        
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
 
         if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
             endOfPoint(team: 0)
@@ -388,6 +424,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         startOfPointButton.isHidden = false
         
         resetFaults()
+        
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
         
         if currentMatch?.matchStatistics.onRightSide == "firstTeam" {
             endOfPoint(team: 0)
