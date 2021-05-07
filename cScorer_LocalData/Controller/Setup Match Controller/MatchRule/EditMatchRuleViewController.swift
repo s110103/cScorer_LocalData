@@ -25,7 +25,7 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
     [
         ["Template", "Sets", "Games", "2 Games difference", "NoAd", "Heat Rule", "Ballchange"],
         ["Advantage Set"],
-        ["TieBreak at", "Points in Set", "Points in last set", "Points in Match TieBreak", "Final Set Match TieBreak"]
+        ["TieBreak at", "Points in Set", "Points in final Set", "Points in Match TieBreak", "Final Set Match TieBreak"]
     ]
     
     
