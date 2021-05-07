@@ -1001,7 +1001,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     }
                 }
                 
-                reorientatePlayerLabels()
                 updateScoreDisplay()
                 reorientatePlayerLabels()
             }
@@ -1131,8 +1130,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 courtRightNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                 courtRightFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
                 
-                firstTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
-                secondTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
+                firstTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
+                secondTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
             }
             
             if currentMatch?.matchStatistics.currentLeftFar == "first" {
@@ -1332,6 +1331,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     /*
                         Tiebreak
                      */
+                    
+                    currentMatch?.matchStatistics.inTiebreak = true
                 }
             } else {
                 currentMatch?.matchStatistics.gamesFirstSetSecondPlayer += 1
@@ -1498,7 +1499,40 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             }
         }
         
+        if currentMatch?.matchStatistics.inTiebreak == false && currentMatch?.matchStatistics.matchTiebreak == false {
+            var setSum = 0
+            
+            switch currentMatch?.matchStatistics.currentSetPlayed {
+            case 1:
+                setSum = currentMatch!.matchStatistics.gamesFirstSetFirstPlayer + currentMatch!.matchStatistics.gamesFirstSetSecondPlayer
+            case 2:
+                setSum = currentMatch!.matchStatistics.gamesSecondSetFirstPlayer + currentMatch!.matchStatistics.gamesSecondSetSecondPlayer
+            case 3:
+                setSum = currentMatch!.matchStatistics.gamesThirdSetFirstPlayer + currentMatch!.matchStatistics.gamesThirdSetSecondPlayer
+            case 4:
+                setSum = currentMatch!.matchStatistics.gamesFourthSetFirstPlayer + currentMatch!.matchStatistics.gamesFourthSetSecondPlayer
+            case 5:
+                setSum = currentMatch!.matchStatistics.gamesFifthSetFirstPlayer + currentMatch!.matchStatistics.gamesFifthSetSecondPlayer
+            default:
+                break
+            }
+            
+            if setSum % 2 == 1 {
+                // Switch
+                if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                    currentMatch?.matchStatistics.onLeftSide = "secondTeam"
+                    currentMatch?.matchStatistics.onRightSide = "firstTeam"
+                } else {
+                    currentMatch?.matchStatistics.onLeftSide = "firstTeam"
+                    currentMatch?.matchStatistics.onRightSide = "secondTeam"
+                }
+            }
+        } else {
+            // Tiebreak changes
+        }
+        
         updateSetView()
+        reorientatePlayerLabels()
     }
     
     func resetFaults() {

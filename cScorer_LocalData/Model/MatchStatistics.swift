@@ -43,6 +43,8 @@ class MatchStatistics {
     var secondTeamFar: String = ""
     var matchInitiated: Bool = false
     var warmupTimerRunning: Bool = false
+    var gamesRemainingTillSwitch: Int = 1
+    var pointsRemainingTillSwitch: Int = 6
     
     var gamesFirstSetFirstPlayer: Int = 0
     var tiebreakFirstSetFirstPlayer: Int = 0
