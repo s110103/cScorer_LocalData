@@ -231,89 +231,97 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     @IBAction func aceButtonTapped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        pointStarted = false
-        startOfPointButton.isHidden = false
-        
-        resetFaults()
-        triggerReadback(message: "ACE", fontSize: 60)
-        
-        shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
-        
-        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
-            endOfPoint(team: 0)
-        } else {
-            endOfPoint(team: 1)
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            pointStarted = false
+            startOfPointButton.isHidden = false
+            
+            resetFaults()
+            triggerReadback(message: "ACE", fontSize: 60)
+            
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
+            
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+                endOfPoint(team: 0)
+            } else {
+                endOfPoint(team: 1)
+            }
         }
     }
     
     @IBAction func netButtonTaped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            pointStarted = false
+            startOfPointButton.isHidden = false
+            
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
         
-        pointStarted = false
-        startOfPointButton.isHidden = false
-        
-        shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
-    
-        if firstFault == false {
-            triggerReadback(message: "NET - FIRST SERVE", fontSize: 45)
-        } else {
-            triggerReadback(message: "NET - SECOND SERVE", fontSize: 45)
+            if firstFault == false {
+                triggerReadback(message: "NET - FIRST SERVE", fontSize: 45)
+            } else {
+                triggerReadback(message: "NET - SECOND SERVE", fontSize: 45)
+            }
         }
     }
     
     @IBAction func faultButtonTapped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        pointStarted = false
-        startOfPointButton.isHidden = false
-        
-        shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
-        
-        var savedFault: Bool = false
-        
-        if firstFault == true {
-            savedFault = true
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            pointStarted = false
+            startOfPointButton.isHidden = false
+            
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
+            
+            var savedFault: Bool = false
+            
+            if firstFault == true {
+                savedFault = true
+            }
+            
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+                addFault(team: 0)
+            } else {
+                addFault(team: 1)
+            }
+            
+            if savedFault == true {
+                triggerReadback(message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
+            } else {
+                triggerReadback(message: "FAULT", fontSize: 60)
+            }
+            
+            savedFault = false
         }
-        
-        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
-            addFault(team: 0)
-        } else {
-            addFault(team: 1)
-        }
-        
-        if savedFault == true {
-            triggerReadback(message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
-        } else {
-            triggerReadback(message: "FAULT", fontSize: 60)
-        }
-        
-        savedFault = false
     }
     
     @IBAction func overruleButtonTapped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        currentMatch?.matchStatistics.totalOverrules+=1
-        
-        triggerReadback(message: "OVERRULE", fontSize: 60)
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            currentMatch?.matchStatistics.totalOverrules+=1
+            
+            triggerReadback(message: "OVERRULE", fontSize: 60)
+        }
     }
     
     @IBAction func undoButtonTapped(_ sender: UIButton) {
@@ -322,178 +330,186 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     @IBAction func letButtonTapped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        pointStarted = false
-        startOfPointButton.isHidden = false
-        
-        resetFaults()
-        
-        shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
-        
-        triggerReadback(message: "LET - REPLAY THE POINT", fontSize: 45)
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            pointStarted = false
+            startOfPointButton.isHidden = false
+            
+            resetFaults()
+            
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
+            
+            triggerReadback(message: "LET - REPLAY THE POINT", fontSize: 45)
+        }
     }
     
     @IBAction func footfaultButtonTapped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        pointStarted = false
-        startOfPointButton.isHidden = false
-        
-        shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
-        
-        var savedFault: Bool = false
-        
-        if firstFault == true {
-            savedFault = true
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            pointStarted = false
+            startOfPointButton.isHidden = false
+            
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
+            
+            var savedFault: Bool = false
+            
+            if firstFault == true {
+                savedFault = true
+            }
+            
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+                addFault(team: 0)
+            } else {
+                addFault(team: 1)
+            }
+            
+            if savedFault == true {
+                triggerReadback(message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
+            } else {
+                triggerReadback(message: "FAULT", fontSize: 60)
+            }
+            
+            savedFault = false
         }
-        
-        if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
-            addFault(team: 0)
-        } else {
-            addFault(team: 1)
-        }
-        
-        if savedFault == true {
-            triggerReadback(message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
-        } else {
-            triggerReadback(message: "FAULT", fontSize: 60)
-        }
-        
-        savedFault = false
     }
     
     @IBAction func firstTeamPointButtonTapped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        pointStarted = false
-        startOfPointButton.isHidden = false
-        
-        resetFaults()
-        
-        shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            pointStarted = false
+            startOfPointButton.isHidden = false
+            
+            resetFaults()
+            
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
 
-        if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
-            endOfPoint(team: 0)
-        } else {
-            endOfPoint(team: 1)
-        }
-        
-        if gameFinished == true {
-            switch currentMatch?.matchStatistics.currentSetPlayed {
-            case 1:
-                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
-                }
-            case 2:
-                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
-                }
-            case 3:
-                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
-                }
-            case 4:
-                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
-                }
-            case 5:
-                if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
-                }
-            default:
-                break
+            if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                endOfPoint(team: 0)
+            } else {
+                endOfPoint(team: 1)
             }
-            gameFinished = false
-        } else {
-            triggerReadback(message: scoreLabel.text!, fontSize: 100)
+            
+            if gameFinished == true {
+                switch currentMatch?.matchStatistics.currentSetPlayed {
+                case 1:
+                    if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 2:
+                    if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 3:
+                    if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 4:
+                    if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                    }
+                case 5:
+                    if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                    }
+                default:
+                    break
+                }
+                gameFinished = false
+            } else {
+                triggerReadback(message: scoreLabel.text!, fontSize: 100)
+            }
         }
     }
     
     @IBAction func secondTeamPointButtonTapped(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        pointStarted = false
-        startOfPointButton.isHidden = false
-        
-        resetFaults()
-        
-        shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
-        
-        if currentMatch?.matchStatistics.onRightSide == "firstTeam" {
-            endOfPoint(team: 0)
-        } else {
-            endOfPoint(team: 1)
-        }
-        
-        if gameFinished == true {
-            switch currentMatch?.matchStatistics.currentSetPlayed {
-            case 1:
-                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
-                }
-            case 2:
-                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
-                }
-            case 3:
-                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
-                }
-            case 4:
-                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
-                }
-            case 5:
-                if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
-                } else {
-                    triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
-                }
-            default:
-                break
+        if currentMatch?.matchStatistics.matchRunning == true {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            pointStarted = false
+            startOfPointButton.isHidden = false
+            
+            resetFaults()
+            
+            shotclockTimer?.invalidate()
+            shotclockTimerRunning = false
+            shotclockTimerInterrupted = false
+            shotclockTimerTime = 25
+            timerLabel.text = "00:25"
+            
+            if currentMatch?.matchStatistics.onRightSide == "firstTeam" {
+                endOfPoint(team: 0)
+            } else {
+                endOfPoint(team: 1)
             }
-            gameFinished = false
-        } else {
-            triggerReadback(message: scoreLabel.text!, fontSize: 100)
+            
+            if gameFinished == true {
+                switch currentMatch?.matchStatistics.currentSetPlayed {
+                case 1:
+                    if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 2:
+                    if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 3:
+                    if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 4:
+                    if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                    }
+                case 5:
+                    if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                    }
+                default:
+                    break
+                }
+                gameFinished = false
+            } else {
+                triggerReadback(message: scoreLabel.text!, fontSize: 100)
+            }
         }
     }
     
@@ -750,6 +766,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         let now = NSDate()
         var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchRestartTimeStamp as Date)
         remainingTimeInterval = remainingTimeInterval + currentMatch!.matchStatistics.matchTimeInterval
+        
+        currentMatch?.matchStatistics.matchTimeInterval = remainingTimeInterval
                 
         matchTimeLabel.text = "\(remainingTimeInterval.format(using: [.hour, .minute])!)"
     }
@@ -1356,10 +1374,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 }
             }
         } else if currentMatch?.matchStatistics.currentSetPlayed == 2 {
+            
             if teamWon == "firstTeam" {
                 currentMatch?.matchStatistics.gamesSecondSetFirstPlayer += 1
                 
                 if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == 6 && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer <= 4 {
+
                     if currentMatch?.matchType.totalSets == 2 {
                         gameSetMatch()
                     } else {
@@ -1632,7 +1652,216 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func gameSetMatch() {
-        
+        switch currentMatch?.matchType.totalSets {
+        case 1:
+            currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
+            timer?.invalidate()
+            currentMatch?.matchStatistics.matchRunning = false
+            currentMatch?.matchStatistics.matchSuspended = false
+            currentMatch?.matchStatistics.matchInterrupted = false
+            
+            scoreLabel.text = "GAME SET MATCH"
+            
+            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                if currentMatch?.matchType.matchType == 0 {
+                    triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 45)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 45)
+                }
+            } else {
+                if currentMatch?.matchType.matchType == 0 {
+                    triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 45)
+                } else {
+                    triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 45)
+                }
+            }
+        case 3:
+            currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
+            timer?.invalidate()
+            currentMatch?.matchStatistics.matchRunning = false
+            currentMatch?.matchStatistics.matchSuspended = false
+            currentMatch?.matchStatistics.matchInterrupted = false
+            
+            scoreLabel.text = "GAME SET MATCH"
+            
+            if currentMatch?.matchStatistics.currentSetPlayed == 2 {
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    // First team winner
+                    
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 45)
+                    }
+                } else if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer < currentMatch!.matchStatistics.gamesFirstSetSecondPlayer && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer < currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    // Second team winner
+                    
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 45)
+                    }
+                }
+            } else if currentMatch?.matchStatistics.currentSetPlayed == 3 {
+                var firstTeamWins = 0, secondTeamWins = 0
+                
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                
+                if firstTeamWins > secondTeamWins {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                    }
+                } else {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                    }
+                }
+            }
+        case 5:
+            currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
+            timer?.invalidate()
+            currentMatch?.matchStatistics.matchRunning = false
+            currentMatch?.matchStatistics.matchSuspended = false
+            currentMatch?.matchStatistics.matchInterrupted = false
+            
+            scoreLabel.text = "GAME SET MATCH"
+            
+            switch currentMatch!.matchStatistics.currentSetPlayed {
+            case 3:
+                var firstTeamWins = 0, secondTeamWins = 0
+                
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                
+                if firstTeamWins > secondTeamWins {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                    }
+                } else {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                    }
+                }
+            case 4:
+                var firstTeamWins = 0, secondTeamWins = 0
+                
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                
+                if firstTeamWins > secondTeamWins {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 45)
+                    }
+                } else {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 45)
+                    }
+                }
+            case 5:
+                var firstTeamWins = 0, secondTeamWins = 0
+                
+                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                    firstTeamWins += 1
+                } else {
+                    secondTeamWins += 1
+                }
+                
+                if firstTeamWins > secondTeamWins {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 45)
+                    }
+                } else {
+                    if currentMatch?.matchType.matchType == 0 {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 45)
+                    } else {
+                        triggerReadback(message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 45)
+                    }
+                }
+            default:
+                break
+            }
+        default:
+            break
+        }
     }
 }
 
