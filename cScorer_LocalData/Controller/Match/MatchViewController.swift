@@ -89,6 +89,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBOutlet weak var readbackView: UIView!
     @IBOutlet weak var readbackLabel: UILabel!
     
+    @IBOutlet weak var letButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var footfaultButton: UIButton!
     @IBOutlet weak var overruleButton: UIButton!
@@ -318,6 +319,24 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBAction func undoButtonTapped(_ sender: UIButton) {
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
+    }
+    
+    @IBAction func letButtonTapped(_ sender: UIButton) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
+        pointStarted = false
+        startOfPointButton.isHidden = false
+        
+        resetFaults()
+        
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
+        
+        triggerReadback(message: "LET - REPLAY THE POINT", fontSize: 45)
     }
     
     @IBAction func footfaultButtonTapped(_ sender: UIButton) {
