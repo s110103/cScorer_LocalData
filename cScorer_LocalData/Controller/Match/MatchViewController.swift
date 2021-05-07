@@ -186,6 +186,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         removeCurrentReadback()
         
+        shotclockTimer?.invalidate()
+        shotclockTimerRunning = false
+        shotclockTimerInterrupted = false
+        shotclockTimerTime = 25
+        timerLabel.text = "00:25"
+        
         if currentMatch?.matchStatistics.matchRunning == false {
             if currentMatch?.matchStatistics.matchSuspended == true {
                 interactMatchButton.backgroundColor = UIColor.systemRed
@@ -504,7 +510,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         matchTimeLabel.text = "\(currentMatch!.matchStatistics.matchTimeInterval.format(using: [.hour, .minute])!)"
         
         let singleTapTimerView = UITapGestureRecognizer(target: self, action: #selector(singleTappedInTimerView))
-        singleTapTimerView.numberOfTapsRequired = 2
+        singleTapTimerView.numberOfTapsRequired = 1
         timerView.addGestureRecognizer(singleTapTimerView)
         
         let doubleTapTimerView = UITapGestureRecognizer(target: self, action: #selector(doubleTappedInTimerView))
@@ -1474,7 +1480,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @objc func shotclockTimerFired() {
         if shotclockTimerTime != 0 {
             shotclockTimerTime = shotclockTimerTime-1
-            timerLabel.text = String(format: "%02d", shotclockTimerTime)
+            timerLabel.text = String(format: "00:%02d", shotclockTimerTime)
         } else {
             shotclockTimer?.invalidate()
             shotclockTimerRunning = false
@@ -1484,7 +1490,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     @objc func singleTappedInTimerView() {
-        print("timer fire")
+        timerLabel.text = String(format: "00:%02d", shotclockTimerTime)
         if shotclockTimerRunning == true {
             if shotclockTimerInterrupted == true {
                 shotclockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(shotclockTimerFired), userInfo: nil, repeats: true)
@@ -1498,7 +1504,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     shotclockTimerInterrupted = false
                     shotclockTimerRunning = false
                     shotclockTimerTime = 25
-                    timerLabel.text = "25"
+                    timerLabel.text = "00:25"
                 }
             }
         } else {
@@ -1514,19 +1520,19 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 shotclockTimerInterrupted = false
                 shotclockTimerRunning = false
                 shotclockTimerTime = 25
-                timerLabel.text = "25"
+                timerLabel.text = "00:25"
             } else {
                 shotclockTimer?.invalidate()
                 shotclockTimerInterrupted = false
                 shotclockTimerRunning = false
                 shotclockTimerTime = 25
-                timerLabel.text = "25"
+                timerLabel.text = "00:25"
             }
         } else {
             shotclockTimerInterrupted = false
             shotclockTimerRunning = false
             shotclockTimerTime = 25
-            timerLabel.text = "25"
+            timerLabel.text = "00:25"
         }
     }
     
