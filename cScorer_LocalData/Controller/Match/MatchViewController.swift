@@ -1327,7 +1327,223 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     
     func updateGames(teamWon: String) {
         gameFinished = true
+        let gamesToBePlayed: Int = currentMatch!.matchType.gamesInSet
+        let twoGamesDifference: Bool = currentMatch!.matchType.twoGameDifference
+        let currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
         
+        switch currentMatch?.matchStatistics.currentSetPlayed {
+        case 1:
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesFirstSetFirstPlayer += 1
+            } else {
+                currentMatch?.matchStatistics.gamesFirstSetSecondPlayer += 1
+            }
+        case 2:
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesSecondSetFirstPlayer += 1
+            } else {
+                currentMatch?.matchStatistics.gamesSecondSetSecondPlayer += 1
+            }
+        case 3:
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesThirdSetFirstPlayer += 1
+            } else {
+                currentMatch?.matchStatistics.gamesThirdSetSecondPlayer += 1
+            }
+        case 4:
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesFourthSetFirstPlayer += 1
+            } else {
+                currentMatch?.matchStatistics.gamesFourthSetSecondPlayer += 1
+            }
+        case 5:
+            if teamWon == "firstTeam" {
+                currentMatch?.matchStatistics.gamesFifthSetFirstPlayer += 1
+            } else {
+                currentMatch?.matchStatistics.gamesFifthSetSecondPlayer += 1
+            }
+        default:
+            break
+        }
+        
+        if  currentMatch?.matchType.matchType == 0 {
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                currentMatch?.matchStatistics.isServer = "secondTeamFirst"
+            } else {
+                currentMatch?.matchStatistics.isServer = "firstTeamFirst"
+            }
+        }
+        
+        if currentMatch?.matchStatistics.inTiebreak == false && currentMatch?.matchStatistics.matchTiebreak == false {
+            var setSum = 0
+            
+            switch currentMatch?.matchStatistics.currentSetPlayed {
+            case 1:
+                setSum = currentMatch!.matchStatistics.gamesFirstSetFirstPlayer + currentMatch!.matchStatistics.gamesFirstSetSecondPlayer
+            case 2:
+                setSum = currentMatch!.matchStatistics.gamesSecondSetFirstPlayer + currentMatch!.matchStatistics.gamesSecondSetSecondPlayer
+            case 3:
+                setSum = currentMatch!.matchStatistics.gamesThirdSetFirstPlayer + currentMatch!.matchStatistics.gamesThirdSetSecondPlayer
+            case 4:
+                setSum = currentMatch!.matchStatistics.gamesFourthSetFirstPlayer + currentMatch!.matchStatistics.gamesFourthSetSecondPlayer
+            case 5:
+                setSum = currentMatch!.matchStatistics.gamesFifthSetFirstPlayer + currentMatch!.matchStatistics.gamesFifthSetSecondPlayer
+            default:
+                break
+            }
+            
+            if setSum % 2 == 1 {
+                // Switch
+                if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                    currentMatch?.matchStatistics.onLeftSide = "secondTeam"
+                    currentMatch?.matchStatistics.onRightSide = "firstTeam"
+                } else {
+                    currentMatch?.matchStatistics.onLeftSide = "firstTeam"
+                    currentMatch?.matchStatistics.onRightSide = "secondTeam"
+                }
+            }
+        } else {
+            // Tiebreak changes
+        }
+        
+        if currentMatch?.matchType.advantageSet == 0 {
+            // No Ad Set
+            print("no ad set")
+            
+            switch currentMatch?.matchType.totalSets {
+            case 0:
+                print("no set")
+            case 1:
+                // MARK: - One Set
+                if currentMatch?.matchType.gamesInSet == 0 {
+                    // Just tiebreak
+                    currentMatch?.matchStatistics.inTiebreak = true
+                } else {
+                    if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                        // Tiebreak
+                        currentMatch?.matchStatistics.inTiebreak = true
+                    } else {
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= currentMatch!.matchStatistics.gamesFirstSetFirstPlayer - 2 {
+                                // First player won
+                                gameSetMatch()
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
+                                // Second player won
+                                gameSetMatch()
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                // First Player won
+                                gameSetMatch()
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                // Second Player won
+                                gameSetMatch()
+                            }
+                        }
+                    }
+                }
+            case 3:
+                // MARK: - Three Sets
+                if currentMatch?.matchType.gamesInSet == 0 {
+                    // Just tiebreak
+                    currentMatch?.matchStatistics.inTiebreak = true
+                } else {
+                    switch currentSet {
+                    case 1:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= currentMatch!.matchStatistics.gamesFirstSetFirstPlayer - 2 {
+                                // First player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
+                                // Second player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                // First Player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                // Second Player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                            }
+                        }
+                    case 2:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer <= currentMatch!.matchStatistics.gamesSecondSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    gameSetMatch()
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                }
+                            } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                    gameSetMatch()
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                }
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    gameSetMatch()
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                }
+                            } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                    gameSetMatch()
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                }
+                            }
+                        }
+                    case 3:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer <= currentMatch!.matchStatistics.gamesThirdSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                gameSetMatch()
+                            } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= currentMatch!.matchStatistics.gamesThirdSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                gameSetMatch()
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                gameSetMatch()
+                            } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer > currentMatch!.matchStatistics.gamesThirdSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                gameSetMatch()
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+            case 5:
+                // MARK: - Five Sets
+                print("test")
+            default:
+                break
+            }
+        } else if currentMatch?.matchType.advantageSet == 1 {
+            // Last Set Ad Set
+        } else if currentMatch?.matchType.advantageSet == 2 {
+            // Every Set Ad Set
+        }
+        
+        /*
         if currentMatch?.matchStatistics.currentSetPlayed == 1 {
             if teamWon == "firstTeam" {
                 currentMatch?.matchStatistics.gamesFirstSetFirstPlayer += 1
@@ -1510,46 +1726,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 }
             }
         }
-        
-        if  currentMatch?.matchType.matchType == 0 {
-            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
-                currentMatch?.matchStatistics.isServer = "secondTeamFirst"
-            } else {
-                currentMatch?.matchStatistics.isServer = "firstTeamFirst"
-            }
-        }
-        
-        if currentMatch?.matchStatistics.inTiebreak == false && currentMatch?.matchStatistics.matchTiebreak == false {
-            var setSum = 0
-            
-            switch currentMatch?.matchStatistics.currentSetPlayed {
-            case 1:
-                setSum = currentMatch!.matchStatistics.gamesFirstSetFirstPlayer + currentMatch!.matchStatistics.gamesFirstSetSecondPlayer
-            case 2:
-                setSum = currentMatch!.matchStatistics.gamesSecondSetFirstPlayer + currentMatch!.matchStatistics.gamesSecondSetSecondPlayer
-            case 3:
-                setSum = currentMatch!.matchStatistics.gamesThirdSetFirstPlayer + currentMatch!.matchStatistics.gamesThirdSetSecondPlayer
-            case 4:
-                setSum = currentMatch!.matchStatistics.gamesFourthSetFirstPlayer + currentMatch!.matchStatistics.gamesFourthSetSecondPlayer
-            case 5:
-                setSum = currentMatch!.matchStatistics.gamesFifthSetFirstPlayer + currentMatch!.matchStatistics.gamesFifthSetSecondPlayer
-            default:
-                break
-            }
-            
-            if setSum % 2 == 1 {
-                // Switch
-                if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
-                    currentMatch?.matchStatistics.onLeftSide = "secondTeam"
-                    currentMatch?.matchStatistics.onRightSide = "firstTeam"
-                } else {
-                    currentMatch?.matchStatistics.onLeftSide = "firstTeam"
-                    currentMatch?.matchStatistics.onRightSide = "secondTeam"
-                }
-            }
-        } else {
-            // Tiebreak changes
-        }
+        */
         
         updateSetView()
         reorientatePlayerLabels()
@@ -1652,8 +1829,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func gameSetMatch() {
+        print("called")
         switch currentMatch?.matchType.totalSets {
         case 1:
+            print("1")
             currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
             timer?.invalidate()
             currentMatch?.matchStatistics.matchRunning = false
@@ -1676,6 +1855,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 }
             }
         case 3:
+            print("3")
             currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
             timer?.invalidate()
             currentMatch?.matchStatistics.matchRunning = false
@@ -1736,6 +1916,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 }
             }
         case 5:
+            print("5")
             currentMatch?.matchStatistics.matchFinishedTimeStamp = NSDate()
             timer?.invalidate()
             currentMatch?.matchStatistics.matchRunning = false

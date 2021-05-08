@@ -36,6 +36,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         matchesTableView.dataSource = self
         
         let singlesMatch = Match(_firstTeamFirstPlayer: "Dominik", _firstTeamFirstPlayerSurname: "Thiem", _firstTeamSecondPlayer: "", _firstTeamSecondPlayerSurname: "", _secondTeamFirstPlayer: "Roger", _secondTeamFirstPlayerSurname: "Federer", _secondTeamSecondPlayer: "", _secondTeamSecondPlayerSurname: "", _firstTeamFirstPlayerDetails: Player(), _firstTeamSecondPlayerDetails: Player(), _secondTeamFirstPlayerDetails: Player(), _secondTeamSecondPlayerDetails: Player(), _court: "CC", _syncedWithCloud: false)
+        singlesMatch.matchType.matchType = 0
+        singlesMatch.matchType.advantageSet = 0
+        singlesMatch.matchType.gamesInSet = 6
+        singlesMatch.matchType.totalSets = 3
         
         let doublesMatch = Match(_firstTeamFirstPlayer: "Dominik", _firstTeamFirstPlayerSurname: "Thiem", _firstTeamSecondPlayer: "Rafael", _firstTeamSecondPlayerSurname: "Nadal", _secondTeamFirstPlayer: "Roger", _secondTeamFirstPlayerSurname: "Federer", _secondTeamSecondPlayer: "Andy", _secondTeamSecondPlayerSurname: "Murray", _firstTeamFirstPlayerDetails: Player(_firstName: "Dominik", _surName: "Thiem", _abbreviation: "", _country: "Österreich", _tennisClub: "", _gender: 0), _firstTeamSecondPlayerDetails: Player(_firstName: "Rafael", _surName: "Nadal", _abbreviation: "", _country: "Spanien", _tennisClub: "", _gender: 0), _secondTeamFirstPlayerDetails: Player(_firstName: "Roger", _surName: "Federer", _abbreviation: "", _country: "Schweiz", _tennisClub: "", _gender: 0), _secondTeamSecondPlayerDetails: Player(_firstName: "Andy", _surName: "Murray", _abbreviation: "", _country: "England", _tennisClub: "", _gender: 0), _court: "1", _syncedWithCloud: false)
         doublesMatch.matchType.matchType = 1
