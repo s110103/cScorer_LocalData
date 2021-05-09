@@ -4101,7 +4101,7 @@
                                     <action selector="undoButtonTapped:" destination="Ur3-qe-1A8" eventType="touchUpInside" id="HxC-xb-Le4"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFk-nO-nLO">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="DFk-nO-nLO">
                                 <rect key="frame" x="20" y="97" width="374" height="127"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="127" id="NyJ-jB-6qZ"/>
