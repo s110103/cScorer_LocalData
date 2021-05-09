@@ -675,13 +675,42 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
         
+        if amountOfSets == 0 {
+            matchType.gamesInSet = 0
+            matchType.tiebreakAt = 0
+            
+            initComparison()
+            
+            if matchType.gamesInSet != comparisonMatchType.gamesInSet {
+                matchType.template = 9
+            } else {
+                if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false{
+                    let checkupTemplate = comparisonMatchType.template
+                    comparisonMatchType.template = 9
+                    
+                    if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false {
+                        comparisonMatchType.template = checkupTemplate
+                    } else {
+                        comparisonMatchType.template = checkupTemplate
+                        matchType.template = matchType.templateBackup
+                    }
+                }
+            }
+        }
+        
         initSubtitles()
         matchRuleTableView.reloadData()
     }
     
     func sendAmountOfGamesData(amountOfGames: Int) {
-        matchType.gamesInSet = amountOfGames
-        matchType.tiebreakAt = amountOfGames
+        
+        if matchType.twoGameDifference == true && amountOfGames < 2 {
+            matchType.gamesInSet = 2
+            matchType.tiebreakAt = 2
+        } else {
+            matchType.gamesInSet = amountOfGames
+            matchType.tiebreakAt = amountOfGames
+        }
         
         initComparison()
         
@@ -697,6 +726,28 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
                 } else {
                     comparisonMatchType.template = checkupTemplate
                     matchType.template = matchType.templateBackup
+                }
+            }
+        }
+        
+        if amountOfGames != 0 && matchType.totalSets == 0 {
+            matchType.totalSets = 1
+            
+            initComparison()
+            
+            if matchType.totalSets != comparisonMatchType.totalSets {
+                matchType.template = 9
+            } else {
+                if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false{
+                    let checkupTemplate = comparisonMatchType.template
+                    comparisonMatchType.template = 9
+                    
+                    if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false {
+                        comparisonMatchType.template = checkupTemplate
+                    } else {
+                        comparisonMatchType.template = checkupTemplate
+                        matchType.template = matchType.templateBackup
+                    }
                 }
             }
         }
@@ -874,6 +925,28 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
                     } else {
                         comparisonMatchType.template = checkupTemplate
                         matchType.template = matchType.templateBackup
+                    }
+                }
+            }
+            
+            if selectedBool == true && matchType.gamesInSet < 2 {
+                matchType.gamesInSet = 2
+                
+                initComparison()
+                
+                if matchType.gamesInSet != comparisonMatchType.gamesInSet {
+                    matchType.template = 9
+                } else {
+                    if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false{
+                        let checkupTemplate = comparisonMatchType.template
+                        comparisonMatchType.template = 9
+                        
+                        if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false {
+                            comparisonMatchType.template = checkupTemplate
+                        } else {
+                            comparisonMatchType.template = checkupTemplate
+                            matchType.template = matchType.templateBackup
+                        }
                     }
                 }
             }

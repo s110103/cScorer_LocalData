@@ -45,8 +45,6 @@ class SetTrueFalseViewController: UIViewController {
         case false:
             setTrueButton.setImage(circleUnselected, for: .normal)
             setFalseButton.setImage(circleSelected, for: .normal)
-        default:
-            break
         }
     }
     
