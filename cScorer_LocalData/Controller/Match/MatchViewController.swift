@@ -27,6 +27,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var removeReadbackTask: DispatchWorkItem?
     var gameFinished: Bool = false
     var gameSetMatchIndication: Bool = false
+    var setJustFinished: Bool = false
     
     // Timer
     var shotclockTimerTime: Int = 25
@@ -257,8 +258,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 endOfPoint(team: 1)
             }
             
+            var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+            
+            if setJustFinished == true {
+                setJustFinished = false
+                currentSet -= 1
+            }
+            
             if gameFinished == true && gameSetMatchIndication == false {
-                switch currentMatch?.matchStatistics.currentSetPlayed {
+                switch currentSet {
                 case 1:
                     if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                         triggerReadback(caller: "414", message: "ACE\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
@@ -269,13 +277,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
                         triggerReadback(caller: "420", message: "ACE\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
                     } else {
-                        triggerReadback(caller: "422", message: "ACE\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        triggerReadback(caller: "422", message: "ACE\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
                     }
                 case 3:
                     if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
                         triggerReadback(caller: "426", message: "ACE\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
                     } else {
-                        triggerReadback(caller: "428", message: "ACE\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        triggerReadback(caller: "428", message: "ACE\n\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
                     }
                 case 4:
                     if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
@@ -350,8 +358,16 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             if savedFault == false {
                 triggerReadback(caller: "309", message: "FAULT", fontSize: 60)
             } else {
+                
+                var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+                
+                if setJustFinished == true {
+                    setJustFinished = false
+                    currentSet -= 1
+                }
+                
                 if gameFinished == true && gameSetMatchIndication == false {
-                    switch currentMatch?.matchStatistics.currentSetPlayed {
+                    switch currentSet {
                     case 1:
                         if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                             triggerReadback(caller: "414", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
@@ -362,13 +378,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
                             triggerReadback(caller: "420", message: "FAULT\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
                         } else {
-                            triggerReadback(caller: "422", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            triggerReadback(caller: "422", message: "FAULT\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
                         }
                     case 3:
                         if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
                             triggerReadback(caller: "426", message: "FAULT\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
                         } else {
-                            triggerReadback(caller: "428", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            triggerReadback(caller: "428", message: "FAULT\n\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
                         }
                     case 4:
                         if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
@@ -460,8 +476,16 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             if savedFault == false {
                 triggerReadback(caller: "309", message: "FOOTFAULT", fontSize: 60)
             } else {
+                
+                var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+                
+                if setJustFinished == true {
+                    setJustFinished = false
+                    currentSet -= 1
+                }
+                
                 if gameFinished == true && gameSetMatchIndication == false {
-                    switch currentMatch?.matchStatistics.currentSetPlayed {
+                    switch currentSet {
                     case 1:
                         if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                             triggerReadback(caller: "414", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
@@ -472,13 +496,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
                             triggerReadback(caller: "420", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
                         } else {
-                            triggerReadback(caller: "422", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            triggerReadback(caller: "422", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
                         }
                     case 3:
                         if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
                             triggerReadback(caller: "426", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
                         } else {
-                            triggerReadback(caller: "428", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            triggerReadback(caller: "428", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
                         }
                     case 4:
                         if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
@@ -526,8 +550,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 endOfPoint(team: 1)
             }
             
+            var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+            
+            if setJustFinished == true {
+                setJustFinished = false
+                currentSet -= 1
+            }
+            
             if gameFinished == true && gameSetMatchIndication == false {
-                switch currentMatch?.matchStatistics.currentSetPlayed {
+                switch currentSet {
                 case 1:
                     if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                         triggerReadback(caller: "414", message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
@@ -538,13 +569,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
                         triggerReadback(caller: "420", message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
                     } else {
-                        triggerReadback(caller: "422", message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        triggerReadback(caller: "422", message: "\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
                     }
                 case 3:
                     if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
                         triggerReadback(caller: "426", message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
                     } else {
-                        triggerReadback(caller: "428", message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        triggerReadback(caller: "428", message: "\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
                     }
                 case 4:
                     if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
@@ -592,8 +623,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 endOfPoint(team: 1)
             }
             
+            var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+            
+            if setJustFinished == true {
+                setJustFinished = false
+                currentSet -= 1
+            }
+            
             if gameFinished == true && gameSetMatchIndication == false {
-                switch currentMatch?.matchStatistics.currentSetPlayed {
+                switch currentSet {
                 case 1:
                     if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                         triggerReadback(caller: "478", message: "\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
@@ -604,13 +642,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
                         triggerReadback(caller: "484", message: "\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
                     } else {
-                        triggerReadback(caller: "486", message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        triggerReadback(caller: "486", message: "\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
                     }
                 case 3:
                     if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
                         triggerReadback(caller: "490", message: "\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
                     } else {
-                        triggerReadback(caller: "492", message: "\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        triggerReadback(caller: "492", message: "\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
                     }
                 case 4:
                     if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
@@ -1685,17 +1723,21 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= currentMatch!.matchStatistics.gamesFirstSetFirstPlayer - 2 {
                                 // First player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
                                 // Second player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                                 // First Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
                                 // Second Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
                             }
                         }
                     case 2:
@@ -1708,6 +1750,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     gameSetMatchIndication = true
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
                                 }
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
                                 // Second player won second Set
@@ -1717,6 +1760,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     gameSetMatchIndication = true
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
                                 }
                             }
                         } else {
@@ -1728,6 +1772,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     gameSetMatchIndication = true
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
                                 }
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
                                 // Second Player won second Set
@@ -1737,6 +1782,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     gameSetMatchIndication = true
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
                                 }
                             }
                         }
