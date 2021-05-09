@@ -89,6 +89,7 @@ class MatchStatistics {
     var firstFault: Bool = false
     var inTiebreak: Bool = false
     var matchTiebreak: Bool = false
+    var winnerPhrase: String = ""
     
     var firstTeamFirstPlayerPosition: Int = 0
     var firstTeamSecondPlayerPosition: Int = 0

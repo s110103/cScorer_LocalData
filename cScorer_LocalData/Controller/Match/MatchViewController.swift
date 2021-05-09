@@ -239,8 +239,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
             
-            pointStarted = true
-            startOfPointButton.isHidden = true
+            pointStarted = false
+            startOfPointButton.isHidden = false
             
             resetFaults()
             triggerReadback(caller: "242", message: "ACE", fontSize: 60)
@@ -264,8 +264,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
             
-            pointStarted = true
-            startOfPointButton.isHidden = true
+            pointStarted = false
+            startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
             shotclockTimerRunning = false
@@ -286,8 +286,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
             
-            pointStarted = true
-            startOfPointButton.isHidden = true
+            pointStarted = false
+            startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
             shotclockTimerRunning = false
@@ -338,8 +338,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
             
-            pointStarted = true
-            startOfPointButton.isHidden = true
+            pointStarted = false
+            startOfPointButton.isHidden = false
             
             resetFaults()
             
@@ -358,8 +358,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
             
-            pointStarted = true
-            startOfPointButton.isHidden = true
+            pointStarted = false
+            startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
             shotclockTimerRunning = false
@@ -394,8 +394,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
             
-            pointStarted = true
-            startOfPointButton.isHidden = true
+            pointStarted = false
+            startOfPointButton.isHidden = false
             
             resetFaults()
             
@@ -460,8 +460,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let generator = UIImpactFeedbackGenerator(style: .heavy)
             generator.impactOccurred()
             
-            pointStarted = true
-            startOfPointButton.isHidden = true
+            pointStarted = false
+            startOfPointButton.isHidden = false
             
             resetFaults()
             
@@ -609,12 +609,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func initMatch() {
-        if currentMatch?.matchStatistics.matchFinished == true {
-            startOfPointButton.isHidden = true
-        } else {
-            startOfPointButton.isHidden = false
-        }
-        
         currentMatch?.matchStatistics.isServer = "firstTeamFirst"
         currentMatch?.matchStatistics.onLeftSide = "firstTeam"
         currentMatch?.matchStatistics.onRightSide = "secondTeam"
@@ -686,7 +680,75 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         courtRightFarLabel.layer.borderWidth = 1
                     }
                 }
+            } else {
+                if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                    currentMatch?.matchStatistics.currentFirstPosition = "firstTeam"
+                    currentMatch?.matchStatistics.currentSecondPosition = "secondTeam"
+                    
+                    currentMatch?.matchStatistics.currentLeftNear = "first"
+                    currentMatch?.matchStatistics.currentLeftFar = ""
+                    currentMatch?.matchStatistics.currentRightFar = "first"
+                    currentMatch?.matchStatistics.currentRightNear = ""
+                    
+                    courtLeftNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
+                    courtLeftFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
+                    
+                    courtRightNearLabel.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1))\(currentMatch!.secondTeamFirstPlayerSurname.prefix(1))"
+                    courtRightFarLabel.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1))\(currentMatch!.secondTeamFirstPlayerSurname.prefix(1))"
+                    
+                    firstTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
+                    secondTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
+                    
+                    if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                        courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtLeftNearLabel.layer.borderWidth = 1
+                        courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtLeftFarLabel.layer.borderWidth = 1
+                    } else {
+                        courtRightNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtRightNearLabel.layer.borderWidth = 1
+                        courtRightFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtRightFarLabel.layer.borderWidth = 1
+                    }
+                } else {
+                    currentMatch?.matchStatistics.currentFirstPosition = "secondTeam"
+                    currentMatch?.matchStatistics.currentSecondPosition = "firstTeam"
+                    
+                    currentMatch?.matchStatistics.currentLeftNear = "first"
+                    currentMatch?.matchStatistics.currentLeftFar = ""
+                    currentMatch?.matchStatistics.currentRightFar = "first"
+                    currentMatch?.matchStatistics.currentRightNear = ""
+                    
+                    courtRightNearLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
+                    courtRightFarLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1))\(currentMatch!.firstTeamFirstPlayerSurname.prefix(1))"
+                    
+                    firstTeamPointButton.setTitle("\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)", for: .normal)
+                    secondTeamPointButton.setTitle("\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)", for: .normal)
+                    
+                    if currentMatch?.matchStatistics.isServer == "secondTeamFirst" {
+                        courtLeftNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtLeftNearLabel.layer.borderWidth = 1
+                        courtLeftFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtLeftFarLabel.layer.borderWidth = 1
+                    } else {
+                        courtRightNearLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtRightNearLabel.layer.borderWidth = 1
+                        courtRightFarLabel.layer.borderColor = UIColor.systemTeal.cgColor
+                        courtRightFarLabel.layer.borderWidth = 1
+                    }
+                }
             }
+        }
+        
+        if currentMatch?.matchStatistics.matchFinished == true {
+            startOfPointButton.isHidden = true
+            pointStarted = false
+            scoreLabel.text = "GAME SET MATCH"
+            gameSetMatchIndication = true
+            triggerReadback(caller: "747", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
+        } else {
+            startOfPointButton.isHidden = false
+            pointStarted = false
         }
     }
     
@@ -836,8 +898,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         interruptedMatchView.isHidden = false
         
-        pointStarted = true
-        startOfPointButton.isHidden = true
+        pointStarted = false
+        startOfPointButton.isHidden = false
     }
     
     func suspendMatch(suspension: Int) {
@@ -869,8 +931,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     // MARK: - End Of Point Logic
     
     func addFault(team: Int) {
-        pointStarted = true
-        startOfPointButton.isHidden = true
+        pointStarted = false
+        startOfPointButton.isHidden = false
         
         if currentMatch?.matchStatistics.firstFault == false {
             currentMatch?.matchStatistics.firstFault = true
@@ -888,8 +950,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func endOfPoint(team: Int) {
-        print(team)
-        
         var updatedScoreDisplay: Bool = false
         
         if currentMatch?.matchType.matchType == 0 {
@@ -1461,11 +1521,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
         if currentMatch?.matchType.advantageSet == 0 {
             // No Ad Set
-            print("no ad set")
             
             switch currentMatch?.matchType.totalSets {
             case 0:
-                print("no set")
+                break
             case 1:
                 // MARK: - One Set
                 if currentMatch?.matchType.gamesInSet == 0 {
@@ -1598,7 +1657,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 }
             case 5:
                 // MARK: - Five Sets
-                print("test")
+                break
             default:
                 break
             }
@@ -1794,10 +1853,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         
          */
         
-        if gameSetMatchIndication == false {
-            updateSetView()
-            reorientatePlayerLabels()
-        }
+        updateSetView()
+        reorientatePlayerLabels()
          
     }
     
@@ -1807,9 +1864,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func triggerReadback(caller: String, message: String, fontSize: Int) {
-        print("Triggered readback CallerId: \(caller)")
-        print("withtext: \(message)")
-        print("scorelabel: \(scoreLabel!.text!)")
         self.removeCurrentReadback()
         readbackVisible = true
         removeReadbackTask = DispatchWorkItem { self.removeCurrentReadback() }
@@ -1824,10 +1878,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             self.readbackView.alpha = 0.9
         })
         
-        if gameSetMatchIndication == true {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 15, execute: removeReadbackTask!)
-        } else {
+        if gameSetMatchIndication == false {
             DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: removeReadbackTask!)
+            
         }
     }
     
@@ -1905,11 +1958,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func gameSetMatch() {
-        print("called")
-        scoreLabel.text = "Called"
         switch currentMatch?.matchType.totalSets {
         case 1:
-            print("1")
             currentMatch!.matchStatistics.matchFinishedTimeStamp = NSDate()
             currentMatch?.matchStatistics.matchFinished = true
             timer!.invalidate()
@@ -1926,19 +1976,22 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             
             if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                 if currentMatch?.matchType.matchType == 0 {
-                    triggerReadback(caller: "1904", message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 45)
+                    currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)"
+                    triggerReadback(caller: "1904", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                 } else {
-                    triggerReadback(caller: "1906", message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 45)
+                    currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)"
+                    triggerReadback(caller: "1906", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                 }
             } else {
                 if currentMatch?.matchType.matchType == 0 {
-                    triggerReadback(caller: "1910", message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 45)
+                    currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)"
+                    triggerReadback(caller: "1910", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                 } else {
-                    triggerReadback(caller: "1912", message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 45)
+                    currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)"
+                    triggerReadback(caller: "1912", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                 }
             }
         case 3:
-            print("3")
             currentMatch!.matchStatistics.matchFinishedTimeStamp = NSDate()
             currentMatch?.matchStatistics.matchFinished = true
             timer!.invalidate()
@@ -1956,23 +2009,23 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             if currentMatch?.matchStatistics.currentSetPlayed == 2 {
                 if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
                     // First team winner
-                    print("first team winner")
                     
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "1931", message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 45)
-                        print("readback triggered")
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)"
+                        triggerReadback(caller: "1931", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "1934", message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 45)
-                        print("readback triggered")
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)"
+                        triggerReadback(caller: "1934", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 } else if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer < currentMatch!.matchStatistics.gamesFirstSetSecondPlayer && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer < currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
                     // Second team winner
-                    print("second team winner")
                     
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "1942", message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)"
+                        triggerReadback(caller: "1942", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "1944", message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)"
+                        triggerReadback(caller: "1944", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 }
             } else if currentMatch?.matchStatistics.currentSetPlayed == 3 {
@@ -1996,20 +2049,23 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 if firstTeamWins > secondTeamWins {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "1968", message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)"
+                        triggerReadback(caller: "1968", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "1970", message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)"
+                        triggerReadback(caller: "1970", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 } else {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "1974", message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)"
+                        triggerReadback(caller: "1974", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "1976", message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)"
+                        triggerReadback(caller: "1976", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 }
             }
         case 5:
-            print("5")
             currentMatch!.matchStatistics.matchFinishedTimeStamp = NSDate()
             currentMatch?.matchStatistics.matchFinished = true
             timer!.invalidate()
@@ -2046,15 +2102,19 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 if firstTeamWins > secondTeamWins {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "2012", message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)"
+                        triggerReadback(caller: "2012", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "2014", message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)"
+                        triggerReadback(caller: "2014", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 } else {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "2018", message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)"
+                        triggerReadback(caller: "2018", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "2020", message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)"
+                        triggerReadback(caller: "2020", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 }
             case 4:
@@ -2083,15 +2143,19 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 if firstTeamWins > secondTeamWins {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "2049", message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)"
+                        triggerReadback(caller: "2049", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "2051", message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)"
+                        triggerReadback(caller: "2051", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 } else {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "2055", message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)"
+                        triggerReadback(caller: "2055", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "2057", message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)"
+                        triggerReadback(caller: "2057", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 }
             case 5:
@@ -2125,15 +2189,19 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 
                 if firstTeamWins > secondTeamWins {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "2091", message: "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayer) \(currentMatch!.firstTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)"
+                        triggerReadback(caller: "2091", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "2093", message: "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.firstTeamFirstPlayerSurname) &  \(currentMatch!.firstTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)"
+                        triggerReadback(caller: "2093", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 } else {
                     if currentMatch?.matchType.matchType == 0 {
-                        triggerReadback(caller: "2097", message: "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayer) \(currentMatch!.secondTeamFirstPlayerSurname)\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)"
+                        triggerReadback(caller: "2097", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     } else {
-                        triggerReadback(caller: "2099", message: "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 45)
+                        currentMatch?.matchStatistics.winnerPhrase = "\(currentMatch!.secondTeamFirstPlayerSurname) &  \(currentMatch!.secondTeamSecondPlayerSurname)\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)-\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)"
+                        triggerReadback(caller: "2099", message: currentMatch!.matchStatistics.winnerPhrase, fontSize: 45)
                     }
                 }
             default:
