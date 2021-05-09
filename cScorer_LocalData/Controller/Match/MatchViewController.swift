@@ -256,6 +256,46 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             } else {
                 endOfPoint(team: 1)
             }
+            
+            if gameFinished == true && gameSetMatchIndication == false {
+                switch currentMatch?.matchStatistics.currentSetPlayed {
+                case 1:
+                    if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                        triggerReadback(caller: "414", message: "ACE\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(caller: "416", message: "ACE\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 2:
+                    if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                        triggerReadback(caller: "420", message: "ACE\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(caller: "422", message: "ACE\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 3:
+                    if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                        triggerReadback(caller: "426", message: "ACE\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(caller: "428", message: "ACE\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                    }
+                case 4:
+                    if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                        triggerReadback(caller: "432", message: "ACE\n\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(caller: "434", message: "ACE\n\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                    }
+                case 5:
+                    if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                        triggerReadback(caller: "438", message: "ACE\n\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                    } else {
+                        triggerReadback(caller: "440", message: "ACE\n\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                    }
+                default:
+                    break
+                }
+                gameFinished = false
+            } else {
+                triggerReadback(caller: "297", message: "ACE\n\(scoreLabel.text!)", fontSize: 100)
+            }
         }
     }
     
@@ -307,10 +347,48 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 addFault(team: 1)
             }
             
-            if savedFault == true {
-                triggerReadback(caller: "307", message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
-            } else {
+            if savedFault == false {
                 triggerReadback(caller: "309", message: "FAULT", fontSize: 60)
+            } else {
+                if gameFinished == true && gameSetMatchIndication == false {
+                    switch currentMatch?.matchStatistics.currentSetPlayed {
+                    case 1:
+                        if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                            triggerReadback(caller: "414", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "416", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 2:
+                        if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                            triggerReadback(caller: "420", message: "FAULT\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "422", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 3:
+                        if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                            triggerReadback(caller: "426", message: "FAULT\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "428", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 4:
+                        if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                            triggerReadback(caller: "432", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "434", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 5:
+                        if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                            triggerReadback(caller: "438", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "440", message: "FAULT\n\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                        }
+                    default:
+                        break
+                    }
+                    gameFinished = false
+                } else {
+                    triggerReadback(caller: "392", message: "FAULT\n\(scoreLabel.text!)", fontSize: 100)
+                }
             }
             
             savedFault = false
@@ -379,12 +457,49 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 addFault(team: 1)
             }
             
-            if savedFault == true {
-                triggerReadback(caller: "379", message: "FAULT \n \(scoreLabel.text!)", fontSize: 45)
+            if savedFault == false {
+                triggerReadback(caller: "309", message: "FOOTFAULT", fontSize: 60)
             } else {
-                triggerReadback(caller: "381", message: "FAULT", fontSize: 60)
+                if gameFinished == true && gameSetMatchIndication == false {
+                    switch currentMatch?.matchStatistics.currentSetPlayed {
+                    case 1:
+                        if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                            triggerReadback(caller: "414", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "416", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 2:
+                        if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                            triggerReadback(caller: "420", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "422", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 3:
+                        if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                            triggerReadback(caller: "426", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "428", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 4:
+                        if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                            triggerReadback(caller: "432", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "434", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                        }
+                    case 5:
+                        if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                            triggerReadback(caller: "438", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                        } else {
+                            triggerReadback(caller: "440", message: "FOOTFAULT\n\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                        }
+                    default:
+                        break
+                    }
+                    gameFinished = false
+                } else {
+                    triggerReadback(caller: "392", message: "FOOTFAULT\n\(scoreLabel.text!)", fontSize: 100)
+                }
             }
-            
             savedFault = false
         }
     }
