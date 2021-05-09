@@ -101,6 +101,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBOutlet weak var firstTeamPointButton: UIButton!
     @IBOutlet weak var secondTeamPointButton: UIButton!
     @IBOutlet weak var startOfPointButton: UIButton!
+    @IBOutlet weak var firstTeamCVIndicator: UILabel!
+    @IBOutlet weak var firstTeamTVIndicator: UILabel!
+    @IBOutlet weak var secondTeamCVIndicator: UILabel!
+    @IBOutlet weak var secondTeamTVIndicator: UILabel!
     
     @IBOutlet weak var interruptedMatchView: UIView!
     @IBOutlet weak var interruptedMatchTimerLabel: UILabel!
