@@ -776,6 +776,28 @@ class EditMatchRuleViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             }
         }
+        
+        if matchType.totalSets == 0 {
+            matchType.totalSets = 1
+            
+            initComparison()
+            
+            if matchType.totalSets != comparisonMatchType.totalSets {
+                matchType.template = 9
+            } else {
+                if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false{
+                    let checkupTemplate = comparisonMatchType.template
+                    comparisonMatchType.template = 9
+                    
+                    if compareMatchTypes(firstMatchType: matchType, secondMatchType: comparisonMatchType) == false {
+                        comparisonMatchType.template = checkupTemplate
+                    } else {
+                        comparisonMatchType.template = checkupTemplate
+                        matchType.template = matchType.templateBackup
+                    }
+                }
+            }
+        }
                 
         initSubtitles()
         matchRuleTableView.reloadData()

@@ -1709,6 +1709,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             }
         }
         
+        // MARK: - Check for Advantage Set
+        
         if currentMatch?.matchType.advantageSet == 0 {
             // No Ad Set
             
@@ -2201,7 +2203,526 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 break
             }
         } else if currentMatch?.matchType.advantageSet == 1 {
-            // Last Set Ad Set
+            // MARK: - Last Set Ad Set
+            
+            switch currentMatch?.matchType.totalSets {
+            case 0:
+                break
+            case 1:
+                // MARK: - One Set
+                if twoGamesDifference == true {
+                    if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= currentMatch!.matchStatistics.gamesFirstSetFirstPlayer - 2 {
+                        // First player won
+                        gameSetMatch()
+                        gameSetMatchIndication = true
+                    } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
+                        // Second player won
+                        gameSetMatch()
+                        gameSetMatchIndication = true
+                    }
+                } else {
+                    if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                        // First Player won
+                        gameSetMatch()
+                        gameSetMatchIndication = true
+                    } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                        // Second Player won
+                        gameSetMatch()
+                        gameSetMatchIndication = true
+                    }
+                }
+            case 3:
+                // MARK: - Three Sets
+                if currentMatch?.matchType.gamesInSet == 0 {
+                    // Just tiebreak
+                    if currentMatch?.matchStatistics.currentSetPlayed != 3 {
+                        currentMatch?.matchStatistics.inTiebreak = true
+                    }
+                } else {
+                    switch currentSet {
+                    case 1:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= currentMatch!.matchStatistics.gamesFirstSetFirstPlayer - 2 {
+                                // First player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
+                                // Second player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                // First Player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                // Second Player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        }
+                    case 2:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer <= currentMatch!.matchStatistics.gamesSecondSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 3
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        }
+                    case 3:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer <= currentMatch!.matchStatistics.gamesThirdSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                            } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= currentMatch!.matchStatistics.gamesThirdSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                            } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer > currentMatch!.matchStatistics.gamesThirdSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+            case 5:
+                // MARK: - Five Sets
+                if currentMatch?.matchType.gamesInSet == 0 {
+                    // Just tiebreak
+                    if currentMatch?.matchStatistics.currentSetPlayed != 5 {
+                        currentMatch?.matchStatistics.inTiebreak = true
+                    }
+                } else {
+                    switch currentSet {
+                    case 1:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer <= currentMatch!.matchStatistics.gamesFirstSetFirstPlayer - 2 {
+                                // First player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
+                                // Second player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                // First Player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
+                                // Second Player won first Set
+                                currentMatch?.matchStatistics.currentSetPlayed = 2
+                                setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        }
+                    case 2:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer <= currentMatch!.matchStatistics.gamesSecondSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                currentMatch?.matchStatistics.currentSetPlayed = 3
+                                setJustFinished = true
+                            } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                currentMatch?.matchStatistics.currentSetPlayed = 3
+                                setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                currentMatch?.matchStatistics.currentSetPlayed = 3
+                                setJustFinished = true
+                            } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                currentMatch?.matchStatistics.currentSetPlayed = 3
+                                setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        }
+                    case 3:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer <= currentMatch!.matchStatistics.gamesThirdSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 4
+                                    setJustFinished = true
+                                }
+                                
+                            } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= currentMatch!.matchStatistics.gamesThirdSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 4
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 4
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer > currentMatch!.matchStatistics.gamesThirdSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 4
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        }
+                    case 4:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetSecondPlayer <= currentMatch!.matchStatistics.gamesFourthSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 5
+                                    setJustFinished = true
+                                }
+                                
+                            } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetFirstPlayer <= currentMatch!.matchStatistics.gamesFourthSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 5
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 5
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetSecondPlayer > currentMatch!.matchStatistics.gamesFourthSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                var firstTeamWins = 0, secondTeamWins = 0
+                                
+                                if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                    firstTeamWins += 1
+                                } else {
+                                    secondTeamWins += 1
+                                }
+                                
+                                if firstTeamWins == 3 || secondTeamWins == 3 {
+                                    gameSetMatch()
+                                    gameSetMatchIndication = true
+                                } else {
+                                    currentMatch?.matchStatistics.currentSetPlayed = 5
+                                    setJustFinished = true
+                                }
+                            } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
+                            }
+                        }
+                    case 5:
+                        if twoGamesDifference == true {
+                            if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFifthSetSecondPlayer <= currentMatch!.matchStatistics.gamesFifthSetFirstPlayer - 2 {
+                                // First player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                                
+                            } else if currentMatch!.matchStatistics.gamesFifthSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFifthSetFirstPlayer <= currentMatch!.matchStatistics.gamesFifthSetSecondPlayer - 2 {
+                                // Second player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                            }
+                        } else {
+                            if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                                // First Player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                            } else if currentMatch!.matchStatistics.gamesFifthSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFifthSetSecondPlayer > currentMatch!.matchStatistics.gamesFifthSetFirstPlayer {
+                                // Second Player won second Set
+                                
+                                gameSetMatch()
+                                gameSetMatchIndication = true
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+            default:
+                break
+            }
         } else if currentMatch?.matchType.advantageSet == 2 {
             // Every Set Ad Set
         }
