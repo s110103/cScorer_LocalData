@@ -169,10 +169,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             }
         } else if interactMatchButton.title(for: .normal) == "Stop Match" {
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
             timer?.invalidate()
             let now = NSDate()
             var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchRestartTimeStamp as Date)
@@ -209,10 +206,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         removeCurrentReadback()
         
         shotclockTimer?.invalidate()
-        shotclockTimerRunning = false
-        shotclockTimerInterrupted = false
-        shotclockTimerTime = 25
-        timerLabel.text = "00:25"
+        resetShotClock(withTime: 25)
                 
         if currentMatch?.matchStatistics.matchRunning == false {
             if currentMatch?.matchStatistics.matchSuspended == true {
@@ -257,10 +251,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             triggerReadback(caller: "242", message: "ACE", fontSize: 60)
             
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
             
             if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
                 endOfPoint(team: 0)
@@ -326,10 +317,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
         
             if firstFault == false {
                 triggerReadback(caller: "273", message: "NET - FIRST SERVE", fontSize: 45)
@@ -348,10 +336,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
             
             var savedFault: Bool = false
             
@@ -448,10 +433,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             resetFaults()
             
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
             
             triggerReadback(caller: "348", message: "LET - REPLAY THE POINT", fontSize: 45)
         }
@@ -466,10 +448,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
             
             var savedFault: Bool = false
             
@@ -549,10 +528,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             resetFaults()
             
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
 
             if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
                 endOfPoint(team: 0)
@@ -622,10 +598,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             resetFaults()
             
             shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
             
             if currentMatch?.matchStatistics.onRightSide == "firstTeam" {
                 endOfPoint(team: 0)
@@ -3486,7 +3459,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @objc func shotclockTimerFired() {
         if shotclockTimerTime != 0 {
             shotclockTimerTime = shotclockTimerTime-1
-            timerLabel.text = String(format: "00:%02d", shotclockTimerTime)
+            timerLabel.text = String(format: "%02d", shotclockTimerTime)
         } else {
             shotclockTimer?.invalidate()
             shotclockTimerRunning = false
@@ -3496,7 +3469,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     @objc func singleTappedInTimerView() {
-        timerLabel.text = String(format: "00:%02d", shotclockTimerTime)
+        timerLabel.text = String(format: "%02d", shotclockTimerTime)
         if shotclockTimerRunning == true {
             if shotclockTimerInterrupted == true {
                 shotclockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(shotclockTimerFired), userInfo: nil, repeats: true)
@@ -3507,10 +3480,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 if shotclockTimerTime != 0 {
                     shotclockTimerInterrupted = true
                 } else {
-                    shotclockTimerInterrupted = false
-                    shotclockTimerRunning = false
-                    shotclockTimerTime = 25
-                    timerLabel.text = "00:25"
+                    resetShotClock(withTime: 25)
                 }
             }
         } else {
@@ -3523,23 +3493,21 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @objc func doubleTappedInTimerView() {
         if shotclockTimerRunning == true {
             if shotclockTimerInterrupted == true {
-                shotclockTimerInterrupted = false
-                shotclockTimerRunning = false
-                shotclockTimerTime = 25
-                timerLabel.text = "00:25"
+                resetShotClock(withTime: 25)
             } else {
                 shotclockTimer?.invalidate()
-                shotclockTimerInterrupted = false
-                shotclockTimerRunning = false
-                shotclockTimerTime = 25
-                timerLabel.text = "00:25"
+                resetShotClock(withTime: 25)
             }
         } else {
-            shotclockTimerInterrupted = false
-            shotclockTimerRunning = false
-            shotclockTimerTime = 25
-            timerLabel.text = "00:25"
+            resetShotClock(withTime: 25)
         }
+    }
+    
+    func resetShotClock(withTime: Int) {
+        shotclockTimerInterrupted = false
+        shotclockTimerRunning = false
+        shotclockTimerTime = withTime
+        timerLabel.text = "\(withTime)"
     }
     
     func gameSetMatch() {
