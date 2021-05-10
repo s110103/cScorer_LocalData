@@ -1736,6 +1736,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // Second player won
                                 gameSetMatch()
                                 gameSetMatchIndication = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
@@ -1746,6 +1749,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // Second Player won
                                 gameSetMatch()
                                 gameSetMatchIndication = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     }
@@ -1767,6 +1773,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // Second player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
@@ -1777,6 +1786,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // Second Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     case 2:
@@ -1801,6 +1813,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
                                 }
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
@@ -1823,6 +1838,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
                                 }
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     case 3:
@@ -1837,6 +1855,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 gameSetMatch()
                                 gameSetMatchIndication = true
+                            } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
@@ -1849,6 +1870,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 gameSetMatch()
                                 gameSetMatchIndication = true
+                            } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     default:
@@ -1872,6 +1896,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // Second player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
@@ -1882,6 +1909,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // Second Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     case 2:
@@ -1896,6 +1926,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
@@ -1908,6 +1941,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                            } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     case 3:
@@ -1969,6 +2005,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
                                 }
+                            } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
@@ -2027,6 +2066,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
                                 }
+                            } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     case 4:
@@ -2098,6 +2140,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
                                 }
+                            } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
@@ -2166,6 +2211,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
                                 }
+                            } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     case 5:
@@ -2181,6 +2229,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 gameSetMatch()
                                 gameSetMatchIndication = true
+                            } else if currentMatch?.matchStatistics.gamesFifthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFifthSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         } else {
                             if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
@@ -2193,6 +2244,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 gameSetMatch()
                                 gameSetMatchIndication = true
+                            } else if currentMatch?.matchStatistics.gamesFifthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFifthSetSecondPlayer == gamesToBePlayed {
+                                // Tiebreak to be played
+                                currentMatch?.matchStatistics.inTiebreak = true
                             }
                         }
                     default:
