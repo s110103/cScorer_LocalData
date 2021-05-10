@@ -28,6 +28,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var gameFinished: Bool = false
     var gameSetMatchIndication: Bool = false
     var setJustFinished: Bool = false
+    var currentlyInChangeOfEnds: Bool = false
+    var currentlyInSetbreak: Bool = false
+    var justHadChangeOfEnds: Bool = false
+    var noChangeOfEndsBreak: Bool = false
     
     // Timer
     var shotclockTimerTime: Int = 25
@@ -171,6 +175,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             shotclockTimer?.invalidate()
             resetShotClock(withTime: 25)
             timer?.invalidate()
+            resetChangeOfEndsShotClockData()
             let now = NSDate()
             var remainingTimeInterval: TimeInterval = now.timeIntervalSince(currentMatch!.matchStatistics.matchRestartTimeStamp as Date)
             remainingTimeInterval = remainingTimeInterval + currentMatch!.matchStatistics.matchTimeInterval
@@ -206,6 +211,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         removeCurrentReadback()
         
         shotclockTimer?.invalidate()
+        resetChangeOfEndsShotClockData()
         resetShotClock(withTime: 25)
                 
         if currentMatch?.matchStatistics.matchRunning == false {
@@ -251,6 +257,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             triggerReadback(caller: "242", message: "ACE", fontSize: 60)
             
             shotclockTimer?.invalidate()
+            resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
             
             if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
@@ -317,6 +324,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
+            resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
         
             if firstFault == false {
@@ -336,6 +344,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
+            resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
             
             var savedFault: Bool = false
@@ -433,6 +442,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             resetFaults()
             
             shotclockTimer?.invalidate()
+            resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
             
             triggerReadback(caller: "348", message: "LET - REPLAY THE POINT", fontSize: 45)
@@ -448,6 +458,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             startOfPointButton.isHidden = false
             
             shotclockTimer?.invalidate()
+            resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
             
             var savedFault: Bool = false
@@ -528,6 +539,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             resetFaults()
             
             shotclockTimer?.invalidate()
+            resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
 
             if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
@@ -598,6 +610,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             resetFaults()
             
             shotclockTimer?.invalidate()
+            resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
             
             if currentMatch?.matchStatistics.onRightSide == "firstTeam" {
@@ -751,6 +764,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         currentMatch?.matchStatistics.onRightSide = "secondTeam"
         
         updateSetView()
+        resetShotClock(withTime: 25)
         
         if currentMatch?.matchType.matchType == 0 {
             
@@ -1650,6 +1664,16 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     currentMatch?.matchStatistics.onLeftSide = "firstTeam"
                     currentMatch?.matchStatistics.onRightSide = "secondTeam"
                 }
+                
+                if setSum == 1 {
+                    currentlyInChangeOfEnds = true
+                    noChangeOfEndsBreak = true
+                    resetShotClock(withTime: 25)
+                } else {
+                    currentlyInChangeOfEnds = true
+                    noChangeOfEndsBreak = false
+                    resetShotClock(withTime: 60)
+                }
             }
         } else {
             // Tiebreak changes
@@ -1679,6 +1703,10 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     currentMatch?.matchStatistics.onLeftSide = "firstTeam"
                     currentMatch?.matchStatistics.onRightSide = "secondTeam"
                 }
+                
+                currentlyInChangeOfEnds = true
+                noChangeOfEndsBreak = true
+                resetShotClock(withTime: 25)
             }
         }
         
@@ -1742,10 +1770,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
                                 // Second player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -1755,10 +1787,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
                                 // Second Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -1775,6 +1811,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
                                 // Second player won second Set
@@ -1785,6 +1823,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -1800,6 +1840,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
                                 // Second Player won second Set
@@ -1810,6 +1852,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -1865,10 +1909,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
                                 // Second player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -1878,10 +1926,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
                                 // Second Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -1894,11 +1946,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
                                 // Second player won second Set
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -1909,11 +1965,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
                                 // Second Player won second Set
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -1948,6 +2008,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                                 
                             } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= currentMatch!.matchStatistics.gamesThirdSetSecondPlayer - 2 {
@@ -1977,6 +2039,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2010,6 +2074,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer > currentMatch!.matchStatistics.gamesThirdSetFirstPlayer {
                                 // Second Player won second Set
@@ -2038,6 +2104,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2078,6 +2146,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                                 
                             } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetFirstPlayer <= currentMatch!.matchStatistics.gamesFourthSetSecondPlayer - 2 {
@@ -2112,6 +2182,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2150,6 +2222,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetSecondPlayer > currentMatch!.matchStatistics.gamesFourthSetFirstPlayer {
                                 // Second Player won second Set
@@ -2183,6 +2257,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2273,10 +2349,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
                                 // Second player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -2286,10 +2366,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
                                 // Second Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -2306,6 +2390,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
                                 // Second player won second Set
@@ -2316,6 +2402,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2331,6 +2419,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
                                 // Second Player won second Set
@@ -2341,6 +2431,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 3
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2392,10 +2484,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
                                 // Second player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -2405,10 +2501,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 // First Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
                                 // Second Player won first Set
                                 currentMatch?.matchStatistics.currentSetPlayed = 2
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesFirstSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFirstSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -2421,11 +2521,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
                                 // Second player won second Set
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -2436,11 +2540,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
                                 // Second Player won second Set
                                 
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             } else if currentMatch?.matchStatistics.gamesSecondSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesSecondSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
                                 currentMatch?.matchStatistics.inTiebreak = true
@@ -2475,6 +2583,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                                 
                             } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= currentMatch!.matchStatistics.gamesThirdSetSecondPlayer - 2 {
@@ -2504,6 +2614,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2537,6 +2649,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer > currentMatch!.matchStatistics.gamesThirdSetFirstPlayer {
                                 // Second Player won second Set
@@ -2565,6 +2679,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 4
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesThirdSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesThirdSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2605,6 +2721,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                                 
                             } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetFirstPlayer <= currentMatch!.matchStatistics.gamesFourthSetSecondPlayer - 2 {
@@ -2639,6 +2757,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2677,6 +2797,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetSecondPlayer > currentMatch!.matchStatistics.gamesFourthSetFirstPlayer {
                                 // Second Player won second Set
@@ -2710,6 +2832,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                                 } else {
                                     currentMatch?.matchStatistics.currentSetPlayed = 5
                                     setJustFinished = true
+                                    currentlyInSetbreak = true
+                                    resetShotClock(withTime: 90)
                                 }
                             } else if currentMatch?.matchStatistics.gamesFourthSetFirstPlayer == gamesToBePlayed && currentMatch?.matchStatistics.gamesFourthSetSecondPlayer == gamesToBePlayed {
                                 // Tiebreak to be played
@@ -2788,20 +2912,28 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             // First player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
                             // Second player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         }
                     } else {
                         if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                             // First Player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
                             // Second Player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         }
                     }
                 case 2:
@@ -2815,6 +2947,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
                             // Second player won second Set
@@ -2825,6 +2959,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         }
                     } else {
@@ -2837,6 +2973,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
                             // Second Player won second Set
@@ -2847,6 +2985,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 3
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         }
                     }
@@ -2889,20 +3029,28 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             // First player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer <= currentMatch!.matchStatistics.gamesFirstSetSecondPlayer - 2 {
                             // Second player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         }
                     } else {
                         if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
                             // First Player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         } else if currentMatch!.matchStatistics.gamesFirstSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFirstSetSecondPlayer > currentMatch!.matchStatistics.gamesFirstSetFirstPlayer {
                             // Second Player won first Set
                             currentMatch?.matchStatistics.currentSetPlayed = 2
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         }
                     }
                 case 2:
@@ -2912,11 +3060,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             
                             currentMatch?.matchStatistics.currentSetPlayed = 3
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer <= currentMatch!.matchStatistics.gamesSecondSetSecondPlayer - 2 {
                             // Second player won second Set
                             
                             currentMatch?.matchStatistics.currentSetPlayed = 3
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         }
                     } else {
                         if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
@@ -2924,11 +3076,15 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             
                             currentMatch?.matchStatistics.currentSetPlayed = 3
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         } else if currentMatch!.matchStatistics.gamesSecondSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesSecondSetSecondPlayer > currentMatch!.matchStatistics.gamesSecondSetFirstPlayer {
                             // Second Player won second Set
                             
                             currentMatch?.matchStatistics.currentSetPlayed = 3
                             setJustFinished = true
+                            currentlyInSetbreak = true
+                            resetShotClock(withTime: 90)
                         }
                     }
                 case 3:
@@ -2960,6 +3116,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 4
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                             
                         } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetFirstPlayer <= currentMatch!.matchStatistics.gamesThirdSetSecondPlayer - 2 {
@@ -2989,6 +3147,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 4
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         }
                     } else {
@@ -3019,6 +3179,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 4
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         } else if currentMatch!.matchStatistics.gamesThirdSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesThirdSetSecondPlayer > currentMatch!.matchStatistics.gamesThirdSetFirstPlayer {
                             // Second Player won second Set
@@ -3047,6 +3209,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 4
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         }
                     }
@@ -3084,6 +3248,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 5
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                             
                         } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetFirstPlayer <= currentMatch!.matchStatistics.gamesFourthSetSecondPlayer - 2 {
@@ -3118,6 +3284,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 5
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         }
                     } else {
@@ -3153,6 +3321,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 5
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         } else if currentMatch!.matchStatistics.gamesFourthSetSecondPlayer >= gamesToBePlayed && currentMatch!.matchStatistics.gamesFourthSetSecondPlayer > currentMatch!.matchStatistics.gamesFourthSetFirstPlayer {
                             // Second Player won second Set
@@ -3186,6 +3356,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                             } else {
                                 currentMatch?.matchStatistics.currentSetPlayed = 5
                                 setJustFinished = true
+                                currentlyInSetbreak = true
+                                resetShotClock(withTime: 90)
                             }
                         }
                     }
@@ -3461,10 +3633,35 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             shotclockTimerTime = shotclockTimerTime-1
             timerLabel.text = String(format: "%02d", shotclockTimerTime)
         } else {
-            shotclockTimer?.invalidate()
-            shotclockTimerRunning = false
-            shotclockTimerInterrupted = false
-            shotclockTimerTime = 25
+            if currentlyInChangeOfEnds == true || currentlyInSetbreak == true{
+                if noChangeOfEndsBreak == true {
+                    justHadChangeOfEnds = false
+                    currentlyInChangeOfEnds = false
+                    currentlyInSetbreak = false
+                    noChangeOfEndsBreak = false
+                    shotclockTimer?.invalidate()
+                    resetShotClock(withTime: 30)
+                } else {
+                    justHadChangeOfEnds = true
+                    currentlyInChangeOfEnds = false
+                    currentlyInSetbreak = false
+                    noChangeOfEndsBreak = false
+                    shotclockTimer?.invalidate()
+                    resetShotClock(withTime: 30)
+                }
+            } else if justHadChangeOfEnds == true {
+                justHadChangeOfEnds = false
+                currentlyInChangeOfEnds = false
+                currentlyInSetbreak = false
+                noChangeOfEndsBreak = false
+                shotclockTimer?.invalidate()
+                resetShotClock(withTime: 25)
+            } else {
+                shotclockTimer?.invalidate()
+                shotclockTimerRunning = false
+                shotclockTimerInterrupted = false
+                shotclockTimerTime = 25
+            }
         }
     }
     
@@ -3480,7 +3677,30 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 if shotclockTimerTime != 0 {
                     shotclockTimerInterrupted = true
                 } else {
-                    resetShotClock(withTime: 25)
+                    
+                    if currentlyInChangeOfEnds == true || currentlyInSetbreak == true{
+                        if noChangeOfEndsBreak == true {
+                            justHadChangeOfEnds = false
+                            currentlyInChangeOfEnds = false
+                            currentlyInSetbreak = false
+                            noChangeOfEndsBreak = false
+                            resetShotClock(withTime: 30)
+                        } else {
+                            justHadChangeOfEnds = true
+                            currentlyInChangeOfEnds = false
+                            currentlyInSetbreak = false
+                            noChangeOfEndsBreak = false
+                            resetShotClock(withTime: 30)
+                        }
+                    } else if justHadChangeOfEnds == true {
+                        justHadChangeOfEnds = false
+                        currentlyInChangeOfEnds = false
+                        currentlyInSetbreak = false
+                        noChangeOfEndsBreak = false
+                        resetShotClock(withTime: 25)
+                    } else {
+                        resetShotClock(withTime: 25)
+                    }
                 }
             }
         } else {
@@ -3492,14 +3712,80 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     
     @objc func doubleTappedInTimerView() {
         if shotclockTimerRunning == true {
-            if shotclockTimerInterrupted == true {
-                resetShotClock(withTime: 25)
+            if shotclockTimerInterrupted == true || currentlyInSetbreak == true{
+                if currentlyInChangeOfEnds == true {
+                    if noChangeOfEndsBreak == true {
+                        justHadChangeOfEnds = false
+                        currentlyInChangeOfEnds = false
+                        currentlyInSetbreak = false
+                        noChangeOfEndsBreak = false
+                        resetShotClock(withTime: 30)
+                    } else {
+                        justHadChangeOfEnds = true
+                        currentlyInChangeOfEnds = false
+                        currentlyInSetbreak = false
+                        noChangeOfEndsBreak = false
+                        resetShotClock(withTime: 30)
+                    }
+                } else if justHadChangeOfEnds == true {
+                    justHadChangeOfEnds = false
+                    currentlyInChangeOfEnds = false
+                    currentlyInSetbreak = false
+                    noChangeOfEndsBreak = false
+                    resetShotClock(withTime: 25)
+                } else {
+                    resetShotClock(withTime: 25)
+                }
             } else {
                 shotclockTimer?.invalidate()
-                resetShotClock(withTime: 25)
+                if currentlyInChangeOfEnds == true || currentlyInSetbreak == true{
+                    if noChangeOfEndsBreak == true {
+                        justHadChangeOfEnds = false
+                        currentlyInChangeOfEnds = false
+                        currentlyInSetbreak = false
+                        noChangeOfEndsBreak = false
+                        resetShotClock(withTime: 30)
+                    } else {
+                        justHadChangeOfEnds = true
+                        currentlyInChangeOfEnds = false
+                        currentlyInSetbreak = false
+                        noChangeOfEndsBreak = false
+                        resetShotClock(withTime: 30)
+                    }
+                } else if justHadChangeOfEnds == true {
+                    justHadChangeOfEnds = false
+                    currentlyInChangeOfEnds = false
+                    currentlyInSetbreak = false
+                    noChangeOfEndsBreak = false
+                    resetShotClock(withTime: 25)
+                } else {
+                    resetShotClock(withTime: 25)
+                }
             }
         } else {
-            resetShotClock(withTime: 25)
+            if currentlyInChangeOfEnds == true || currentlyInSetbreak == true {
+                if noChangeOfEndsBreak == true {
+                    justHadChangeOfEnds = false
+                    currentlyInChangeOfEnds = false
+                    currentlyInSetbreak = false
+                    noChangeOfEndsBreak = false
+                    resetShotClock(withTime: 30)
+                } else {
+                    justHadChangeOfEnds = true
+                    currentlyInChangeOfEnds = false
+                    currentlyInSetbreak = false
+                    noChangeOfEndsBreak = false
+                    resetShotClock(withTime: 30)
+                }
+            } else if justHadChangeOfEnds == true {
+                justHadChangeOfEnds = false
+                currentlyInChangeOfEnds = false
+                currentlyInSetbreak = false
+                noChangeOfEndsBreak = false
+                resetShotClock(withTime: 25)
+            } else {
+                resetShotClock(withTime: 25)
+            }
         }
     }
     
@@ -3508,6 +3794,13 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         shotclockTimerRunning = false
         shotclockTimerTime = withTime
         timerLabel.text = "\(withTime)"
+    }
+    
+    func resetChangeOfEndsShotClockData() {
+        currentlyInChangeOfEnds = false
+        currentlyInSetbreak = false
+        noChangeOfEndsBreak = false
+        justHadChangeOfEnds = false
     }
     
     func gameSetMatch() {
