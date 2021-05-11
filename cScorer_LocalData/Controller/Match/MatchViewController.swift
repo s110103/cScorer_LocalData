@@ -1287,10 +1287,41 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 }
             } else {
                 // Tiebreak scoring
+                
+                endOfTiebreakPointSingles(team: team)
             }
             
         } else {
             // MARK: - Doubles
+        }
+    }
+    
+    func endOfTiebreakPointSingles(team: Int) {
+        if currentMatch?.matchStatistics.inTiebreak == true {
+            switch currentMatch?.matchStatistics.currentSetPlayed {
+            case 1:
+                if team == 0 {
+                    currentMatch?.matchStatistics.tiebreakFirstSetFirstPlayer += 1
+                } else {
+                    currentMatch?.matchStatistics.tiebreakFirstSetSecondPlayer += 1
+                }
+                
+                let firstTeamPoints: Int = currentMatch!.matchStatistics.tiebreakFirstSetFirstPlayer, secondTeamPoints: Int = currentMatch!.matchStatistics.tiebreakFirstSetSecondPlayer
+                
+                if firstTeamPoints + secondTeamPoints % 6 == 0 {
+                    // Switch sides
+                    
+                    if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                        currentMatch?.matchStatistics.onLeftSide = "secondTeam"
+                        currentMatch?.matchStatistics.onRightSide = "firstTeam"
+                    } else {
+                        currentMatch?.matchStatistics.onLeftSide = "firstTeam"
+                        currentMatch?.matchStatistics.onRightSide = "secondTeam"
+                    }
+                }
+            default:
+                break
+            }
         }
     }
     
