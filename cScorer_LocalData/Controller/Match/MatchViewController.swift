@@ -1298,7 +1298,29 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     
     func endOfTiebreakPointSingles(team: Int) {
         if currentMatch?.matchStatistics.inTiebreak == true {
+            
+            var firstTeamPoints: Int = 0
+            var secondTeamPoints: Int = 0
+            var pointsToBePlayed: Int = 0
+            
             switch currentMatch?.matchStatistics.currentSetPlayed {
+            case 0:
+                if team == 0 {
+                    currentMatch?.matchStatistics.justTiebreakPointsFirstPlayer += 1
+                } else {
+                    currentMatch?.matchStatistics.justTiebreakPointsSecondPlayer += 1
+                }
+                
+                firstTeamPoints = currentMatch!.matchStatistics.justTiebreakPointsFirstPlayer
+                secondTeamPoints = currentMatch!.matchStatistics.justTiebreakPointsSecondPlayer
+                
+                if currentMatch?.matchType.tiebreakPoints != 0 {
+                    pointsToBePlayed = currentMatch!.matchType.tiebreakPoints
+                } else if currentMatch?.matchType.matchTiebreakPoints != 0{
+                    pointsToBePlayed = currentMatch!.matchType.matchTiebreakPoints
+                } else if currentMatch?.matchType.lastSetTiebreakPoints != 0 {
+                    pointsToBePlayed = currentMatch!.matchType.lastSetTiebreakPoints
+                }
             case 1:
                 if team == 0 {
                     currentMatch?.matchStatistics.tiebreakFirstSetFirstPlayer += 1
@@ -1306,22 +1328,118 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                     currentMatch?.matchStatistics.tiebreakFirstSetSecondPlayer += 1
                 }
                 
-                let firstTeamPoints: Int = currentMatch!.matchStatistics.tiebreakFirstSetFirstPlayer, secondTeamPoints: Int = currentMatch!.matchStatistics.tiebreakFirstSetSecondPlayer
+                firstTeamPoints = currentMatch!.matchStatistics.tiebreakFirstSetFirstPlayer
+                secondTeamPoints = currentMatch!.matchStatistics.tiebreakFirstSetSecondPlayer
                 
-                if firstTeamPoints + secondTeamPoints % 6 == 0 {
-                    // Switch sides
-                    
-                    if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
-                        currentMatch?.matchStatistics.onLeftSide = "secondTeam"
-                        currentMatch?.matchStatistics.onRightSide = "firstTeam"
-                    } else {
-                        currentMatch?.matchStatistics.onLeftSide = "firstTeam"
-                        currentMatch?.matchStatistics.onRightSide = "secondTeam"
-                    }
+                if currentMatch?.matchType.totalSets == 1 {
+                    pointsToBePlayed = currentMatch!.matchType.lastSetTiebreakPoints
+                } else {
+                    pointsToBePlayed = currentMatch!.matchType.tiebreakPoints
+                }
+            case 2:
+                if team == 0 {
+                    currentMatch?.matchStatistics.tiebreakSecondSetFirstPlayer += 1
+                } else {
+                    currentMatch?.matchStatistics.tiebreakSecondSetSecondPlayer += 1
+                }
+                
+                firstTeamPoints = currentMatch!.matchStatistics.tiebreakSecondSetFirstPlayer
+                secondTeamPoints = currentMatch!.matchStatistics.tiebreakSecondSetSecondPlayer
+                
+                pointsToBePlayed = currentMatch!.matchType.tiebreakPoints
+            case 3:
+                if team == 0 {
+                    currentMatch?.matchStatistics.tiebreakThirdSetFirstPlayer += 1
+                } else {
+                    currentMatch?.matchStatistics.tiebreakThirdSetSecondPlayer += 1
+                }
+                
+                firstTeamPoints = currentMatch!.matchStatistics.tiebreakThirdSetFirstPlayer
+                secondTeamPoints = currentMatch!.matchStatistics.tiebreakThirdSetSecondPlayer
+                
+                if currentMatch?.matchType.totalSets == 3 {
+                    pointsToBePlayed = currentMatch!.matchType.lastSetTiebreakPoints
+                } else {
+                    pointsToBePlayed = currentMatch!.matchType.tiebreakPoints
+                }
+            case 4:
+                if team == 0 {
+                    currentMatch?.matchStatistics.tiebreakFourthSetFirstPlayer += 1
+                } else {
+                    currentMatch?.matchStatistics.tiebreakFourthSetSecondPlayer += 1
+                }
+                
+                firstTeamPoints = currentMatch!.matchStatistics.tiebreakFourthSetFirstPlayer
+                secondTeamPoints = currentMatch!.matchStatistics.tiebreakFourthSetSecondPlayer
+                
+                pointsToBePlayed = currentMatch!.matchType.tiebreakPoints
+            case 5:
+                if team == 0 {
+                    currentMatch?.matchStatistics.tiebreakFifthSetFirstPlayer += 1
+                } else {
+                    currentMatch?.matchStatistics.tiebreakFifthSetSecondPlayer += 1
+                }
+                
+                firstTeamPoints = currentMatch!.matchStatistics.tiebreakFifthSetFirstPlayer
+                secondTeamPoints = currentMatch!.matchStatistics.tiebreakFifthSetSecondPlayer
+                
+                if currentMatch?.matchType.totalSets == 3 {
+                    pointsToBePlayed = currentMatch!.matchType.lastSetTiebreakPoints
+                } else {
+                    pointsToBePlayed = currentMatch!.matchType.tiebreakPoints
                 }
             default:
                 break
             }
+            
+            if firstTeamPoints + secondTeamPoints % 6 == 0 {
+                // Switch sides
+                
+                if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                    currentMatch?.matchStatistics.onLeftSide = "secondTeam"
+                    currentMatch?.matchStatistics.onRightSide = "firstTeam"
+                } else {
+                    currentMatch?.matchStatistics.onLeftSide = "firstTeam"
+                    currentMatch?.matchStatistics.onRightSide = "secondTeam"
+                }
+            }
+            
+            if firstTeamPoints + secondTeamPoints % 2 == 1 {
+                // Switch Servers
+                
+                if currentMatch?.matchStatistics.isServer == "firstTeamFirst" {
+                    currentMatch?.matchStatistics.isServer = "secondTeamFirst"
+                } else {
+                    currentMatch?.matchStatistics.isServer = "firstTeamFirst"
+                }
+            }
+            
+            if firstTeamPoints >= pointsToBePlayed && secondTeamPoints <= firstTeamPoints - 2 {
+                // First Team won Tiebreak
+                
+                if currentMatch?.matchType.totalSets == 0 {
+                    gameSetMatch()
+                } else {
+                    if team == 0 {
+                        updateGames(teamWon: "firstTeam")
+                    } else {
+                        updateGames(teamWon: "secondTeam")
+                    }
+                }
+            } else if secondTeamPoints >= pointsToBePlayed && firstTeamPoints <= secondTeamPoints - 2 {
+                // Second Team won Tiebreak
+                
+                if currentMatch?.matchType.totalSets == 0 {
+                    gameSetMatch()
+                } else {
+                    if team == 0 {
+                        updateGames(teamWon: "firstTeam")
+                    } else {
+                        updateGames(teamWon: "secondTeam")
+                    }
+                }
+            }
+            
         }
     }
     

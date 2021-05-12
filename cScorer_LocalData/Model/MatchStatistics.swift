@@ -36,6 +36,7 @@ class MatchStatistics {
     var wonToss: Int = 0
     var madeChoice: Int = 0
     var isServer: String = ""
+    var isServerAfterTiebreak: String = ""
     var onLeftSide: String = ""
     var onRightSide: String = ""
     var firstTeamNear: String = ""
@@ -47,6 +48,8 @@ class MatchStatistics {
     var gamesRemainingTillSwitch: Int = 1
     var pointsRemainingTillSwitch: Int = 6
     
+    var justTiebreakPointsFirstPlayer: Int = 0
+    
     var gamesFirstSetFirstPlayer: Int = 0
     var tiebreakFirstSetFirstPlayer: Int = 0
     var gamesSecondSetFirstPlayer: Int = 0
@@ -57,6 +60,8 @@ class MatchStatistics {
     var tiebreakFourthSetFirstPlayer: Int = 0
     var gamesFifthSetFirstPlayer: Int = 0
     var tiebreakFifthSetFirstPlayer: Int = 0
+    
+    var justTiebreakPointsSecondPlayer: Int = 0
     
     var gamesFirstSetSecondPlayer: Int = 0
     var tiebreakFirstSetSecondPlayer: Int = 0
