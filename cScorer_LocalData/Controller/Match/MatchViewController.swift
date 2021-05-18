@@ -32,6 +32,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var currentlyInSetbreak: Bool = false
     var justHadChangeOfEnds: Bool = false
     var noChangeOfEndsBreak: Bool = false
+    var touchedObject: UIView?
     
     // Timer
     var shotclockTimerTime: Int = 25
@@ -78,6 +79,9 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBOutlet weak var secondTeamThirdScoreLabel: UILabel!
     @IBOutlet weak var secondTeamFourthScoreLabel: UILabel!
     @IBOutlet weak var secondTeamFifthScoreLabel: UILabel!
+    
+    @IBOutlet weak var firstTeamScoreView: UIView!
+    @IBOutlet weak var secondTeamScoreView: UIView!
     
     @IBOutlet weak var firstTeamLabel: UILabel!
     @IBOutlet weak var secondTeamLabel: UILabel!
@@ -764,7 +768,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         currentMatch?.matchStatistics.onRightSide = "secondTeam"
         
         updateSetView()
-        resetShotClock(withTime: 25)
+        resetShotClock(withTime: 30)
         
         if currentMatch?.matchType.matchType == 0 {
             
@@ -927,6 +931,31 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 currentMatch?.matchStatistics.matchRunning = true
             }
         }
+    }
+    
+    func updateBallChangeIndication() {
+        
+        let ballchangeAt = currentMatch?.matchType.ballChange
+        
+        switch ballchangeAt {
+        case 0:
+            ballchangeIndicatorLabel.text = "NA"
+        case 1:
+            // 7/9
+            ballchangeIndicatorLabel.text = ""
+        case 2:
+            // 9/11
+            ballchangeIndicatorLabel.text = ""
+        case 3:
+            // 11/13
+            ballchangeIndicatorLabel.text = ""
+        case 4:
+            // 3. Satz
+            ballchangeIndicatorLabel.text = ""
+        default:
+            break
+        }
+        
     }
     
     func updateSetView() {
@@ -3814,19 +3843,86 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         }
     }
     
-    @objc func singleTappedInTimerView() {
-        timerLabel.text = String(format: "%02d", shotclockTimerTime)
-        if shotclockTimerRunning == true {
-            if shotclockTimerInterrupted == true {
+    @objc func singleTappedInTimerView(sender: UITapGestureRecognizer) {
+        
+        if sender.state == .recognized {
+            
+            timerLabel.text = String(format: "%02d", shotclockTimerTime)
+            if shotclockTimerRunning == true {
+                if shotclockTimerInterrupted == true {
+                    shotclockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(shotclockTimerFired), userInfo: nil, repeats: true)
+                    shotclockTimerRunning = true
+                    shotclockTimerInterrupted = false
+                } else {
+                    shotclockTimer?.invalidate()
+                    if shotclockTimerTime != 0 {
+                        shotclockTimerInterrupted = true
+                    } else {
+                        
+                        if currentlyInChangeOfEnds == true || currentlyInSetbreak == true{
+                            if noChangeOfEndsBreak == true {
+                                justHadChangeOfEnds = false
+                                currentlyInChangeOfEnds = false
+                                currentlyInSetbreak = false
+                                noChangeOfEndsBreak = false
+                                resetShotClock(withTime: 30)
+                            } else {
+                                justHadChangeOfEnds = true
+                                currentlyInChangeOfEnds = false
+                                currentlyInSetbreak = false
+                                noChangeOfEndsBreak = false
+                                resetShotClock(withTime: 30)
+                            }
+                        } else if justHadChangeOfEnds == true {
+                            justHadChangeOfEnds = false
+                            currentlyInChangeOfEnds = false
+                            currentlyInSetbreak = false
+                            noChangeOfEndsBreak = false
+                            resetShotClock(withTime: 25)
+                        } else {
+                            resetShotClock(withTime: 25)
+                        }
+                    }
+                }
+            } else {
                 shotclockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(shotclockTimerFired), userInfo: nil, repeats: true)
                 shotclockTimerRunning = true
                 shotclockTimerInterrupted = false
-            } else {
-                shotclockTimer?.invalidate()
-                if shotclockTimerTime != 0 {
-                    shotclockTimerInterrupted = true
+            }
+        }
+    }
+    
+    @objc func doubleTappedInTimerView(sender: UITapGestureRecognizer) {
+        
+        if sender.state == .recognized {
+            
+            if shotclockTimerRunning == true {
+                if shotclockTimerInterrupted == true || currentlyInSetbreak == true{
+                    if currentlyInChangeOfEnds == true {
+                        if noChangeOfEndsBreak == true {
+                            justHadChangeOfEnds = false
+                            currentlyInChangeOfEnds = false
+                            currentlyInSetbreak = false
+                            noChangeOfEndsBreak = false
+                            resetShotClock(withTime: 30)
+                        } else {
+                            justHadChangeOfEnds = true
+                            currentlyInChangeOfEnds = false
+                            currentlyInSetbreak = false
+                            noChangeOfEndsBreak = false
+                            resetShotClock(withTime: 30)
+                        }
+                    } else if justHadChangeOfEnds == true {
+                        justHadChangeOfEnds = false
+                        currentlyInChangeOfEnds = false
+                        currentlyInSetbreak = false
+                        noChangeOfEndsBreak = false
+                        resetShotClock(withTime: 25)
+                    } else {
+                        resetShotClock(withTime: 25)
+                    }
                 } else {
-                    
+                    shotclockTimer?.invalidate()
                     if currentlyInChangeOfEnds == true || currentlyInSetbreak == true{
                         if noChangeOfEndsBreak == true {
                             justHadChangeOfEnds = false
@@ -3851,18 +3947,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                         resetShotClock(withTime: 25)
                     }
                 }
-            }
-        } else {
-            shotclockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(shotclockTimerFired), userInfo: nil, repeats: true)
-            shotclockTimerRunning = true
-            shotclockTimerInterrupted = false
-        }
-    }
-    
-    @objc func doubleTappedInTimerView() {
-        if shotclockTimerRunning == true {
-            if shotclockTimerInterrupted == true || currentlyInSetbreak == true{
-                if currentlyInChangeOfEnds == true {
+            } else {
+                if currentlyInChangeOfEnds == true || currentlyInSetbreak == true {
                     if noChangeOfEndsBreak == true {
                         justHadChangeOfEnds = false
                         currentlyInChangeOfEnds = false
@@ -3885,55 +3971,6 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 } else {
                     resetShotClock(withTime: 25)
                 }
-            } else {
-                shotclockTimer?.invalidate()
-                if currentlyInChangeOfEnds == true || currentlyInSetbreak == true{
-                    if noChangeOfEndsBreak == true {
-                        justHadChangeOfEnds = false
-                        currentlyInChangeOfEnds = false
-                        currentlyInSetbreak = false
-                        noChangeOfEndsBreak = false
-                        resetShotClock(withTime: 30)
-                    } else {
-                        justHadChangeOfEnds = true
-                        currentlyInChangeOfEnds = false
-                        currentlyInSetbreak = false
-                        noChangeOfEndsBreak = false
-                        resetShotClock(withTime: 30)
-                    }
-                } else if justHadChangeOfEnds == true {
-                    justHadChangeOfEnds = false
-                    currentlyInChangeOfEnds = false
-                    currentlyInSetbreak = false
-                    noChangeOfEndsBreak = false
-                    resetShotClock(withTime: 25)
-                } else {
-                    resetShotClock(withTime: 25)
-                }
-            }
-        } else {
-            if currentlyInChangeOfEnds == true || currentlyInSetbreak == true {
-                if noChangeOfEndsBreak == true {
-                    justHadChangeOfEnds = false
-                    currentlyInChangeOfEnds = false
-                    currentlyInSetbreak = false
-                    noChangeOfEndsBreak = false
-                    resetShotClock(withTime: 30)
-                } else {
-                    justHadChangeOfEnds = true
-                    currentlyInChangeOfEnds = false
-                    currentlyInSetbreak = false
-                    noChangeOfEndsBreak = false
-                    resetShotClock(withTime: 30)
-                }
-            } else if justHadChangeOfEnds == true {
-                justHadChangeOfEnds = false
-                currentlyInChangeOfEnds = false
-                currentlyInSetbreak = false
-                noChangeOfEndsBreak = false
-                resetShotClock(withTime: 25)
-            } else {
-                resetShotClock(withTime: 25)
             }
         }
     }
@@ -4248,6 +4285,41 @@ extension MatchViewController {
             if readbackVisible == true {
                 removeCurrentReadback()
             }
+        }
+        
+        /*
+                Check if first Team score was touched
+         */
+        
+        if touchedPoint.x >= firstTeamScoreView.frame.minX && touchedPoint.x <= firstTeamScoreView.frame.maxX && touchedPoint.y >= firstTeamScoreView.frame.minY && touchedPoint.y <= firstTeamScoreView.frame.maxY {
+            if readbackVisible == true {
+                removeCurrentReadback()
+            }
+            
+            touchedObject = firstTeamScoreView
+            touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 35/255, blue: 33/255, alpha: 1)
+        }
+        
+        /*
+                Check if first Team score was touched
+         */
+        
+        if touchedPoint.x >= secondTeamScoreView.frame.minX && touchedPoint.x <= secondTeamScoreView.frame.maxX && touchedPoint.y >= secondTeamScoreView.frame.minY && touchedPoint.y <= secondTeamScoreView.frame.maxY {
+            if readbackVisible == true {
+                removeCurrentReadback()
+            }
+            
+            touchedObject = secondTeamScoreView
+            touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 35/255, blue: 33/255, alpha: 1)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+                
+        if touchedObject != nil {
+            touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
+            touchedObject = nil
         }
     }
 }
