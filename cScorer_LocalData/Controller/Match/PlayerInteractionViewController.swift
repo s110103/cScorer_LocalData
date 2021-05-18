@@ -23,7 +23,9 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
     var playerInteractionHeadings: [String] =
     [
         "Code Violation",
-        "Time Violation"
+        "Time Violation",
+        "Player Timeouts",
+        "Retirement"
     ]
     
     var playerCodeViolationHeadings: [String] =
@@ -33,6 +35,16 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
     var playerTimeViolationHeadings: [String] =
     [
         "Time Violation"
+    ]
+    var playerTimeoutHeadings: [String] =
+    [
+        "Medical Timeout",
+        "Toilet Break",
+        "Change of Attire"
+    ]
+    var playerRetirementHeadings: [String] =
+    [
+        "Retirement"
     ]
     
     // MARK: - Outlets
@@ -47,6 +59,9 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        playerInteractionTableView.delegate = self
+        playerInteractionTableView.dataSource = self
+        
         initLayout()
     }
     
@@ -108,6 +123,10 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
             return playerCodeViolationHeadings.count
         case 1:
             return playerTimeViolationHeadings.count
+        case 2:
+            return playerTimeoutHeadings.count
+        case 3:
+            return playerRetirementHeadings.count
         default:
             return 0
         }
@@ -124,6 +143,10 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
             cell.titleLabel.text = playerCodeViolationHeadings[row]
         case 1:
             cell.titleLabel.text = playerTimeViolationHeadings[row]
+        case 2:
+            cell.titleLabel.text = playerTimeoutHeadings[row]
+        case 3:
+            cell.titleLabel.text = playerRetirementHeadings[row]
         default:
             cell.titleLabel.text = "NA"
         }
@@ -134,6 +157,7 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         playerInteractionTableView.deselectRow(at: indexPath, animated: true)
         
+        let row = indexPath.row
         let section = indexPath.section
         
         switch section {
@@ -141,6 +165,25 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
             delegate?.openCodeViolation(player: targetPlayer)
         case 1:
             delegate?.openTimeViolation(player: targetPlayer)
+        case 2:
+            // Timeout
+            switch row {
+            case 0:
+                // Medical
+                break
+            case 1:
+                // Toilett
+                break
+            case 2:
+                // Change of Attire
+                break
+            default:
+                break
+            }
+            break
+        case 3:
+            // Retirement
+            break
         default:
             break
         }

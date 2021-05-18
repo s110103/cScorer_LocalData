@@ -13,7 +13,7 @@ protocol MatchViewControllerDelegate {
     func sendMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate, PlayerInteractionViewControllerDelegate, SelectPlayerViewControllerDelegate {
+class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate, PlayerInteractionViewControllerDelegate, SelectPlayerViewControllerDelegate, SelectCodeViolationViewControllerDelegate {
     
     // MARK: - Variables
     var currentMatch: Match?
@@ -35,6 +35,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var touchedObject: UIView?
     var selectedTeam: String = ""
     var selectedPlayer: String = ""
+    var selectedViolation: Int = 0
+    var selectedPenalty: Int = 0
     
     // Timer
     var shotclockTimerTime: Int = 25
@@ -1065,6 +1067,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             destinationVC.currentMatch = currentMatch
             destinationVC.indexOfMatch = selectedIndex!
             destinationVC.targetPlayer = selectedPlayer
+            
+            destinationVC.delegate = self
+        case "selectCodeViolationSegue":
+            let destinationVC = segue.destination as! SelectCodeViolationViewController
+            
+            destinationVC.currentMatch = currentMatch
+            destinationVC.indexOfMatch = selectedIndex!
+            destinationVC.selectedPlayer = selectedPlayer
             
             destinationVC.delegate = self
         default:
@@ -4294,9 +4304,12 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     }
     
     func openCodeViolation(player: String) {
+        selectedPlayer = player
+        performSegue(withIdentifier: "selectCodeViolationSegue", sender: self)
     }
     
     func openTimeViolation(player: String) {
+        selectedPlayer = player
     }
     
     func returnSelectedPlayer(player: String, furtherAction: String) {
@@ -4305,6 +4318,11 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             
             performSegue(withIdentifier: "operatePlayerInteractionSegue", sender: self)
         }
+    }
+    
+    func selctCodeViolation(player: String, violation: Int) {
+        selectedPlayer = player
+        selectedViolation = violation
     }
 }
 

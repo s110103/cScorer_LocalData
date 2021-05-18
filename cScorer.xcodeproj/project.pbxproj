@@ -41,6 +41,7 @@
 		06A64E8726525BC7009E2A35 /* MatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E8626525BC7009E2A35 /* MatchTableViewCell.swift */; };
 		06A64E892653C738009E2A35 /* PlayerInteractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E882653C738009E2A35 /* PlayerInteractionViewController.swift */; };
 		06A64E8B2653E32D009E2A35 /* SelectPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E8A2653E32D009E2A35 /* SelectPlayerViewController.swift */; };
+		06A64E8D26545AD0009E2A35 /* SelectCodeViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E8C26545AD0009E2A35 /* SelectCodeViolationViewController.swift */; };
 		06A86A212574212A00ED0A80 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A202574212A00ED0A80 /* Player.swift */; };
 		06A86A272574287800ED0A80 /* SelectPlayerDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A262574287800ED0A80 /* SelectPlayerDetailsViewController.swift */; };
 		06A86A2B2574334900ED0A80 /* SetBallChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */; };
@@ -92,6 +93,7 @@
 		06A64E8626525BC7009E2A35 /* MatchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTableViewCell.swift; sourceTree = "<group>"; };
 		06A64E882653C738009E2A35 /* PlayerInteractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInteractionViewController.swift; sourceTree = "<group>"; };
 		06A64E8A2653E32D009E2A35 /* SelectPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlayerViewController.swift; sourceTree = "<group>"; };
+		06A64E8C26545AD0009E2A35 /* SelectCodeViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCodeViolationViewController.swift; sourceTree = "<group>"; };
 		06A86A202574212A00ED0A80 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		06A86A262574287800ED0A80 /* SelectPlayerDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlayerDetailsViewController.swift; sourceTree = "<group>"; };
 		06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBallChangeViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				0684E12A261B3935002EEC02 /* StopMatchViewController.swift */,
 				06A64E882653C738009E2A35 /* PlayerInteractionViewController.swift */,
 				06A64E8A2653E32D009E2A35 /* SelectPlayerViewController.swift */,
+				06A64E8C26545AD0009E2A35 /* SelectCodeViolationViewController.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				0679DEA02582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift in Sources */,
 				066F65362572DDE7006843D1 /* TemplateMatchRuleViewController.swift in Sources */,
 				067FB508255EF038001AD911 /* cScorer_LocalData.xcdatamodeld in Sources */,
+				06A64E8D26545AD0009E2A35 /* SelectCodeViolationViewController.swift in Sources */,
 				06AA2A41261A371B00A0D5E5 /* MatchViewController.swift in Sources */,
 				06DE137D256EE97D0080EAB0 /* MatchStatistics.swift in Sources */,
 				0684E12B261B3935002EEC02 /* StopMatchViewController.swift in Sources */,
