@@ -13,7 +13,7 @@ protocol MatchViewControllerDelegate {
     func sendMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate {
+class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate, PlayerInteractionViewControllerDelegate, SelectPlayerViewControllerDelegate {
     
     // MARK: - Variables
     var currentMatch: Match?
@@ -33,6 +33,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     var justHadChangeOfEnds: Bool = false
     var noChangeOfEndsBreak: Bool = false
     var touchedObject: UIView?
+    var selectedTeam: String = ""
+    var selectedPlayer: String = ""
     
     // Timer
     var shotclockTimerTime: Int = 25
@@ -1047,6 +1049,22 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             let destinationVC = segue.destination as! WarmupInfoViewController
             
             destinationVC.currentMatch = currentMatch
+            
+            destinationVC.delegate = self
+        case "selectPlayerSegue":
+            let destinationVC = segue.destination as! SelectPlayerViewController
+            
+            destinationVC.currentMatch = currentMatch
+            destinationVC.currentTeam = selectedTeam
+            destinationVC.indexOfMatch = selectedIndex!
+            
+            destinationVC.delegate = self
+        case "operatePlayerInteractionSegue":
+            let destinationVC = segue.destination as! PlayerInteractionViewController
+            
+            destinationVC.currentMatch = currentMatch
+            destinationVC.indexOfMatch = selectedIndex!
+            destinationVC.targetPlayer = selectedPlayer
             
             destinationVC.delegate = self
         default:
@@ -4264,6 +4282,30 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             break
         }
     }
+    
+    func operatePlayerInteraction(player: String) {
+        
+        if currentMatch?.matchType.matchType == 1 {
+            performSegue(withIdentifier: "selectPlayerSegue", sender: self)
+        } else {
+            selectedPlayer = player
+            performSegue(withIdentifier: "operatePlayerInteractionSegue", sender: self)
+        }
+    }
+    
+    func openCodeViolation(player: String) {
+    }
+    
+    func openTimeViolation(player: String) {
+    }
+    
+    func returnSelectedPlayer(player: String, furtherAction: String) {
+        if furtherAction == "operatePlayerInteraction" {
+            selectedPlayer = player
+            
+            performSegue(withIdentifier: "operatePlayerInteractionSegue", sender: self)
+        }
+    }
 }
 
 extension MatchViewController {
@@ -4298,6 +4340,22 @@ extension MatchViewController {
             
             touchedObject = firstTeamScoreView
             touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 35/255, blue: 33/255, alpha: 1)
+                        
+            selectedTeam = "firstTeam"
+
+            if currentMatch?.matchType.matchType == 0 {
+                if touchedObject != nil {
+                    touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
+                    touchedObject = nil
+                }
+                operatePlayerInteraction(player: "firstTeamFirstPlayer")
+            } else {
+                if touchedObject != nil {
+                    touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
+                    touchedObject = nil
+                }
+                performSegue(withIdentifier: "selectPlayerSegue", sender: self)
+            }
         }
         
         /*
@@ -4311,6 +4369,22 @@ extension MatchViewController {
             
             touchedObject = secondTeamScoreView
             touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 35/255, blue: 33/255, alpha: 1)
+            
+            selectedTeam = "secondTeam"
+
+            if currentMatch?.matchType.matchType == 0 {
+                if touchedObject != nil {
+                    touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
+                    touchedObject = nil
+                }
+                operatePlayerInteraction(player: "secondTeamFirstPlayer")
+            } else {
+                if touchedObject != nil {
+                    touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
+                    touchedObject = nil
+                }
+                performSegue(withIdentifier: "selectPlayerSegue", sender: self)
+            }
         }
     }
     
