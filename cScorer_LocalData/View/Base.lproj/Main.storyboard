@@ -4680,6 +4680,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XoG-fq-LfC">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="BBH-pq-dMt">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QHo-OL-t1I"/>
                         <color key="backgroundColor" red="0.00048926781160000003" green="0.1255693138" blue="0.1176485047" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -4702,6 +4710,7 @@
                             <constraint firstItem="Asv-7x-A1s" firstAttribute="top" secondItem="DFk-nO-nLO" secondAttribute="bottom" constant="8" symbolic="YES" id="Arn-1B-tdG"/>
                             <constraint firstItem="CyE-HH-Jwa" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" constant="20" id="Bgk-bd-0sX"/>
                             <constraint firstItem="f7M-y7-mJo" firstAttribute="top" secondItem="voL-cj-c81" secondAttribute="bottom" constant="8" symbolic="YES" id="Bxu-6c-FVg"/>
+                            <constraint firstItem="XoG-fq-LfC" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" id="ETp-OT-ZjY"/>
                             <constraint firstItem="DFk-nO-nLO" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" constant="20" id="Hda-IE-9hS"/>
                             <constraint firstItem="0N8-9o-2VC" firstAttribute="top" secondItem="vkI-DD-XrQ" secondAttribute="bottom" constant="8" symbolic="YES" id="HyW-MP-LEq"/>
                             <constraint firstAttribute="bottomMargin" secondItem="dsf-zJ-zFi" secondAttribute="bottom" constant="10" id="JMC-hf-e1L"/>
@@ -4742,6 +4751,7 @@
                             <constraint firstItem="vkI-DD-XrQ" firstAttribute="top" secondItem="C75-V4-lRA" secondAttribute="bottom" constant="8" symbolic="YES" id="dTl-WB-0XX"/>
                             <constraint firstItem="y56-oY-Am7" firstAttribute="top" secondItem="Re1-bZ-xXh" secondAttribute="bottom" constant="8" symbolic="YES" id="e4W-4o-LeA"/>
                             <constraint firstItem="Re1-bZ-xXh" firstAttribute="leading" secondItem="l3s-y5-fwe" secondAttribute="trailing" constant="4" id="ffh-7x-fdt"/>
+                            <constraint firstItem="XoG-fq-LfC" firstAttribute="top" secondItem="LTx-iC-yhW" secondAttribute="top" id="gNW-Sh-ZhZ"/>
                             <constraint firstItem="ncU-dY-U0D" firstAttribute="bottom" secondItem="QHo-OL-t1I" secondAttribute="bottom" id="gTL-rp-ZYV"/>
                             <constraint firstItem="APi-Cz-fH0" firstAttribute="top" secondItem="lqD-ix-rfL" secondAttribute="bottom" constant="52" id="ggS-cP-pTQ"/>
                             <constraint firstItem="cYx-pz-gYq" firstAttribute="width" secondItem="ncU-dY-U0D" secondAttribute="width" id="hBp-vl-dsv"/>
@@ -4765,6 +4775,8 @@
                             <constraint firstItem="f7M-y7-mJo" firstAttribute="leading" secondItem="HHI-xZ-Een" secondAttribute="trailing" constant="8" symbolic="YES" id="sb5-ca-I2V"/>
                             <constraint firstItem="l3s-y5-fwe" firstAttribute="baseline" secondItem="vkI-DD-XrQ" secondAttribute="baseline" id="t25-DP-1o9"/>
                             <constraint firstItem="cJQ-qC-CdV" firstAttribute="leading" secondItem="S8A-Rx-TVr" secondAttribute="trailing" constant="8" symbolic="YES" id="wUn-JL-SMf"/>
+                            <constraint firstAttribute="bottom" secondItem="XoG-fq-LfC" secondAttribute="bottom" id="wbo-NI-7i9"/>
+                            <constraint firstItem="XoG-fq-LfC" firstAttribute="trailing" secondItem="QHo-OL-t1I" secondAttribute="trailing" id="wny-lA-m2m"/>
                             <constraint firstItem="Asv-7x-A1s" firstAttribute="leading" secondItem="QHo-OL-t1I" secondAttribute="leading" constant="20" id="x5h-EM-5zO"/>
                             <constraint firstItem="QHo-OL-t1I" firstAttribute="trailing" secondItem="Kyu-nG-W7U" secondAttribute="trailing" constant="20" id="xHF-tZ-Ls3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AA8-bv-iEb" secondAttribute="trailing" constant="10" id="xOJ-qC-DEW"/>
@@ -4820,13 +4832,14 @@
                         <outlet property="timerLabel" destination="a1J-dt-BdM" id="7Pe-yZ-SZY"/>
                         <outlet property="timerView" destination="f7M-y7-mJo" id="RDD-S9-a3K"/>
                         <outlet property="undoButton" destination="PLm-df-Knj" id="6FM-fQ-3cI"/>
+                        <outlet property="visualEffectView" destination="XoG-fq-LfC" id="yNg-2Y-zUr"/>
                         <segue destination="dtX-Xc-di3" kind="presentation" identifier="showStopMatchSegue" id="Hds-H3-meZ"/>
                         <segue destination="IVX-JU-itH" kind="presentation" identifier="showWarmupInfoFromMatchSegue" id="acH-FC-tpd"/>
                         <segue destination="cNr-g9-Pcc" kind="presentation" identifier="operatePlayerInteractionSegue" id="Un1-Na-GQb"/>
                         <segue destination="5fw-f4-eM5" kind="presentation" identifier="selectPlayerSegue" id="FA0-kZ-UgM"/>
-                        <segue destination="iCM-YI-6js" kind="presentation" identifier="selectCodeViolationSegue" id="hRL-iu-RrG"/>
-                        <segue destination="4G2-nh-THf" kind="presentation" identifier="clarifyCodeViolationPenaltySegue" id="ScK-hH-Pub"/>
-                        <segue destination="1Bi-gJ-xcb" kind="presentation" identifier="validateCodeViolationSegue" id="qdg-Ej-dFW"/>
+                        <segue destination="iCM-YI-6js" kind="presentation" identifier="selectCodeViolationSegue" animates="NO" id="hRL-iu-RrG"/>
+                        <segue destination="4G2-nh-THf" kind="presentation" identifier="clarifyCodeViolationPenaltySegue" animates="NO" id="ScK-hH-Pub"/>
+                        <segue destination="1Bi-gJ-xcb" kind="presentation" identifier="validateCodeViolationSegue" animates="NO" id="qdg-Ej-dFW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NNT-Dd-4fp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

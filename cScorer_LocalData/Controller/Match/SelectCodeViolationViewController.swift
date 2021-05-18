@@ -133,7 +133,7 @@ class SelectCodeViolationViewController: UIViewController, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectCodeViolationTableView.deselectRow(at: indexPath, animated: true)
         
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
         
         delegate?.selctCodeViolation(player: selectedPlayer, violation: indexPath.row)
     }

@@ -37,6 +37,8 @@ class SelectPlayerViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func firstPlayerButtonTapped(_ sender: UIButton) {
+        dismiss(animated: false, completion: nil)
+        
         if currentTeam == "firstTeam" {
             delegate?.returnSelectedPlayer(player: "firstTeamFirstPlayer", furtherAction: furtherAction)
         } else {
@@ -45,6 +47,8 @@ class SelectPlayerViewController: UIViewController {
     }
     
     @IBAction func secondPlayerButtonTapped(_ sender: UIButton) {
+        dismiss(animated: false, completion: nil)
+        
         if currentTeam == "firstTeam" {
             delegate?.returnSelectedPlayer(player: "firstTeamSecondPlayer", furtherAction: furtherAction)
         } else {

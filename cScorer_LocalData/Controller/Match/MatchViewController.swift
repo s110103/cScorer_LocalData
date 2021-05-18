@@ -123,6 +123,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBOutlet weak var interruptedMatchContinueButton: UIButton!
     @IBOutlet weak var interruptedMatchReWarmupButton: UIButton!
     
+    @IBOutlet weak var visualEffectView: UIVisualEffectView!
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -4358,6 +4360,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         /*
                 Handle Code Violation
          */
+        visualEffectView.isHidden = true
     }
 }
 
@@ -4401,18 +4404,20 @@ extension MatchViewController {
                     touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
                     touchedObject = nil
                 }
+                visualEffectView.isHidden = false
                 operatePlayerInteraction(player: "firstTeamFirstPlayer")
             } else {
                 if touchedObject != nil {
                     touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
                     touchedObject = nil
                 }
+                visualEffectView.isHidden = false
                 performSegue(withIdentifier: "selectPlayerSegue", sender: self)
             }
         }
         
         /*
-                Check if first Team score was touched
+                Check if second Team score was touched
          */
         
         if touchedPoint.x >= secondTeamScoreView.frame.minX && touchedPoint.x <= secondTeamScoreView.frame.maxX && touchedPoint.y >= secondTeamScoreView.frame.minY && touchedPoint.y <= secondTeamScoreView.frame.maxY {
@@ -4430,12 +4435,14 @@ extension MatchViewController {
                     touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
                     touchedObject = nil
                 }
+                visualEffectView.isHidden = false
                 operatePlayerInteraction(player: "secondTeamFirstPlayer")
             } else {
                 if touchedObject != nil {
                     touchedObject?.backgroundColor = UIColor.init(red: 0/255, green: 23/255, blue: 21/255, alpha: 1)
                     touchedObject = nil
                 }
+                visualEffectView.isHidden = false
                 performSegue(withIdentifier: "selectPlayerSegue", sender: self)
             }
         }

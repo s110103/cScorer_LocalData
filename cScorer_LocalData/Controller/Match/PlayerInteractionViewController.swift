@@ -160,7 +160,7 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
         let row = indexPath.row
         let section = indexPath.section
         
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
         
         switch section {
         case 0:
