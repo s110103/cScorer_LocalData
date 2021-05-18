@@ -13,7 +13,7 @@ protocol MatchViewControllerDelegate {
     func sendMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate, PlayerInteractionViewControllerDelegate, SelectPlayerViewControllerDelegate, SelectCodeViolationViewControllerDelegate {
+class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate, PlayerInteractionViewControllerDelegate, SelectPlayerViewControllerDelegate, SelectCodeViolationViewControllerDelegate, ClarifyCodeViolationViewControllerDelegate, ValidateCodeViolationViewControllerDelegate {
     
     // MARK: - Variables
     var currentMatch: Match?
@@ -1075,6 +1075,25 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             destinationVC.currentMatch = currentMatch
             destinationVC.indexOfMatch = selectedIndex!
             destinationVC.selectedPlayer = selectedPlayer
+            
+            destinationVC.delegate = self
+        case "clarifyCodeViolationPenaltySegue":
+            let destinationVC = segue.destination as! ClarifyCodeViolationViewController
+            
+            destinationVC.currentMatch = currentMatch
+            destinationVC.indexOfMatch = selectedIndex!
+            destinationVC.selectedPlayer = selectedPlayer
+            destinationVC.selectedCodeViolation = selectedViolation
+            
+            destinationVC.delegate = self
+        case "validateCodeViolationSegue":
+            let destinationVC = segue.destination as! ValidateCodeViolationViewController
+            
+            destinationVC.currentMatch = currentMatch
+            destinationVC.indexOfMatch = selectedIndex!
+            destinationVC.selectedPlayer = selectedPlayer
+            destinationVC.selectedCodeViolation = selectedViolation
+            destinationVC.selectedPenalty = selectedPenalty
             
             destinationVC.delegate = self
         default:
@@ -4323,6 +4342,22 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     func selctCodeViolation(player: String, violation: Int) {
         selectedPlayer = player
         selectedViolation = violation
+        
+        performSegue(withIdentifier: "clarifyCodeViolationPenaltySegue", sender: self)
+    }
+    
+    func clarifyCodeViolation(player: String, violation: Int, penalty: Int) {
+        selectedPlayer = player
+        selectedViolation = violation
+        selectedPenalty = penalty
+        
+        performSegue(withIdentifier: "validateCodeViolationSegue", sender: self)
+    }
+    
+    func validateCodeViolation(player: String, violation: Int, penalty: Int) {
+        /*
+                Handle Code Violation
+         */
     }
 }
 

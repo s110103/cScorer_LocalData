@@ -42,6 +42,8 @@
 		06A64E892653C738009E2A35 /* PlayerInteractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E882653C738009E2A35 /* PlayerInteractionViewController.swift */; };
 		06A64E8B2653E32D009E2A35 /* SelectPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E8A2653E32D009E2A35 /* SelectPlayerViewController.swift */; };
 		06A64E8D26545AD0009E2A35 /* SelectCodeViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E8C26545AD0009E2A35 /* SelectCodeViolationViewController.swift */; };
+		06A64E8F26546543009E2A35 /* ClarifyCodeViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E8E26546543009E2A35 /* ClarifyCodeViolationViewController.swift */; };
+		06A64E9126546B7C009E2A35 /* ValidateCodeViolationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A64E9026546B7C009E2A35 /* ValidateCodeViolationViewController.swift */; };
 		06A86A212574212A00ED0A80 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A202574212A00ED0A80 /* Player.swift */; };
 		06A86A272574287800ED0A80 /* SelectPlayerDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A262574287800ED0A80 /* SelectPlayerDetailsViewController.swift */; };
 		06A86A2B2574334900ED0A80 /* SetBallChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */; };
@@ -94,6 +96,8 @@
 		06A64E882653C738009E2A35 /* PlayerInteractionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInteractionViewController.swift; sourceTree = "<group>"; };
 		06A64E8A2653E32D009E2A35 /* SelectPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlayerViewController.swift; sourceTree = "<group>"; };
 		06A64E8C26545AD0009E2A35 /* SelectCodeViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCodeViolationViewController.swift; sourceTree = "<group>"; };
+		06A64E8E26546543009E2A35 /* ClarifyCodeViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClarifyCodeViolationViewController.swift; sourceTree = "<group>"; };
+		06A64E9026546B7C009E2A35 /* ValidateCodeViolationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateCodeViolationViewController.swift; sourceTree = "<group>"; };
 		06A86A202574212A00ED0A80 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		06A86A262574287800ED0A80 /* SelectPlayerDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlayerDetailsViewController.swift; sourceTree = "<group>"; };
 		06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBallChangeViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 				06A64E882653C738009E2A35 /* PlayerInteractionViewController.swift */,
 				06A64E8A2653E32D009E2A35 /* SelectPlayerViewController.swift */,
 				06A64E8C26545AD0009E2A35 /* SelectCodeViolationViewController.swift */,
+				06A64E8E26546543009E2A35 /* ClarifyCodeViolationViewController.swift */,
+				06A64E9026546B7C009E2A35 /* ValidateCodeViolationViewController.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -437,8 +443,10 @@
 				0648DF1D2570235D00BC55FB /* EditDistinctTournamentDataViewController.swift in Sources */,
 				06D6709D25698204005CB434 /* SetCourtViewController.swift in Sources */,
 				06DE1381256EEEE60080EAB0 /* EditMatchRuleViewController.swift in Sources */,
+				06A64E8F26546543009E2A35 /* ClarifyCodeViolationViewController.swift in Sources */,
 				06A64E8B2653E32D009E2A35 /* SelectPlayerViewController.swift in Sources */,
 				068ED18A258E9D5100B685BC /* TimeInterval.swift in Sources */,
+				06A64E9126546B7C009E2A35 /* ValidateCodeViolationViewController.swift in Sources */,
 				067FB52F255F42E2001AD911 /* SelectMatchTypeViewController.swift in Sources */,
 				066F65492572FCC6006843D1 /* SelectorTableViewCell.swift in Sources */,
 				06A86A2B2574334900ED0A80 /* SetBallChangeViewController.swift in Sources */,

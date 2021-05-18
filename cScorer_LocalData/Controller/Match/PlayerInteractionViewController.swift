@@ -160,6 +160,8 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
         let row = indexPath.row
         let section = indexPath.section
         
+        dismiss(animated: true, completion: nil)
+        
         switch section {
         case 0:
             delegate?.openCodeViolation(player: targetPlayer)
@@ -187,8 +189,6 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
         default:
             break
         }
-        
-        dismiss(animated: true, completion: nil)
     }
 
 }

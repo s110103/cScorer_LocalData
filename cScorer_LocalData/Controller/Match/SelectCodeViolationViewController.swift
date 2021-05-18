@@ -92,7 +92,7 @@ class SelectCodeViolationViewController: UIViewController, UITableViewDelegate, 
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return 1
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return selectCodeViolationTableHeading
@@ -132,6 +132,8 @@ class SelectCodeViolationViewController: UIViewController, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectCodeViolationTableView.deselectRow(at: indexPath, animated: true)
+        
+        dismiss(animated: true, completion: nil)
         
         delegate?.selctCodeViolation(player: selectedPlayer, violation: indexPath.row)
     }
