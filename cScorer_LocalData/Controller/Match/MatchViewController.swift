@@ -113,12 +113,14 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBOutlet weak var firstTeamPointButton: UIButton!
     @IBOutlet weak var secondTeamPointButton: UIButton!
     @IBOutlet weak var startOfPointButton: UIButton!
+    @IBOutlet weak var firstTeamViolationView: UIView!
     @IBOutlet weak var firstTeamCVIndicator: UILabel!
     @IBOutlet weak var firstTeamTVIndicator: UILabel!
     @IBOutlet weak var firstTeamNameIndicator: UILabel!
     @IBOutlet weak var firstTeamUpperCVIndicator: UILabel!
     @IBOutlet weak var firstTeamUpperTVIndicator: UILabel!
     @IBOutlet weak var firstTeamUpperNameIndicator: UILabel!
+    @IBOutlet weak var secondTeamViolationView: UIView!
     @IBOutlet weak var secondTeamCVIndicator: UILabel!
     @IBOutlet weak var secondTeamTVIndicator: UILabel!
     @IBOutlet weak var secondTeamNameIndicator: UILabel!
@@ -1378,6 +1380,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         } else {
             // MARK: - Doubles
         }
+        
+        visualizeViolations()
     }
     
     func endOfTiebreakPointSingles(team: Int) {
@@ -4499,6 +4503,8 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         default:
             break
         }
+        
+        visualizeViolations()
         
         selectedPlayer = ""
         selectedViolation = 0
