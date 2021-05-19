@@ -48,6 +48,7 @@
 		06A86A272574287800ED0A80 /* SelectPlayerDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A262574287800ED0A80 /* SelectPlayerDetailsViewController.swift */; };
 		06A86A2B2574334900ED0A80 /* SetBallChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */; };
 		06AA2A41261A371B00A0D5E5 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06AA2A40261A371B00A0D5E5 /* MatchViewController.swift */; };
+		06D43EE52654E6E400F088A2 /* ScoreStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D43EE42654E6E400F088A2 /* ScoreStamp.swift */; };
 		06D6708E25694450005CB434 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D6708D25694450005CB434 /* Match.swift */; };
 		06D670942569474C005CB434 /* MatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D670932569474C005CB434 /* MatchType.swift */; };
 		06D6709725694816005CB434 /* TournamentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D6709625694816005CB434 /* TournamentData.swift */; };
@@ -102,6 +103,7 @@
 		06A86A262574287800ED0A80 /* SelectPlayerDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlayerDetailsViewController.swift; sourceTree = "<group>"; };
 		06A86A2A2574334900ED0A80 /* SetBallChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBallChangeViewController.swift; sourceTree = "<group>"; };
 		06AA2A40261A371B00A0D5E5 /* MatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
+		06D43EE42654E6E400F088A2 /* ScoreStamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreStamp.swift; sourceTree = "<group>"; };
 		06D6708D25694450005CB434 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		06D670932569474C005CB434 /* MatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchType.swift; sourceTree = "<group>"; };
 		06D6709625694816005CB434 /* TournamentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentData.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				06D6709625694816005CB434 /* TournamentData.swift */,
 				06DE137C256EE97D0080EAB0 /* MatchStatistics.swift */,
 				06A86A202574212A00ED0A80 /* Player.swift */,
+				06D43EE42654E6E400F088A2 /* ScoreStamp.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				06A64E8726525BC7009E2A35 /* MatchTableViewCell.swift in Sources */,
 				06D6709A25697C18005CB434 /* SetPlayerNameViewController.swift in Sources */,
 				0648DF17257010C900BC55FB /* TournamentInfoViewController.swift in Sources */,
+				06D43EE52654E6E400F088A2 /* ScoreStamp.swift in Sources */,
 				067FB500255EF038001AD911 /* SceneDelegate.swift in Sources */,
 				0630523025840C9C00B9F5D2 /* PlayersOnCourtViewController.swift in Sources */,
 				0679DEA02582C9A100E0D2C9 /* SlideAnimatedTransitioning.swift in Sources */,

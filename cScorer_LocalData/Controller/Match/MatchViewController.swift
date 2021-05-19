@@ -115,8 +115,16 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     @IBOutlet weak var startOfPointButton: UIButton!
     @IBOutlet weak var firstTeamCVIndicator: UILabel!
     @IBOutlet weak var firstTeamTVIndicator: UILabel!
+    @IBOutlet weak var firstTeamNameIndicator: UILabel!
+    @IBOutlet weak var firstTeamUpperCVIndicator: UILabel!
+    @IBOutlet weak var firstTeamUpperTVIndicator: UILabel!
+    @IBOutlet weak var firstTeamUpperNameIndicator: UILabel!
     @IBOutlet weak var secondTeamCVIndicator: UILabel!
     @IBOutlet weak var secondTeamTVIndicator: UILabel!
+    @IBOutlet weak var secondTeamNameIndicator: UILabel!
+    @IBOutlet weak var secondTeamUpperCVIndicator: UILabel!
+    @IBOutlet weak var secondTeamUpperTVIndicator: UILabel!
+    @IBOutlet weak var secondTeamUpperNameIndicator: UILabel!
     
     @IBOutlet weak var interruptedMatchView: UIView!
     @IBOutlet weak var interruptedMatchTimerLabel: UILabel!
@@ -4358,6 +4366,615 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         /*
                 Handle Code Violation
          */
+        
+        switch penalty {
+        case 0:
+            /*
+                Warning
+             */
+            
+            switch player {
+            case "firstTeamFirstPlayer":
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            case "firstTeamSecondPlayer":
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            case "secondTeamFirstPlayer":
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            case "secondTeamSecondPlayer":
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            default:
+                break
+            }
+        case 1:
+            /*
+                Point Penalty
+            */
+        
+            switch player {
+            case "firstTeamFirstPlayer":
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 1)
+            case "firstTeamSecondPlayer":
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 1)
+            case "secondTeamFirstPlayer":
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 0)
+            case "secondTeamSecondPlayer":
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 0)
+            default:
+                break
+            }
+        case 2:
+            /*
+                Game Penalty
+            */
+        
+            switch player {
+            case "firstTeamFirstPlayer":
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                updateGames(teamWon: "secondTeam")
+            case "firstTeamSecondPlayer":
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                updateGames(teamWon: "secondTeam")
+            case "secondTeamFirstPlayer":
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                updateGames(teamWon: "firstTeam")
+            case "secondTeamSecondPlayer":
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                updateGames(teamWon: "firstTeam")
+            default:
+                break
+            }
+        case 3:
+            /*
+                Default
+            */
+        
+            switch player {
+            case "firstTeamFirstPlayer":
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                defaultPlayer(player: player)
+            case "firstTeamSecondPlayer":
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                defaultPlayer(player: player)
+            case "secondTeamFirstPlayer":
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                defaultPlayer(player: player)
+            case "secondTeamSecondPlayer":
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations += 1
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationDescriptions.append(violation)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                defaultPlayer(player: player)
+            default:
+                break
+            }
+        default:
+            break
+        }
+        
+        selectedPlayer = ""
+        selectedViolation = 0
+        selectedPenalty = 0
+    }
+    
+    func evaluateCurrentScoreStamp() -> ScoreStamp {
+        var currentScoreStamp: ScoreStamp = ScoreStamp()
+        
+        switch currentMatch?.matchStatistics.currentSetPlayed {
+        case 0:
+            /*
+                    No Set
+            */
+        
+            if currentMatch?.matchStatistics.inTiebreak == true || currentMatch?.matchStatistics.matchTiebreak == true {
+                currentScoreStamp.currentSet = 0
+                currentScoreStamp.firstTeamCurrentTiebreakScore = currentMatch!.matchStatistics.justTiebreakPointsFirstPlayer
+                currentScoreStamp.secondTeamCurrentTiebreakScore = currentMatch!.matchStatistics.justTiebreakPointsSecondPlayer
+            }
+        case 1:
+            if currentMatch?.matchStatistics.inTiebreak == true || currentMatch?.matchStatistics.matchTiebreak == true {
+                currentScoreStamp.currentSet = 1
+                currentScoreStamp.firstTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakFirstSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakFirstSetSecondPlayer
+            } else {
+                currentScoreStamp.currentSet = 1
+                currentScoreStamp.firstTeamCurrentGameScore = currentMatch!.matchStatistics.gamesFirstSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentGameScore = currentMatch!.matchStatistics.gamesFirstSetSecondPlayer
+                currentScoreStamp.firstTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameFirstPlayer
+                currentScoreStamp.secondTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameSecondPlayer
+            }
+        case 2:
+            if currentMatch?.matchStatistics.inTiebreak == true || currentMatch?.matchStatistics.matchTiebreak == true {
+                currentScoreStamp.currentSet = 2
+                currentScoreStamp.firstTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakSecondSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakSecondSetSecondPlayer
+            } else {
+                currentScoreStamp.currentSet = 2
+                currentScoreStamp.firstTeamCurrentGameScore = currentMatch!.matchStatistics.gamesSecondSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentGameScore = currentMatch!.matchStatistics.gamesSecondSetSecondPlayer
+                currentScoreStamp.firstTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameFirstPlayer
+                currentScoreStamp.secondTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameSecondPlayer
+            }
+        case 3:
+            if currentMatch?.matchStatistics.inTiebreak == true || currentMatch?.matchStatistics.matchTiebreak == true {
+                currentScoreStamp.currentSet = 3
+                currentScoreStamp.firstTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakThirdSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakThirdSetSecondPlayer
+            } else {
+                currentScoreStamp.currentSet = 3
+                currentScoreStamp.firstTeamCurrentGameScore = currentMatch!.matchStatistics.gamesThirdSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentGameScore = currentMatch!.matchStatistics.gamesThirdSetSecondPlayer
+                currentScoreStamp.firstTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameFirstPlayer
+                currentScoreStamp.secondTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameSecondPlayer
+            }
+        case 4:
+            if currentMatch?.matchStatistics.inTiebreak == true || currentMatch?.matchStatistics.matchTiebreak == true {
+                currentScoreStamp.currentSet = 4
+                currentScoreStamp.firstTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakFourthSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakFourthSetSecondPlayer
+            } else {
+                currentScoreStamp.currentSet = 4
+                currentScoreStamp.firstTeamCurrentGameScore = currentMatch!.matchStatistics.gamesFourthSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentGameScore = currentMatch!.matchStatistics.gamesFourthSetSecondPlayer
+                currentScoreStamp.firstTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameFirstPlayer
+                currentScoreStamp.secondTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameSecondPlayer
+            }
+        case 5:
+            if currentMatch?.matchStatistics.inTiebreak == true || currentMatch?.matchStatistics.matchTiebreak == true {
+                currentScoreStamp.currentSet = 5
+                currentScoreStamp.firstTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakFifthSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentTiebreakScore = currentMatch!.matchStatistics.tiebreakFifthSetSecondPlayer
+            } else {
+                currentScoreStamp.currentSet = 5
+                currentScoreStamp.firstTeamCurrentGameScore = currentMatch!.matchStatistics.gamesFifthSetFirstPlayer
+                currentScoreStamp.secondTeamCurrentGameScore = currentMatch!.matchStatistics.gamesFifthSetSecondPlayer
+                currentScoreStamp.firstTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameFirstPlayer
+                currentScoreStamp.secondTeamCurrentInGameScore = currentMatch!.matchStatistics.currentGameSecondPlayer
+            }
+        default:
+            break
+        }
+        
+        return currentScoreStamp
+    }
+    
+    func defaultPlayer(player: String) {
+        /*
+                Default Player routine
+         */
+    }
+    
+    func visualizeViolations() {
+        if currentMatch?.matchType.matchType == 0 {
+            
+            firstTeamNameIndicator.isHidden = true
+            firstTeamUpperCVIndicator.isHidden = true
+            firstTeamUpperTVIndicator.isHidden = true
+            firstTeamUpperNameIndicator.isHidden = true
+            
+            secondTeamNameIndicator.isHidden = true
+            secondTeamUpperCVIndicator.isHidden = true
+            secondTeamUpperTVIndicator.isHidden = true
+            secondTeamUpperNameIndicator.isHidden = true
+            
+            if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                if currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolations != 0 {
+                    
+                    firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                    firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                    
+                    firstTeamCVIndicator.isHidden = false
+                    firstTeamTVIndicator.isHidden = false
+                } else {
+                    firstTeamCVIndicator.isHidden = true
+                    firstTeamTVIndicator.isHidden = true
+                }
+                
+                if currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolations != 0 {
+                    
+                    secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                    secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                    
+                    secondTeamCVIndicator.isHidden = false
+                    secondTeamTVIndicator.isHidden = false
+                } else {
+                    secondTeamCVIndicator.isHidden = true
+                    secondTeamTVIndicator.isHidden = true
+                }
+            } else {
+                if currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolations != 0 {
+                    
+                    secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                    secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                    
+                    secondTeamCVIndicator.isHidden = false
+                    secondTeamTVIndicator.isHidden = false
+                } else {
+                    secondTeamCVIndicator.isHidden = true
+                    secondTeamTVIndicator.isHidden = true
+                }
+                
+                if currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolations != 0 {
+                    
+                    firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                    firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                    
+                    firstTeamCVIndicator.isHidden = false
+                    firstTeamTVIndicator.isHidden = false
+                } else {
+                    firstTeamCVIndicator.isHidden = true
+                    firstTeamTVIndicator.isHidden = true
+                }
+            }
+        } else {
+            /*
+                    Doubles
+             */
+            
+            /*
+                    First Team
+             */
+            if currentMatch?.matchStatistics.onLeftSide == "firstTeam" {
+                if currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolations != 0 {
+                    // First Player has CV/TV
+                    
+                    if currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolations != 0 {
+                        // Both players have CVs/TVs
+                        
+                        if ((firstTeamNameIndicator.text?.contains(currentMatch!.firstTeamFirstPlayerSurname)) != nil) {
+                            firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                            firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                            firstTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = true
+                            
+                            firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                            firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                            firstTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = false
+                        } else if ((firstTeamNameIndicator.text?.contains(currentMatch!.firstTeamSecondPlayerSurname)) != nil) {
+                            firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                            firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                            firstTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = false
+                            
+                            firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                            firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                            firstTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = true
+                        } else {
+                            if currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower != currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower {
+                                
+                                if currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower == true {
+                                    firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                                    firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                                    firstTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = true
+                                    
+                                    firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                                    firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                                    firstTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = false
+                                } else {
+                                    firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                                    firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                                    firstTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = false
+                                    
+                                    firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                                    firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                                    firstTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = true
+                                }
+                            } else {
+                                firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                                firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                                firstTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                                currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = true
+                                
+                                firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                                firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                                firstTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                                currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = false
+                            }
+                        }
+                    } else {
+                        firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                        firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                        firstTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                    }
+                } else {
+                    if currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolations != 0 {
+                        firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                        firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                        firstTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                    }
+                }
+                
+                /*
+                        Second Team
+                 */
+                
+                if currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolations != 0 {
+                    // First Player has CV/TV
+                    
+                    if currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolations != 0 {
+                        // Both players have CVs/TVs
+                        
+                        if ((secondTeamNameIndicator.text?.contains(currentMatch!.secondTeamFirstPlayerSurname)) != nil) {
+                            secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                            secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                            secondTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = true
+                            
+                            secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                            secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                            secondTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = false
+                        } else if ((secondTeamNameIndicator.text?.contains(currentMatch!.secondTeamSecondPlayerSurname)) != nil) {
+                            secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                            secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                            secondTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = false
+                            
+                            secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                            secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                            secondTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = true
+                        } else {
+                            if currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower != currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower {
+                                
+                                if currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower == true {
+                                    secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                                    secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                                    secondTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = true
+                                    
+                                    secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                                    secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                                    secondTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = false
+                                } else {
+                                    secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                                    secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                                    secondTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = false
+                                    
+                                    secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                                    secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                                    secondTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = true
+                                }
+                            } else {
+                                secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                                secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                                secondTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                                currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = true
+                                
+                                secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                                secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                                secondTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                                currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = false
+                            }
+                        }
+                    } else {
+                        secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                        secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                        secondTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                    }
+                } else {
+                    if currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolations != 0 {
+                        secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                        secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                        secondTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                    }
+                }
+            } else {
+                /*
+                        First Team
+                 */
+                if currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolations != 0 {
+                    // First Player has CV/TV
+                    
+                    if currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolations != 0 {
+                        // Both players have CVs/TVs
+                        
+                        if ((secondTeamNameIndicator.text?.contains(currentMatch!.firstTeamFirstPlayerSurname)) != nil) {
+                            secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                            secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                            secondTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = true
+                            
+                            secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                            secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                            secondTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = false
+                        } else if ((secondTeamNameIndicator.text?.contains(currentMatch!.firstTeamSecondPlayerSurname)) != nil) {
+                            secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                            secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                            secondTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = false
+                            
+                            secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                            secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                            secondTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = true
+                        } else {
+                            if currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower != currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower {
+                                
+                                if currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower == true {
+                                    secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                                    secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                                    secondTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = true
+                                    
+                                    secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                                    secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                                    secondTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = false
+                                } else {
+                                    secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                                    secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                                    secondTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = false
+                                    
+                                    secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                                    secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                                    secondTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = true
+                                }
+                            } else {
+                                secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                                secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                                secondTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                                currentMatch?.matchStatistics.firstTeamFirstPlayerViolationLower = true
+                                
+                                secondTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                                secondTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                                secondTeamUpperNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                                currentMatch?.matchStatistics.firstTeamSecondPlayerViolationLower = false
+                            }
+                        }
+                    } else {
+                        secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerCodeViolations)"
+                        secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamFirstPlayerTimeViolations)"
+                        secondTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
+                    }
+                } else {
+                    if currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolations != 0 {
+                        secondTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerCodeViolations)"
+                        secondTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.firstTeamSecondPlayerTimeViolations)"
+                        secondTeamNameIndicator.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
+                    }
+                }
+                
+                /*
+                        Second Team
+                 */
+                
+                if currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolations != 0 {
+                    // First Player has CV/TV
+                    
+                    if currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolations != 0 {
+                        // Both players have CVs/TVs
+                        
+                        if ((firstTeamNameIndicator.text?.contains(currentMatch!.secondTeamFirstPlayerSurname)) != nil) {
+                            firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                            firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                            firstTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = true
+                            
+                            firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                            firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                            firstTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = false
+                        } else if ((firstTeamNameIndicator.text?.contains(currentMatch!.secondTeamSecondPlayerSurname)) != nil) {
+                            firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                            firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                            firstTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = false
+                            
+                            firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                            firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                            firstTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                            currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = true
+                        } else {
+                            if currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower != currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower {
+                                
+                                if currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower == true {
+                                    firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                                    firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                                    firstTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = true
+                                    
+                                    firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                                    firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                                    firstTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = false
+                                } else {
+                                    firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                                    firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                                    firstTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = false
+                                    
+                                    firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                                    firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                                    firstTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                                    currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = true
+                                }
+                            } else {
+                                firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                                firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                                firstTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                                currentMatch?.matchStatistics.secondTeamFirstPlayerViolationLower = true
+                                
+                                firstTeamUpperCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                                firstTeamUpperTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                                firstTeamUpperNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                                currentMatch?.matchStatistics.secondTeamSecondPlayerViolationLower = false
+                            }
+                        }
+                    } else {
+                        firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerCodeViolations)"
+                        firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamFirstPlayerTimeViolations)"
+                        firstTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
+                    }
+                } else {
+                    if currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations != 0 || currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolations != 0 {
+                        firstTeamCVIndicator.text = "CV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerCodeViolations)"
+                        firstTeamTVIndicator.text = "TV: \(currentMatch!.matchStatistics.secondTeamSecondPlayerTimeViolations)"
+                        firstTeamNameIndicator.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
+                    }
+                }
+            }
+        }
     }
 }
 

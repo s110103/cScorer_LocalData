@@ -106,20 +106,30 @@ class MatchStatistics {
     var secondTeamFirstPlayerCodeViolations: Int = 0
     var secondTeamSecondPlayerCodeViolations: Int = 0
     
-    var firstTeamFirstPlayerCodeViolationDescriptions: [String] = []
-    var firstTeamSecondPlayerCodeViolationDescriptions: [String] = []
-    var secondTeamFirstPlayerCodeViolationDescriptions: [String] = []
-    var secondTeamSecondPlayerCodeViolationDescriptions: [String] = []
+    var firstTeamFirstPlayerCodeViolationDescriptions: [Int] = []
+    var firstTeamSecondPlayerCodeViolationDescriptions: [Int] = []
+    var secondTeamFirstPlayerCodeViolationDescriptions: [Int] = []
+    var secondTeamSecondPlayerCodeViolationDescriptions: [Int] = []
+    
+    var firstTeamFirstPlayerCodeViolationPenalties: [Int] = []
+    var firstTeamSecondPlayerCodeViolationPenalties: [Int] = []
+    var secondTeamFirstPlayerCodeViolationPenalties: [Int] = []
+    var secondTeamSecondPlayerCodeViolationPenalties: [Int] = []
+    
+    var firstTeamFirstPlayerCodeViolationScoreStamps: [ScoreStamp] = []
+    var firstTeamSecondPlayerCodeViolationScoreStamps: [ScoreStamp] = []
+    var secondTeamFirstPlayerCodeViolationScoreStamps: [ScoreStamp] = []
+    var secondTeamSecondPlayerCodeViolationScoreStamps: [ScoreStamp] = []
     
     var firstTeamFirstPlayerTimeViolations: Int = 0
     var firstTeamSecondPlayerTimeViolations: Int = 0
     var secondTeamFirstPlayerTimeViolations: Int = 0
     var secondTeamSecondPlayerTimeViolations: Int = 0
     
-    var firstTeamFirstPlayerTimeViolationDescriptions: [String] = []
-    var firstTeamSecondPlayerTimeViolationDescriptions: [String] = []
-    var secondTeamFirstPlayerTimeViolationDescriptions: [String] = []
-    var secondTeamSecondPlayerTimeViolationDescriptions: [String] = []
+    var firstTeamFirstPlayerViolationLower: Bool = false
+    var firstTeamSecondPlayerViolationLower: Bool = false
+    var secondTeamFirstPlayerViolationLower: Bool = false
+    var secondTeamSecondPlayerViolationLower: Bool = false
     
     init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _warmupTimeInterval: TimeInterval, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _matchTimeInterval: TimeInterval, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: String, _onLeftSide: String, _onRightSide: String, _firstTeamNear: String, _firstTeamFar: String, _secondTeamNear: String, _secondTeamFar: String, _matchInitiated: Bool, _warmupTimerRunning: Bool, _firstTeamFirstPlayerPosition: Int) {
         
