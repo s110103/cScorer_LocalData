@@ -95,15 +95,15 @@ class ClarifyCodeViolationViewController: UIViewController {
         case "firstTeamFirstPlayer":
             clarifyCodeViolationHeadingLabel.text = "\(currentMatch!.firstTeamFirstPlayer.prefix(1)). \(currentMatch!.firstTeamFirstPlayerSurname)"
             
-            currentViolations = (currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations)!
+            currentViolations = (currentMatch?.matchStatistics.firstTeamFirstPlayerCodeViolations)!
         case "firstTeamSecondPlayer":
             clarifyCodeViolationHeadingLabel.text = "\(currentMatch!.firstTeamSecondPlayer.prefix(1)). \(currentMatch!.firstTeamSecondPlayerSurname)"
             
-            currentViolations = (currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations)!
+            currentViolations = (currentMatch?.matchStatistics.firstTeamSecondPlayerCodeViolations)!
         case "secondTeamFirstPlayer":
             clarifyCodeViolationHeadingLabel.text = "\(currentMatch!.secondTeamFirstPlayer.prefix(1)). \(currentMatch!.secondTeamFirstPlayerSurname)"
             
-            currentViolations = (currentMatch?.matchStatistics.secondTeamSecondPlayerCodeViolations)!
+            currentViolations = (currentMatch?.matchStatistics.secondTeamFirstPlayerCodeViolations)!
         case "secondTeamSecondPlayer":
             clarifyCodeViolationHeadingLabel.text = "\(currentMatch!.secondTeamSecondPlayer.prefix(1)). \(currentMatch!.secondTeamSecondPlayerSurname)"
             
