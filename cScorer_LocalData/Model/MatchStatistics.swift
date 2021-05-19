@@ -126,6 +126,16 @@ class MatchStatistics {
     var secondTeamFirstPlayerTimeViolations: Int = 0
     var secondTeamSecondPlayerTimeViolations: Int = 0
     
+    var firstTeamFirstPlayerTimeViolationPenalties: [Int] = []
+    var firstTeamSecondPlayerTimeViolationPenalties: [Int] = []
+    var secondTeamFirstPlayerTimeViolationPenalties: [Int] = []
+    var secondTeamSecondPlayerTimeViolationPenalties: [Int] = []
+    
+    var firstTeamFirstPlayerTimeViolationScoreStamps: [ScoreStamp] = []
+    var firstTeamSecondPlayerTimeViolationScoreStamps: [ScoreStamp] = []
+    var secondTeamFirstPlayerTimeViolationScoreStamps: [ScoreStamp] = []
+    var secondTeamSecondPlayerTimeViolationScoreStamps: [ScoreStamp] = []
+    
     var firstTeamFirstPlayerViolationLower: Bool = false
     var firstTeamSecondPlayerViolationLower: Bool = false
     var secondTeamFirstPlayerViolationLower: Bool = false

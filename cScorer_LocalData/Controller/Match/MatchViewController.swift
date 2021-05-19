@@ -13,7 +13,7 @@ protocol MatchViewControllerDelegate {
     func sendMatch(currentMatch: Match, selectedIndex: Int)
 }
 
-class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate, PlayerInteractionViewControllerDelegate, SelectPlayerViewControllerDelegate, SelectCodeViolationViewControllerDelegate, ClarifyCodeViolationViewControllerDelegate, ValidateCodeViolationViewControllerDelegate {
+class MatchViewController: UIViewController, StopMatchViewControllerDelegate, WarmupInfoViewControllerDelegate, PlayerInteractionViewControllerDelegate, SelectPlayerViewControllerDelegate, SelectCodeViolationViewControllerDelegate, ClarifyCodeViolationViewControllerDelegate, ValidateCodeViolationViewControllerDelegate, ClarifyTimeViolationViewControllerDelegate, ValidateTimeViolationViewControllerDelegate {
     
     // MARK: - Variables
     var currentMatch: Match?
@@ -278,7 +278,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             resetChangeOfEndsShotClockData()
             resetShotClock(withTime: 25)
             
-            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firstTeamSecond" {
                 endOfPoint(team: 0)
             } else {
                 endOfPoint(team: 1)
@@ -371,7 +371,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 savedFault = true
             }
             
-            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firstTeamSecond" {
                 addFault(team: 0)
             } else {
                 addFault(team: 1)
@@ -485,7 +485,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
                 savedFault = true
             }
             
-            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firsTeamSecond" {
+            if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firstTeamSecond" {
                 addFault(team: 0)
             } else {
                 addFault(team: 1)
@@ -1103,6 +1103,23 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             destinationVC.indexOfMatch = selectedIndex!
             destinationVC.selectedPlayer = selectedPlayer
             destinationVC.selectedCodeViolation = selectedViolation
+            destinationVC.selectedPenalty = selectedPenalty
+            
+            destinationVC.delegate = self
+        case "clarifyTimeViolationPenaltySegue":
+            let destinationVC = segue.destination as! ClarifyTimeViolationViewController
+            
+            destinationVC.currentMatch = currentMatch
+            destinationVC.indexOfMatch = selectedIndex!
+            destinationVC.selectedPlayer = selectedPlayer
+            
+            destinationVC.delegate = self
+        case "validateTimeViolationSegue":
+            let destinationVC = segue.destination as! ValidateTimeViolationViewController
+            
+            destinationVC.currentMatch = currentMatch
+            destinationVC.indexOfMatch = selectedIndex!
+            destinationVC.selectedPlayer = selectedPlayer
             destinationVC.selectedPenalty = selectedPenalty
             
             destinationVC.delegate = self
@@ -4341,6 +4358,7 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
     
     func openTimeViolation(player: String) {
         selectedPlayer = player
+        performSegue(withIdentifier: "clarifyTimeViolationPenaltySegue", sender: self)
     }
     
     func returnSelectedPlayer(player: String, furtherAction: String) {
@@ -4511,8 +4529,392 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
         selectedPenalty = 0
     }
     
+    func clarifyTimeViolation(player: String, penalty: Int) {
+        selectedPlayer = player
+        selectedPenalty = penalty
+        
+        performSegue(withIdentifier: "validateTimeViolationSegue", sender: self)
+    }
+    
+    func validateTimeViolation(player: String, penalty: Int) {
+        /*
+                Handle Time Violation
+         */
+        
+        switch penalty {
+        case 0:
+            /*
+                Warning
+             */
+            
+            switch player {
+            case "firstTeamFirstPlayer":
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            case "firstTeamSecondPlayer":
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            case "secondTeamFirstPlayer":
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            case "secondTeamSecondPlayer":
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+            default:
+                break
+            }
+        case 1:
+            /*
+                Loss of Serve
+            */
+        
+            switch player {
+            case "firstTeamFirstPlayer":
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                
+                pointStarted = false
+                startOfPointButton.isHidden = false
+                
+                shotclockTimer?.invalidate()
+                resetChangeOfEndsShotClockData()
+                resetShotClock(withTime: 25)
+                
+                var savedFault: Bool = false
+                
+                if firstFault == true {
+                    savedFault = true
+                }
+                
+                if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firstTeamSecond" {
+                    addFault(team: 0)
+                }
+                
+                if savedFault == false {
+                    triggerReadback(caller: "309", message: "Time Violation - Loss of Serve", fontSize: 60)
+                } else {
+                    
+                    var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+                    
+                    if setJustFinished == true {
+                        setJustFinished = false
+                        currentSet -= 1
+                    }
+                    
+                    if gameFinished == true && gameSetMatchIndication == false {
+                        switch currentSet {
+                        case 1:
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                triggerReadback(caller: "414", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "416", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 2:
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                triggerReadback(caller: "420", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "422", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 3:
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                triggerReadback(caller: "426", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "428", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 4:
+                            if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                triggerReadback(caller: "432", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "434", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 5:
+                            if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                                triggerReadback(caller: "438", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "440", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                            }
+                        default:
+                            break
+                        }
+                        gameFinished = false
+                    } else {
+                        triggerReadback(caller: "392", message: "TV: LoS\n\(scoreLabel.text!)", fontSize: 100)
+                    }
+                }
+                savedFault = false
+                
+            case "firstTeamSecondPlayer":
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                
+                pointStarted = false
+                startOfPointButton.isHidden = false
+                
+                shotclockTimer?.invalidate()
+                resetChangeOfEndsShotClockData()
+                resetShotClock(withTime: 25)
+                
+                var savedFault: Bool = false
+                
+                if firstFault == true {
+                    savedFault = true
+                }
+                
+                if currentMatch?.matchStatistics.isServer == "firstTeamFirst" || currentMatch?.matchStatistics.isServer == "firstTeamSecond" {
+                    addFault(team: 0)
+                }
+                
+                if savedFault == false {
+                    triggerReadback(caller: "309", message: "Time Violation - Loss of Serve", fontSize: 60)
+                } else {
+                    
+                    var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+                    
+                    if setJustFinished == true {
+                        setJustFinished = false
+                        currentSet -= 1
+                    }
+                    
+                    if gameFinished == true && gameSetMatchIndication == false {
+                        switch currentSet {
+                        case 1:
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                triggerReadback(caller: "414", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "416", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 2:
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                triggerReadback(caller: "420", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "422", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 3:
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                triggerReadback(caller: "426", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "428", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 4:
+                            if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                triggerReadback(caller: "432", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "434", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 5:
+                            if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                                triggerReadback(caller: "438", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "440", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                            }
+                        default:
+                            break
+                        }
+                        gameFinished = false
+                    } else {
+                        triggerReadback(caller: "392", message: "TV: LoS\n\(scoreLabel.text!)", fontSize: 100)
+                    }
+                }
+                savedFault = false
+            case "secondTeamFirstPlayer":
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                
+                pointStarted = false
+                startOfPointButton.isHidden = false
+                
+                shotclockTimer?.invalidate()
+                resetChangeOfEndsShotClockData()
+                resetShotClock(withTime: 25)
+                
+                var savedFault: Bool = false
+                
+                if firstFault == true {
+                    savedFault = true
+                }
+                
+                if currentMatch?.matchStatistics.isServer == "secondTeamFirst" || currentMatch?.matchStatistics.isServer == "secondTeamSecond" {
+                    addFault(team: 1)
+                }
+                
+                if savedFault == false {
+                    triggerReadback(caller: "309", message: "Time Violation - Loss of Serve", fontSize: 60)
+                } else {
+                    
+                    var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+                    
+                    if setJustFinished == true {
+                        setJustFinished = false
+                        currentSet -= 1
+                    }
+                    
+                    if gameFinished == true && gameSetMatchIndication == false {
+                        switch currentSet {
+                        case 1:
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                triggerReadback(caller: "414", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "416", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 2:
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                triggerReadback(caller: "420", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "422", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 3:
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                triggerReadback(caller: "426", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "428", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 4:
+                            if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                triggerReadback(caller: "432", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "434", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 5:
+                            if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                                triggerReadback(caller: "438", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "440", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                            }
+                        default:
+                            break
+                        }
+                        gameFinished = false
+                    } else {
+                        triggerReadback(caller: "392", message: "TV: LoS\n\(scoreLabel.text!)", fontSize: 100)
+                    }
+                }
+                savedFault = false
+            case "secondTeamSecondPlayer":
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                
+                pointStarted = false
+                startOfPointButton.isHidden = false
+                
+                shotclockTimer?.invalidate()
+                resetChangeOfEndsShotClockData()
+                resetShotClock(withTime: 25)
+                
+                var savedFault: Bool = false
+                
+                if firstFault == true {
+                    savedFault = true
+                }
+                
+                if currentMatch?.matchStatistics.isServer == "secondTeamFirst" || currentMatch?.matchStatistics.isServer == "secondTeamSecond" {
+                    addFault(team: 1)
+                }
+                
+                if savedFault == false {
+                    triggerReadback(caller: "309", message: "Time Violation - Loss of Serve", fontSize: 60)
+                } else {
+                    
+                    var currentSet: Int = currentMatch!.matchStatistics.currentSetPlayed
+                    
+                    if setJustFinished == true {
+                        setJustFinished = false
+                        currentSet -= 1
+                    }
+                    
+                    if gameFinished == true && gameSetMatchIndication == false {
+                        switch currentSet {
+                        case 1:
+                            if currentMatch!.matchStatistics.gamesFirstSetFirstPlayer > currentMatch!.matchStatistics.gamesFirstSetSecondPlayer {
+                                triggerReadback(caller: "414", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "416", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFirstSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFirstSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 2:
+                            if currentMatch!.matchStatistics.gamesSecondSetFirstPlayer > currentMatch!.matchStatistics.gamesSecondSetSecondPlayer {
+                                triggerReadback(caller: "420", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "422", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesSecondSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesSecondSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 3:
+                            if currentMatch!.matchStatistics.gamesThirdSetFirstPlayer > currentMatch!.matchStatistics.gamesThirdSetSecondPlayer {
+                                triggerReadback(caller: "426", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "428", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesThirdSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesThirdSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 4:
+                            if currentMatch!.matchStatistics.gamesFourthSetFirstPlayer > currentMatch!.matchStatistics.gamesFourthSetSecondPlayer {
+                                triggerReadback(caller: "432", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "434", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFourthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFourthSetFirstPlayer)", fontSize: 100)
+                            }
+                        case 5:
+                            if currentMatch!.matchStatistics.gamesFifthSetFirstPlayer > currentMatch!.matchStatistics.gamesFifthSetSecondPlayer {
+                                triggerReadback(caller: "438", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer)", fontSize: 100)
+                            } else {
+                                triggerReadback(caller: "440", message: "TV: LoS\n\(currentMatch!.matchStatistics.gamesFifthSetSecondPlayer) - \(currentMatch!.matchStatistics.gamesFifthSetFirstPlayer)", fontSize: 100)
+                            }
+                        default:
+                            break
+                        }
+                        gameFinished = false
+                    } else {
+                        triggerReadback(caller: "392", message: "TV: LoS\n\(scoreLabel.text!)", fontSize: 100)
+                    }
+                }
+                savedFault = false
+            default:
+                break
+            }
+        case 2:
+            /*
+                Point Penalty
+            */
+        
+            switch player {
+            case "firstTeamFirstPlayer":
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamFirstPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 1)
+            case "firstTeamSecondPlayer":
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.firstTeamSecondPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 1)
+            case "secondTeamFirstPlayer":
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamFirstPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 0)
+            case "secondTeamSecondPlayer":
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolations += 1
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolationPenalties.append(penalty)
+                currentMatch?.matchStatistics.secondTeamSecondPlayerTimeViolationScoreStamps.append(evaluateCurrentScoreStamp())
+                endOfPoint(team: 0)
+            default:
+                break
+            }
+        default:
+            break
+        }
+        
+        visualizeViolations()
+        
+        selectedPlayer = ""
+        selectedViolation = 0
+        selectedPenalty = 0
+    }
+    
     func evaluateCurrentScoreStamp() -> ScoreStamp {
-        var currentScoreStamp: ScoreStamp = ScoreStamp()
+        let currentScoreStamp: ScoreStamp = ScoreStamp()
         
         switch currentMatch?.matchStatistics.currentSetPlayed {
         case 0:
