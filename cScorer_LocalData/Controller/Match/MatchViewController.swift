@@ -5384,6 +5384,22 @@ class MatchViewController: UIViewController, StopMatchViewControllerDelegate, Wa
             }
         }
     }
+    
+    func openMedicalTimeOut(player: String) {
+        return
+    }
+    
+    func openToilettBreak(player: String) {
+        return
+    }
+    
+    func openChangeOfAttire(player: String) {
+        return
+    }
+    
+    func openRetirement(player: String) {
+        return
+    }
 }
 
 extension MatchViewController {

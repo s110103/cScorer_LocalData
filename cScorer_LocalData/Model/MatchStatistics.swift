@@ -141,6 +141,13 @@ class MatchStatistics {
     var secondTeamFirstPlayerViolationLower: Bool = false
     var secondTeamSecondPlayerViolationLower: Bool = false
     
+    var firstTeamFirstPlayerRemainingMedical: TimeInterval = 180
+    var firstTeamSecondPlayerRemainingMedical: TimeInterval = 180
+    var secondTeamFirstPlayerRemainingMedical: TimeInterval = 180
+    var secondTeamSecondPlayerRemainingMedical: TimeInterval = 180
+    
+    var currentlyInMedical: String = ""
+    
     init(_chairUmpireOnCourtTimeStamp: NSDate, _playersOnCourtTimeStamp: NSDate, _warmupStartedTimeStamp: NSDate, _warmupFinishedTimeStamp: NSDate, _warmupTimeInterval: TimeInterval, _matchStartedTimeStamp: NSDate, _matchFinishedTimeStamp: NSDate, _matchTimeInterval: TimeInterval, _timePlayed: NSDate, _matchService: Int, _chairUmpireOnCourt: Bool, _playersOnCourt: Bool, _wonToss: Int, _madeChoice: Int, _isServer: String, _onLeftSide: String, _onRightSide: String, _firstTeamNear: String, _firstTeamFar: String, _secondTeamNear: String, _secondTeamFar: String, _matchInitiated: Bool, _warmupTimerRunning: Bool, _firstTeamFirstPlayerPosition: Int) {
         
         chairUmpireOnCourtTimeStamp = _chairUmpireOnCourtTimeStamp

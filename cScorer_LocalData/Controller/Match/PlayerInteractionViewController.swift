@@ -10,6 +10,12 @@ import UIKit
 protocol PlayerInteractionViewControllerDelegate {
     func openCodeViolation(player: String)
     func openTimeViolation(player: String)
+    
+    func openMedicalTimeOut(player: String)
+    func openToilettBreak(player: String)
+    func openChangeOfAttire(player: String)
+    
+    func openRetirement(player: String)
 }
 
 class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -171,21 +177,17 @@ class PlayerInteractionViewController: UIViewController, UITableViewDelegate, UI
             // Timeout
             switch row {
             case 0:
-                // Medical
-                break
+                delegate?.openMedicalTimeOut(player: targetPlayer)
             case 1:
-                // Toilett
-                break
+                delegate?.openToilettBreak(player: targetPlayer)
             case 2:
-                // Change of Attire
-                break
+                delegate?.openChangeOfAttire(player: targetPlayer)
             default:
                 break
             }
             break
         case 3:
-            // Retirement
-            break
+            delegate?.openRetirement(player: targetPlayer)
         default:
             break
         }
